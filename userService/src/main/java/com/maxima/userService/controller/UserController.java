@@ -1,7 +1,7 @@
 package com.maxima.userService.controller;
 
-import com.maxima.userService.dto.inside.UserInsideDto;
-import com.maxima.userService.dto.out.UserOutDto;
+import com.maxima.userService.dto.UserCreateDto;
+import com.maxima.userService.dto.UserViewDto;
 import com.maxima.userService.service.UserService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -26,34 +26,30 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping
-  public ResponseEntity<UserOutDto> addUser(@Valid @RequestBody UserInsideDto userInsideDto) {
-    return new ResponseEntity<>(userService.addUser(userInsideDto), HttpStatus.CREATED);
+  public ResponseEntity<UserViewDto> create(@Valid @RequestBody UserCreateDto userCreateDto) {
+    return ResponseEntity.ok(userService.create(userCreateDto));
   }
 
   @GetMapping
-  public ResponseEntity<List<UserOutDto>> getAllUsers() {
-    return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+  public ResponseEntity<List<UserViewDto>> getList() {
+    return ResponseEntity.ok(userService.getList());
   }
 
   @GetMapping("/{uuid}")
-  public ResponseEntity<UserOutDto> getUserByUUID(@PathVariable UUID uuid) {
-    UserOutDto user = userService.getUserByUUID(uuid);
-    if (user == null) {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-    return new ResponseEntity<>(user, HttpStatus.OK);
+  public ResponseEntity<UserViewDto> getOne(@PathVariable UUID uuid) {
+    return ResponseEntity.ok(userService.getOne(uuid));
   }
 
   @PutMapping("/{uuid}")
-  public ResponseEntity<UserOutDto> updateUserByUUID(
-      @Valid @RequestBody UserInsideDto userInsideDto,
+  public ResponseEntity<UserViewDto> update(
+      @Valid @RequestBody UserCreateDto userCreateDto,
       @PathVariable UUID uuid) {
-    return new ResponseEntity<>(userService.updateUserByUUID(userInsideDto, uuid), HttpStatus.OK);
+    return ResponseEntity.ok(userService.update(userCreateDto, uuid));
   }
 
   @DeleteMapping("/{uuid}")
-  public ResponseEntity<Void> deleteUserByUUID(@PathVariable UUID uuid) {
-    userService.deleteUserByUUID(uuid);
+  public ResponseEntity<Void> delete(@PathVariable UUID uuid) {
+    userService.delete(uuid);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }

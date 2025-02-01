@@ -1,7 +1,7 @@
-package com.maxima.userService.dto.inside;
+package com.maxima.userService.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import java.util.Date;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +11,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserInsideDto {
+public class UserViewDto {
 
-  @NotBlank
+  private UUID uuid;
+
   private String name;
 
-  @Email
+  private Date registeredAt;
+
   private String email;
 }

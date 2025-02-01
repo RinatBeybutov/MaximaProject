@@ -1,19 +1,19 @@
 package com.maxima.userService.service;
 
-import com.maxima.userService.dto.inside.UserInsideDto;
-import com.maxima.userService.dto.out.UserOutDto;
+import com.maxima.userService.dto.UserCreateDto;
+import com.maxima.userService.dto.UserViewDto;
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
 
-  UserOutDto addUser(UserInsideDto userInsideDto);
+  UserViewDto create(UserCreateDto userCreateDto);
 
-  List<UserOutDto> getAllUsers();
+  List<UserViewDto> getList();
 
-  UserOutDto getUserByUUID(UUID uuid);
+  UserViewDto getOne(UUID uuid);
 
-  UserOutDto updateUserByUUID(UserInsideDto userInsideDto, UUID uuid);
+  UserViewDto update(UserCreateDto userCreateDto, UUID uuid);
 
-  void deleteUserByUUID(UUID uuid);
+  void delete(UUID uuid);
 }
