@@ -18,9 +18,9 @@ task/1-add-user-service
 #2 Добавлены тесты для сущности UserEntity
 
 # Подключение к бд
-
 Дописать после разработки сущностей и подключения к бд
-
+БД - postgres
+Schema = user_service, table = users
 # Процесс создания реквеста
 
 1. Выбрать ветку develop
