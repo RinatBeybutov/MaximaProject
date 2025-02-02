@@ -1,0 +1,15 @@
+22-00
+23-00  
+
+28-00  надо мерджить в Девелоп ветку
+
+
+create database MaximaProject with owner=postgres encoding='UTF8';
+\c maximaproject
+
+create table public.category(
+     id int primary key,
+     name varchar
+);
+
+create sequence public.cat_id_seq;
