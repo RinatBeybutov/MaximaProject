@@ -67,8 +67,17 @@ public class CategoryController {
      * Обновить категорию по UUID
      * @param uuid идентификатор категории
      */
+    @PostMapping("/update")
+    public void update(@RequestBody CategoryDto cd) throws Exception {	System.out.println(">>cc.u()");
+        cs.update(cd.getI(),cd.getName());
+    }
+
+    /**
+     * Обновить категорию по UUID
+     * @param uuid идентификатор категории
+     */
     @GetMapping("/update")
-    public void update(@RequestParam("uuid") int uuid,@RequestParam("name") String name) throws Exception {	System.out.println(">>cc.u()");
+    public void update0(@RequestParam("uuid") int uuid,@RequestParam("name") String name) throws Exception {	System.out.println(">>cc.u()");
         cs.update(uuid,name);
     }
 
