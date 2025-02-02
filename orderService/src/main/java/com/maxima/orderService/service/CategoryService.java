@@ -38,8 +38,8 @@ public class CategoryService {
      * Найти категорию по id
      */
     @Transactional
-    public Category find(int uuid) throws Exception{                        System.out.println(">>cs.f()-B");
-        return cr.findById(uuid).orElseThrow( () -> new Exception() );
+    public Category find(long uuid) throws ResponseException{                        System.out.println(">>cs.f()-B");
+        return cr.findById(uuid).orElseThrow( () -> new ResponseException() );
 				                   //System.out.println(">>fc-E");
     }
 
@@ -47,7 +47,7 @@ public class CategoryService {
      * Обновить категорию по id
      */
     @Transactional
-    public void update(int uuid,String name) throws Exception{                     System.out.println(">>cs.u()-B");
+    public void update(long uuid,String name) throws ResponseException{                     System.out.println(">>cs.u()-B");
         Category c=find(uuid);
         c.setName(name);
         cr.save(c);
@@ -58,7 +58,8 @@ public class CategoryService {
      * Удалить категорию по id
      */
     @Transactional
-    public void delete(int uuid){                System.out.println(">>cs.d()-B");
+    public void delete(long uuid) throws ResponseException{                System.out.println(">>cs.d()-B");
+        if(!cr.existsById(uuid)) throw new ResponseException();
         cr.deleteById(uuid);
 				                   //System.out.println(">>ut-E");
     }
@@ -68,16 +69,8 @@ public class CategoryService {
      */
     @Transactional
     public List<CategoryDto> index(){                System.out.println(">>cs.i()-B");
-        /*List<Category> tl=cr.index();
-
-        if(tl==null) throw new ResponseException(); //return null;   
-        return tl.stream()
-          .map( t -> new CategoryDto(t.getId(),t.getName()) ).collect(Collectors.toList());
-        */
-
         return StreamSupport.stream(cr.findAll().spliterator(), false)
                .map( t -> new CategoryDto(t.getI(),t.getName()) ).collect(Collectors.toList());
-        //return null;
     }
 
 }

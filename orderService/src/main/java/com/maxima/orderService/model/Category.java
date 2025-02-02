@@ -18,12 +18,12 @@ public class Category {
     @Column(name="id",nullable=false)   
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sgu")
     @SequenceGenerator(name="sgu",sequenceName="cat_id_seq",allocationSize=1)
-    private int i;
+    private long i;
 
     @Column
     private String name;
 
-    public int getI(){
+    public long getI(){
         return i; 
     } 
     public void setName(String name){
@@ -35,9 +35,9 @@ public class Category {
 
     public Category(){
         this.name="";
-        this.i=0;
+        this.i=0L;
     }
-    public Category(int i, String name){
+    public Category(long i, String name){
         this.name=name;
         this.i=i;
     }

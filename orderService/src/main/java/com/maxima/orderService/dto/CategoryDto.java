@@ -10,10 +10,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDto {
-    private int i;
+    private long i;
     private String name;
 
-    public void setI(int i){
+    public void setI(long i){
         this.i=i;
     }
 
@@ -21,7 +21,7 @@ public class CategoryDto {
         this.name=name;
     }
 
-    public int getI(){
+    public long getI(){
         return i;
     }
 
@@ -34,7 +34,7 @@ public class CategoryDto {
         i=0;
     }
 
-    public CategoryDto(int i,String name){
+    public CategoryDto(long i,String name){
         this.name=name;
         this.i=i;
     }
