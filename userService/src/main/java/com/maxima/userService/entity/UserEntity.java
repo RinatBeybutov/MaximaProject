@@ -1,6 +1,5 @@
 package com.maxima.userService.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.UUID;
 import lombok.Data;
 
@@ -28,7 +27,7 @@ public class UserEntity {
   private String name;
 
   @Column(name = "registered_at")
-  private LocalDate registeredAt;
+  private Date registeredAt;
 
   private String email;
 
