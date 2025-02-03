@@ -23,33 +23,32 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-  private final UserService userService;
+  private final UserService service;
 
   @PostMapping
   public ResponseEntity<UserViewDto> create(@Valid @RequestBody UserCreateDto userCreateDto) {
-    return ResponseEntity.ok(userService.create(userCreateDto));
+    return service.create(userCreateDto);
   }
 
   @GetMapping
   public ResponseEntity<List<UserViewDto>> getList() {
-    return ResponseEntity.ok(userService.getList());
+    return service.getList();
   }
 
   @GetMapping("/{uuid}")
   public ResponseEntity<UserViewDto> getOne(@PathVariable UUID uuid) {
-    return ResponseEntity.ok(userService.getOne(uuid));
+    return service.getOne(uuid);
   }
 
   @PutMapping("/{uuid}")
   public ResponseEntity<UserViewDto> update(
       @Valid @RequestBody UserCreateDto userCreateDto,
       @PathVariable UUID uuid) {
-    return ResponseEntity.ok(userService.update(userCreateDto, uuid));
+    return service.update(userCreateDto, uuid);
   }
 
   @DeleteMapping("/{uuid}")
   public ResponseEntity<Void> delete(@PathVariable UUID uuid) {
-    userService.delete(uuid);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    return service.delete(uuid);
   }
 }
