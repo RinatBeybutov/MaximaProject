@@ -25,15 +25,23 @@ import com.maxima.orderService.util.*;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Value;
+
+import com.maxima.orderService.config.*;
+
 /**
 * Класс Рест Контроллера для реализации API для работы с Категориями
 */
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping(value=ConfProperties.API_PATH)
 public class CategoryController {
 
+    private CategoryService categoryService;
+
     @Autowired
-    private CategoryService cs;
+    public CategoryController(CategoryService categoryService){
+        this.categoryService=categoryService;
+    } 
 
     /**
      * Создать новую категорию
@@ -41,7 +49,7 @@ public class CategoryController {
      */
     @GetMapping("/new")
     public void createCategory(@RequestParam("name") String name) {
-        cs.createCategory(new CategoryDto(name));
+        categoryService.createCategory(new CategoryDto(name));
     }
 
     /**
@@ -49,7 +57,7 @@ public class CategoryController {
      */
     @GetMapping("/index")
     public ResponseEntity<List<CategoryDto>> index() throws Exception {		System.out.println(">>cc.i()");
-        List<CategoryDto> cd=cs.index();
+        List<CategoryDto> cd=categoryService.index();
         return ResponseEntity.ok(cd);
     }
 
@@ -59,7 +67,7 @@ public class CategoryController {
      */
     @GetMapping("/find")
     public ResponseEntity<CategoryDto> find(@RequestParam("uuid") int uuid) throws Exception {		System.out.println(">>cc.f()");
-        Category c=cs.find(uuid);
+        Category c=categoryService.find(uuid);
         return ResponseEntity.ok(new CategoryDto(c.getName()));
     }
 
@@ -69,7 +77,7 @@ public class CategoryController {
      */
     @PostMapping("/update")
     public void update(@RequestBody CategoryDto cd) throws Exception {	System.out.println(">>cc.u()");
-        cs.update(cd.getI(),cd.getName());
+        categoryService.update(cd.getI(),cd.getName());
     }
 
     /**
@@ -78,7 +86,7 @@ public class CategoryController {
      */
     @GetMapping("/update")
     public void update0(@RequestParam("uuid") int uuid,@RequestParam("name") String name) throws Exception {	System.out.println(">>cc.u()");
-        cs.update(uuid,name);
+        categoryService.update(uuid,name);
     }
 
     /**
@@ -87,7 +95,7 @@ public class CategoryController {
      */
     @GetMapping("/delete")
     public void delete(@RequestParam("uuid") int uuid) throws Exception {	System.out.println(">>cc.d()");
-        cs.delete(uuid);
+        categoryService.delete(uuid);
     }
 
     /**
