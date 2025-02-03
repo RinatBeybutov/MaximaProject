@@ -30,9 +30,10 @@ public class CategoryService {
      * Создать категорию
      */
     @Transactional
-    public void createCategory(CategoryDto c){                                System.out.println(">>cs.n()-B");
-        cr.save(new Category(0,c.getName()));
+    public CategoryDto create(CategoryDto c){                                System.out.println(">>cs.n()-B");
+        Category ct=cr.save(new Category(0,c.getName()));
 				                   System.out.println(">>cc-E");
+        return new CategoryDto(ct.getI(),ct.getName());
     }
     /**
      * Найти категорию по id

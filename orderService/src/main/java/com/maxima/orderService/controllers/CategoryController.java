@@ -48,8 +48,8 @@ public class CategoryController {
      * @param name название категории
      */
     @GetMapping("/new")
-    public void createCategory(@RequestParam("name") String name) {
-        categoryService.createCategory(new CategoryDto(name));
+    public CategoryDto create(@RequestParam("name") String name) {
+        return categoryService.create(new CategoryDto(name));
     }
 
     /**
