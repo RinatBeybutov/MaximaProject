@@ -4,6 +4,7 @@ import com.maxima.userService.dto.UserCreateDto;
 import com.maxima.userService.dto.UserViewDto;
 import com.maxima.userService.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -30,7 +31,7 @@ public class UserController {
 
   @Operation(summary = "Создание пользователя")
   @PostMapping
-  public ResponseEntity<UserViewDto> create(@Valid @RequestBody UserCreateDto userCreateDto) {
+  public ResponseEntity<UserViewDto> create( @Valid @RequestBody UserCreateDto userCreateDto) {
     return ResponseEntity.ok(userService.create(userCreateDto));
   }
 
@@ -42,7 +43,10 @@ public class UserController {
 
   @Operation(summary = "Получение пользователя по UUID")
   @GetMapping("/{uuid}")
-  public ResponseEntity<UserViewDto> getOne(@PathVariable UUID uuid) {
+  public ResponseEntity<UserViewDto> getOne(
+      @PathVariable
+      @Parameter(description = "Глобальный идентификатор пользователя", required = true)
+      UUID uuid) {
     return ResponseEntity.ok(userService.getOne(uuid));
   }
 
@@ -50,13 +54,18 @@ public class UserController {
   @PutMapping("/{uuid}")
   public ResponseEntity<UserViewDto> update(
       @Valid @RequestBody UserCreateDto userCreateDto,
-      @PathVariable UUID uuid) {
+      @PathVariable
+      @Parameter(description = "Глобальный идентификатор пользователя", required = true)
+      UUID uuid) {
     return ResponseEntity.ok(userService.update(userCreateDto, uuid));
   }
 
   @Operation(summary = "Удаление пользователя по UUID")
   @DeleteMapping("/{uuid}")
-  public ResponseEntity<Void> delete(@PathVariable UUID uuid) {
+  public ResponseEntity<Void> delete(
+      @PathVariable
+      @Parameter(description = "Глобальный идентификатор пользователя", required = true)
+      UUID uuid) {
     userService.delete(uuid);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }

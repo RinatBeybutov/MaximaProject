@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Schema(description = "DTO для получения пользователя")
 public class UserViewDto {
 
-  @Schema(description = "UUID пользователя", example = "1")
+  @Schema(description = "Глобальный идентификатор пользователя", example = "3422b448-2460-4fd2-9183-8000de6f8343")
   private UUID uuid;
 
   @Schema(description = "Имя пользователя", example = "Иван")
