@@ -9,8 +9,8 @@ import org.mapstruct.MappingConstants;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
 
-  UserEntity toUserEntity(UserCreateDto userCreateDto);
+  UserEntity toEntity(UserCreateDto userCreateDto);
 
-  UserViewDto toUserViewDto(UserEntity userEntity);
+  UserViewDto toDto(UserEntity userEntity);
 
 }
