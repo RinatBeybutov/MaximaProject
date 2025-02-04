@@ -3,14 +3,11 @@ package com.maxima.orderService.controllers;
 
 import com.maxima.orderService.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.maxima.orderService.dto.*;
 
@@ -22,10 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import com.maxima.orderService.util.*;
-
-import java.time.LocalDateTime;
-
-import org.springframework.beans.factory.annotation.Value;
 
 import com.maxima.orderService.config.*;
 
