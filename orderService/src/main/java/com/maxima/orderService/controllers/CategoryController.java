@@ -23,12 +23,12 @@ import com.maxima.orderService.util.*;
 import com.maxima.orderService.config.*;
 
 import java.util.UUID;
-
+import static com.maxima.orderService.config.ApiConfig.CATEGORIES;
 /**
 * Класс Рест Контроллера для реализации API для работы с Категориями
 */
 @RestController
-@RequestMapping(value=ConfProperties.API_PATH)
+@RequestMapping(CATEGORIES)
 public class CategoryController {
 
     private CategoryService categoryService;
