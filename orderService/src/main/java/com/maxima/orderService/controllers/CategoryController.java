@@ -55,8 +55,8 @@ public class CategoryController {
     @GetMapping("{uuid}")
     public ResponseEntity<CategoryDto> find(@PathVariable("uuid") UUID uuid) throws Exception {
         System.out.println(">>cc.f()");
-        CategoryEntity c=categoryService.find(uuid);
-        return ResponseEntity.ok(new CategoryDto(c.getId(),c.getUuid(),c.getName()));
+        CategoryDto cd=categoryService.find(uuid);
+        return ResponseEntity.ok(cd);
     }
 
     /**
