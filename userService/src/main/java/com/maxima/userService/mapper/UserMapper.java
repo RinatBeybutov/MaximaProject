@@ -5,6 +5,7 @@ import com.maxima.userService.dto.UserViewDto;
 import com.maxima.userService.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
@@ -13,4 +14,5 @@ public interface UserMapper {
 
   UserViewDto toDto(UserEntity userEntity);
 
+  void update(UserCreateDto dto, @MappingTarget UserEntity user);
 }

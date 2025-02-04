@@ -2,10 +2,8 @@ package com.maxima.userService.service;
 
 import com.maxima.userService.dto.UserCreateDto;
 import com.maxima.userService.dto.UserViewDto;
-import com.maxima.userService.entity.UserEntity;
 import com.maxima.userService.mapper.UserMapper;
 import com.maxima.userService.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +20,10 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional
-  public UserViewDto create(UserCreateDto userCreateDto) {
-    return mapper.toDto(repository.save(mapper.toEntity(userCreateDto)));
+  public UserViewDto create(UserCreateDto dto) {
+    var entity = mapper.toEntity(dto);
+    entity = repository.save(entity);
+    return mapper.toDto(entity);
   }
 
   @Override
@@ -37,25 +37,22 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional(readOnly = true)
   public UserViewDto getOne(UUID uuid) {
-    return mapper.toDto(find(uuid));
+    var entity = repository.getUser(uuid);
+    return mapper.toDto(entity);
   }
 
   @Override
   @Transactional
-  public UserViewDto update(UserCreateDto userCreateDto, UUID uuid) {
-    UserEntity entity = find(uuid);
-    entity.setEmail(userCreateDto.getEmail());
-    entity.setName(userCreateDto.getName());
-    return mapper.toDto(repository.save(entity));
+  public UserViewDto update(UserCreateDto dto, UUID uuid) {
+    var entity = repository.getUser(uuid);
+    mapper.update(dto, entity);
+    entity = repository.save(entity);
+    return mapper.toDto(entity);
   }
 
   @Override
   @Transactional
   public void delete(UUID uuid) {
-    repository.delete(find(uuid));
-  }
-
-  private UserEntity find(UUID uuid) {
-    return repository.findByUuid(uuid).orElseThrow(EntityNotFoundException::new);
+    repository.delete(repository.getUser(uuid));
   }
 }
