@@ -31,11 +31,11 @@ public class CategoryController {
 
     /**
      * Создать новую категорию
-     * @param categoryDto название категории
+     * @param categoryInputDto название категории
      */
     @PostMapping
-    public ResponseEntity<CategoryDto> create(@RequestBody CategoryDto categoryDto) {
-        return ResponseEntity.ok(categoryService.create(categoryDto));
+    public ResponseEntity<CategoryDto> create(@RequestBody CategoryInputDto categoryInputDto) {
+        return ResponseEntity.ok(categoryService.create(categoryInputDto));
     }
 
     /**
@@ -64,9 +64,9 @@ public class CategoryController {
      * @param categoryDto идентификатор категории
      */
     @PutMapping("{uuid}")
-    public ResponseEntity<Void> update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryDto categoryDto) throws Exception {
+    public ResponseEntity<Void> update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryInputDto categoryInputDto) throws Exception {
         System.out.println(">>cc.u()");
-        categoryService.update(uuid,categoryDto);
+        categoryService.update(uuid,categoryInputDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
