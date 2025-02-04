@@ -2,6 +2,7 @@ package com.maxima.orderService.controllers;
 
 
 import com.maxima.orderService.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -29,14 +30,10 @@ import static com.maxima.orderService.config.ApiConfig.CATEGORIES;
 */
 @RestController
 @RequestMapping(CATEGORIES)
+@RequiredArgsConstructor
 public class CategoryController {
 
-    private CategoryService categoryService;
-
-    @Autowired
-    public CategoryController(CategoryService categoryService){
-        this.categoryService=categoryService;
-    } 
+    private final CategoryService categoryService;
 
     /**
      * Создать новую категорию
