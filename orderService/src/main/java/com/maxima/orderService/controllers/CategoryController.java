@@ -16,7 +16,7 @@ import com.maxima.orderService.dto.*;
 
 
 import org.springframework.web.bind.annotation.*;
-import com.maxima.orderService.model.Category;
+import com.maxima.orderService.entity.CategoryEntity;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -69,8 +69,8 @@ public class CategoryController {
      */
     @GetMapping("/find")
     public ResponseEntity<CategoryDto> find(@RequestParam("uuid") UUID uuid) throws Exception {		System.out.println(">>cc.f()");
-        Category c=categoryService.find(uuid);
-        return ResponseEntity.ok(new CategoryDto(c.getI(),c.getUuid(),c.getName()));
+        CategoryEntity c=categoryService.find(uuid);
+        return ResponseEntity.ok(new CategoryDto(c.getId(),c.getUuid(),c.getName()));
     }
 
     /**

@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 //@AllArgsConstructor
 public class CategoryDto {
-    private long i;
+    private long id;
     private UUID uuid;
     private String name;
 
@@ -27,33 +27,28 @@ public class CategoryDto {
     }
 
 
-    public void setI(long i){
-        this.i=i;
+    public void setId(long id){
+        this.id=id;
     }
 
     public void setName(String name){
         this.name=name;
     }
 
-    public long getI(){
-        return i;
+    public long getId(){
+        return id;
     }
 
     public String getName(){
         return name;
     }
 
-    /*public CategoryDto(String name){
-        this.name=name;
-        i=0;
-    }*/
-
-    public CategoryDto(long i,UUID uuid,String name){
+    public CategoryDto(long id,UUID uuid,String name){
         this.name=name;
         if(uuid==null){
             this.uuid=null; 
         }
         else this.uuid=UUID.fromString(uuid.toString());
-        this.i=i;
+        this.id=id;
     }
 }
