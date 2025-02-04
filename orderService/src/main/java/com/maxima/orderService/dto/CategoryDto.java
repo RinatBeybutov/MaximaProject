@@ -6,13 +6,17 @@ import java.util.UUID;
 /**
 * Дто сущности категории
 */
-//@Data
-//@Builder
 @NoArgsConstructor
-//@AllArgsConstructor
 public class CategoryDto {
+    @Setter
+    @Getter
     private long id;
+
+    @Getter
     private UUID uuid;
+
+    @Setter
+    @Getter
     private String name;
 
     public void setUuid(UUID uuid){
@@ -20,27 +24,6 @@ public class CategoryDto {
             this.uuid=null; 
         }
         else this.uuid=UUID.fromString(uuid.toString());
-    }
-
-    public UUID getUuid(){
-        return uuid;
-    }
-
-
-    public void setId(long id){
-        this.id=id;
-    }
-
-    public void setName(String name){
-        this.name=name;
-    }
-
-    public long getId(){
-        return id;
-    }
-
-    public String getName(){
-        return name;
     }
 
     public CategoryDto(long id,UUID uuid,String name){

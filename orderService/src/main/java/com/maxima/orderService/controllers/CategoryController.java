@@ -51,7 +51,7 @@ public class CategoryController {
      */
     @GetMapping("/new")
     public ResponseEntity<CategoryDto> create(@RequestParam("uuid") UUID uuid, @RequestParam("name") String name) {
-        return ResponseEntity.ok(categoryService.create(new CategoryDto(0,uuid,name)));
+        return ResponseEntity.ok(categoryService.create(new CategoryDto(0L,uuid,name)));
     }
 
     /**
