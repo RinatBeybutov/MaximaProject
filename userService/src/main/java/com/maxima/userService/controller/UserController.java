@@ -21,24 +21,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.maxima.userService.config.ApiConfig.USERS;
+
 @Tag(name = "Пользователи", description = "Операции CRUD с пользователями ")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping(USERS)
 public class UserController {
 
-  private final UserService userService;
+  private final UserService service;
 
   @Operation(summary = "Создание пользователя")
   @PostMapping
-  public ResponseEntity<UserViewDto> create( @Valid @RequestBody UserCreateDto userCreateDto) {
-    return ResponseEntity.ok(userService.create(userCreateDto));
+  public ResponseEntity<UserViewDto> create(@Valid @RequestBody UserCreateDto userCreateDto) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(userCreateDto));
   }
 
   @Operation(summary = "Получение списка пользователей")
   @GetMapping
   public ResponseEntity<List<UserViewDto>> getList() {
-    return ResponseEntity.ok(userService.getList());
+    return ResponseEntity.ok(service.getList());
   }
 
   @Operation(summary = "Получение пользователя по UUID")
@@ -47,7 +49,7 @@ public class UserController {
       @PathVariable
       @Parameter(description = "Глобальный идентификатор пользователя", required = true)
       UUID uuid) {
-    return ResponseEntity.ok(userService.getOne(uuid));
+    return ResponseEntity.ok(service.getOne(uuid));
   }
 
   @Operation(summary = "Обновление пользователя по UUID")
@@ -57,7 +59,7 @@ public class UserController {
       @PathVariable
       @Parameter(description = "Глобальный идентификатор пользователя", required = true)
       UUID uuid) {
-    return ResponseEntity.ok(userService.update(userCreateDto, uuid));
+    return ResponseEntity.ok(service.update(userCreateDto, uuid));
   }
 
   @Operation(summary = "Удаление пользователя по UUID")
@@ -66,7 +68,7 @@ public class UserController {
       @PathVariable
       @Parameter(description = "Глобальный идентификатор пользователя", required = true)
       UUID uuid) {
-    userService.delete(uuid);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    service.delete(uuid);
+    return ResponseEntity.noContent().build();
   }
 }
