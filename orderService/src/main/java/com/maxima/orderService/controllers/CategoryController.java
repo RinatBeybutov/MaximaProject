@@ -70,9 +70,10 @@ public class CategoryController {
      * @param categoryDto идентификатор категории
      */
     @PutMapping("{uuid}")
-    public void update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryDto categoryDto) throws Exception {
+    public ResponseEntity<Void> update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryDto categoryDto) throws Exception {
         System.out.println(">>cc.u()");
         categoryService.update(uuid,categoryDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -80,9 +81,10 @@ public class CategoryController {
      * @param uuid идентификатор категории
      */
     @DeleteMapping("{uuid}")
-    public void delete(@PathVariable("uuid") UUID uuid) throws Exception {
+    public ResponseEntity<Void> delete(@PathVariable("uuid") UUID uuid) throws Exception {
         System.out.println(">>cc.d()");
         categoryService.delete(uuid);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
