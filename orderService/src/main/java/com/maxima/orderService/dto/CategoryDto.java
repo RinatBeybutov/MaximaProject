@@ -10,7 +10,7 @@ import java.util.UUID;
 public class CategoryDto {
     @Setter
     @Getter
-    private long id;
+    private Long id;
 
     @Getter
     private UUID uuid;
@@ -26,7 +26,7 @@ public class CategoryDto {
         else this.uuid=UUID.fromString(uuid.toString());
     }
 
-    public CategoryDto(long id,UUID uuid,String name){
+    public CategoryDto(Long id,UUID uuid,String name){
         this.name=name;
         if(uuid==null){
             this.uuid=null; 
