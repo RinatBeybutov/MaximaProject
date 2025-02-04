@@ -1,9 +1,8 @@
 package com.maxima.orderService.controllers;
 
-
 import com.maxima.orderService.service.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,16 +11,11 @@ import java.util.List;
 
 import com.maxima.orderService.dto.*;
 
-
 import org.springframework.web.bind.annotation.*;
 import com.maxima.orderService.entity.CategoryEntity;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
-
-import com.maxima.orderService.util.*;
-
-import com.maxima.orderService.config.*;
 
 import java.util.UUID;
 import static com.maxima.orderService.config.ApiConfig.CATEGORIES;
@@ -85,13 +79,5 @@ public class CategoryController {
         System.out.println(">>cc.d()");
         categoryService.delete(uuid);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    /**
-     * Обработчик исключения из метода сервиса для генерации корректного http ответа об ошибке
-     */
-    @ExceptionHandler
-    private ResponseEntity<String> handleException(ResponseException e){
-        return new ResponseEntity<>("err", HttpStatus.NOT_FOUND);
     }
 }
