@@ -37,18 +37,19 @@ public class CategoryController {
 
     /**
      * Создать новую категорию
-     * @param name название категории
+     * @param categoryDto название категории
      */
-    @GetMapping("/new")
-    public ResponseEntity<CategoryDto> create(@RequestParam("uuid") UUID uuid, @RequestParam("name") String name) {
-        return ResponseEntity.ok(categoryService.create(new CategoryDto(0L,uuid,name)));
+    @PostMapping
+    public ResponseEntity<CategoryDto> create(@RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.create(categoryDto));
     }
 
     /**
      * Получить список категорий 
      */
-    @GetMapping("/index")
-    public ResponseEntity<List<CategoryDto>> index() throws Exception {		System.out.println(">>cc.i()");
+    @GetMapping
+    public ResponseEntity<List<CategoryDto>> index() throws Exception {
+        System.out.println(">>cc.i()");
         List<CategoryDto> cd=categoryService.index();
         return ResponseEntity.ok(cd);
     }
@@ -57,36 +58,30 @@ public class CategoryController {
      * Получить категорию по UUID
      * @param uuid идентификатор категории
      */
-    @GetMapping("/find")
-    public ResponseEntity<CategoryDto> find(@RequestParam("uuid") UUID uuid) throws Exception {		System.out.println(">>cc.f()");
+    @GetMapping("{uuid}")
+    public ResponseEntity<CategoryDto> find(@PathVariable("uuid") UUID uuid) throws Exception {
+        System.out.println(">>cc.f()");
         CategoryEntity c=categoryService.find(uuid);
         return ResponseEntity.ok(new CategoryDto(c.getId(),c.getUuid(),c.getName()));
     }
 
     /**
      * Обновить категорию по UUID
-     * @param uuid идентификатор категории
+     * @param categoryDto идентификатор категории
      */
-    @PostMapping("/update")
-    public void update(@RequestBody CategoryDto cd) throws Exception {	System.out.println(">>cc.u()");
-        categoryService.update(cd.getUuid(),cd.getName());
-    }
-
-    /**
-     * Обновить категорию по UUID
-     * @param uuid идентификатор категории
-     */
-    @GetMapping("/update")
-    public void update0(@RequestParam("uuid") UUID uuid,@RequestParam("name") String name) throws Exception {	System.out.println(">>cc.u()");
-        categoryService.update(uuid,name);
+    @PutMapping("{uuid}")
+    public void update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryDto categoryDto) throws Exception {
+        System.out.println(">>cc.u()");
+        categoryService.update(uuid,categoryDto);
     }
 
     /**
      * Удалить категорию по UUID
      * @param uuid идентификатор категории
      */
-    @GetMapping("/delete")
-    public void delete(@RequestParam("uuid") UUID uuid) throws Exception {	System.out.println(">>cc.d()");
+    @DeleteMapping("{uuid}")
+    public void delete(@PathVariable("uuid") UUID uuid) throws Exception {
+        System.out.println(">>cc.d()");
         categoryService.delete(uuid);
     }
 
