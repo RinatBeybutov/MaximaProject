@@ -42,8 +42,7 @@ public class CategoryController {
      */
     @GetMapping
     public ResponseEntity<List<CategoryDto>> getList(){
-        List<CategoryDto> cd=service.getList();
-        return ResponseEntity.ok(cd);
+        return ResponseEntity.ok(service.getList());
     }
 
     /**
@@ -52,8 +51,7 @@ public class CategoryController {
      */
     @GetMapping("/{uuid}")
     public ResponseEntity<CategoryDto> find(@PathVariable("uuid") UUID uuid){
-        CategoryDto cd=service.find(uuid);
-        return ResponseEntity.ok(cd);
+        return ResponseEntity.ok(service.find(uuid));
     }
 
     /**
