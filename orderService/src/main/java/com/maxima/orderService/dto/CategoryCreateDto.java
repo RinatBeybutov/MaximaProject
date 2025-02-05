@@ -9,7 +9,6 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryInputDto {
-    private UUID uuid;
+public class CategoryCreateDto {
     private String name;
 }
