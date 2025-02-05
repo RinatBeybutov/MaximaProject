@@ -59,9 +59,8 @@ public class CategoryController {
      * @param categoryCreateDto идентификатор категории
      */
     @PutMapping("/{uuid}")
-    public ResponseEntity<Void> update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryCreateDto categoryCreateDto){
-        service.update(uuid,categoryCreateDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<CategoryDto> update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryCreateDto categoryCreateDto){
+        return ResponseEntity.ok(service.update(uuid,categoryCreateDto));
     }
 
     /**
