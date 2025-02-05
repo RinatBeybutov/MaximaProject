@@ -41,8 +41,8 @@ public class CategoryController {
      * Получить список категорий 
      */
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> index(){
-        List<CategoryDto> cd=service.index();
+    public ResponseEntity<List<CategoryDto>> getList(){
+        List<CategoryDto> cd=service.getList();
         return ResponseEntity.ok(cd);
     }
 
