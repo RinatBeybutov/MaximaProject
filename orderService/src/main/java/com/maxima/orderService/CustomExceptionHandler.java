@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * Класс Обработчика исключения для CategoryController
+ * Класс глобального перехватчика ошибок
  */
 @ControllerAdvice
-public class CatExceptionHandler {
+public class CustomExceptionHandler {
 
     /**
      * Обработчик исключения из метода сервиса для генерации корректного http ответа об ошибке
      */
     @ExceptionHandler
     private ResponseEntity<String> handleException(ResponseException e){
-        return new ResponseEntity<>("err", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 }

@@ -12,7 +12,6 @@ import java.util.List;
 import com.maxima.orderService.dto.*;
 
 import org.springframework.web.bind.annotation.*;
-import com.maxima.orderService.entity.CategoryEntity;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,7 @@ import static com.maxima.orderService.config.ApiConfig.CATEGORIES;
 @RequiredArgsConstructor
 public class CategoryController {
 
-    private final CategoryService categoryService;
+    private final CategoryService service;
 
     /**
      * Создать новую категорию
@@ -35,16 +34,15 @@ public class CategoryController {
      */
     @PostMapping
     public ResponseEntity<CategoryDto> create(@RequestBody CategoryInputDto categoryInputDto) {
-        return ResponseEntity.ok(categoryService.create(categoryInputDto));
+        return ResponseEntity.ok(service.create(categoryInputDto));
     }
 
     /**
      * Получить список категорий 
      */
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> index() throws Exception {
-        System.out.println(">>cc.i()");
-        List<CategoryDto> cd=categoryService.index();
+    public ResponseEntity<List<CategoryDto>> index(){
+        List<CategoryDto> cd=service.index();
         return ResponseEntity.ok(cd);
     }
 
@@ -52,21 +50,19 @@ public class CategoryController {
      * Получить категорию по UUID
      * @param uuid идентификатор категории
      */
-    @GetMapping("{uuid}")
-    public ResponseEntity<CategoryDto> find(@PathVariable("uuid") UUID uuid) throws Exception {
-        System.out.println(">>cc.f()");
-        CategoryDto cd=categoryService.find(uuid);
+    @GetMapping("/{uuid}")
+    public ResponseEntity<CategoryDto> find(@PathVariable("uuid") UUID uuid){
+        CategoryDto cd=service.find(uuid);
         return ResponseEntity.ok(cd);
     }
 
     /**
      * Обновить категорию по UUID
-     * @param categoryDto идентификатор категории
+     * @param categoryInputDto идентификатор категории
      */
-    @PutMapping("{uuid}")
-    public ResponseEntity<Void> update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryInputDto categoryInputDto) throws Exception {
-        System.out.println(">>cc.u()");
-        categoryService.update(uuid,categoryInputDto);
+    @PutMapping("/{uuid}")
+    public ResponseEntity<Void> update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryInputDto categoryInputDto){
+        service.update(uuid,categoryInputDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -74,10 +70,9 @@ public class CategoryController {
      * Удалить категорию по UUID
      * @param uuid идентификатор категории
      */
-    @DeleteMapping("{uuid}")
-    public ResponseEntity<Void> delete(@PathVariable("uuid") UUID uuid) throws Exception {
-        System.out.println(">>cc.d()");
-        categoryService.delete(uuid);
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<Void> delete(@PathVariable("uuid") UUID uuid) {
+        service.delete(uuid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
