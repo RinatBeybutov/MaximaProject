@@ -55,9 +55,9 @@ public class CategoryService {
      */
     @Transactional
     public CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto) throws ResponseException{
-        CategoryEntity c=categoryRepository.findByUuidRequired(uuid);
-        c.setName(categoryInputDto.getName());
-        return mapper.entityToDto(categoryRepository.save(c));
+        CategoryEntity categoryEntity=categoryRepository.findByUuidRequired(uuid);
+        categoryEntity.setName(categoryInputDto.getName());
+        return mapper.entityToDto(categoryRepository.save(categoryEntity));
     }
 
     /**
