@@ -1,8 +1,7 @@
 package com.maxima.orderService.service;
 
 
-import com.maxima.orderService.CategoryToDtoMapper;
-import com.maxima.orderService.CreateDtoToCategoryMapper;
+import com.maxima.orderService.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,18 +28,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CategoryService {
 
-    private final CategoryRepository repo;
+    private final CategoryRepository categoryRepository;
 
-    private final CategoryToDtoMapper cdm;
-
-    private final CreateDtoToCategoryMapper dcm;
+    private final CategoryMapper mapper;
 
     /**
      * Создать категорию
      */
     @Transactional
     public CategoryDto create(CategoryCreateDto dto){
-        return cdm.entityToDto(repo.save(dcm.dtoToEntity(dto)));
+        CategoryEntity categoryEntity=categoryRepository.save(mapper.dtoToEntity(dto));
+        return mapper.entityToDto(categoryEntity);
     }
 
     /**
@@ -48,17 +46,18 @@ public class CategoryService {
      */
     @Transactional
     public CategoryDto find(UUID uuid) throws ResponseException{
-        return cdm.entityToDto(repo.findByUuid(uuid).orElseThrow( () -> new ResponseException() ));
+        CategoryEntity categoryEntity=categoryRepository.findByUuidRequired(uuid);
+        return mapper.entityToDto(categoryEntity);
     }
 
     /**
      * Обновить категорию по uuid
      */
     @Transactional
-    public CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto) throws ResponseException{                     System.out.println(">>cs.u()-B");
-        CategoryEntity c=repo.findByUuid(uuid).orElseThrow( () -> new ResponseException() );
+    public CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto) throws ResponseException{
+        CategoryEntity c=categoryRepository.findByUuidRequired(uuid);
         c.setName(categoryInputDto.getName());
-        return cdm.entityToDto(repo.save(c));
+        return mapper.entityToDto(categoryRepository.save(c));
     }
 
     /**
@@ -66,8 +65,8 @@ public class CategoryService {
      */
     @Transactional
     public void delete(UUID uuid) throws ResponseException{
-        if(!repo.existsByUuid(uuid)) throw new ResponseException();
-        repo.deleteByUuid(uuid);
+        if(!categoryRepository.existsByUuid(uuid)) throw new ResponseException();
+        categoryRepository.deleteByUuid(uuid);
     }
 
     /**
@@ -75,8 +74,8 @@ public class CategoryService {
      */
     @Transactional
     public List<CategoryDto> getList(){
-        return StreamSupport.stream(repo.findAll().spliterator(), false)
-               .map( t -> cdm.entityToDto(t) ).collect(Collectors.toList());
+        return categoryRepository.findAll().stream()
+               .map( t -> mapper.entityToDto(t) ).collect(Collectors.toList());
     }
 
 }
