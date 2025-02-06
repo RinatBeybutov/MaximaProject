@@ -65,7 +65,7 @@ public class CategoryService {
      */
     @Transactional
     public void delete(UUID uuid) throws ResponseException{
-        if(!categoryRepository.existsByUuid(uuid)) throw new ResponseException();
+        categoryRepository.findByUuidRequired(uuid);
         categoryRepository.deleteByUuid(uuid);
     }
 
