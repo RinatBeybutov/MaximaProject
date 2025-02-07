@@ -19,8 +19,8 @@ import com.maxima.orderService.exceptions.ResponseException;
 import java.util.UUID;
 
 /**
-* Класс Сервиса для реализации работы с Категориями
-*/
+ * Класс Сервиса для реализации работы с Категориями
+ */
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
@@ -33,9 +33,9 @@ public class CategoryService {
      * Создать категорию
      */
     @Transactional
-    public CategoryDto create(CategoryCreateDto dto){
-        var categoryEntity0=mapper.toEntity(dto);
-        var categoryEntity=categoryRepository.save(categoryEntity0);
+    public CategoryDto create(CategoryCreateDto dto) {
+        var categoryEntity0 = mapper.toEntity(dto);
+        var categoryEntity = categoryRepository.save(categoryEntity0);
         return mapper.toDto(categoryEntity);
     }
 
@@ -43,8 +43,8 @@ public class CategoryService {
      * Найти категорию по uuid
      */
     @Transactional
-    public CategoryDto find(UUID uuid) throws ResponseException{
-        var categoryEntity=categoryRepository.getByUuid(uuid);
+    public CategoryDto find(UUID uuid) throws ResponseException {
+        var categoryEntity = categoryRepository.getByUuid(uuid);
         return mapper.toDto(categoryEntity);
     }
 
@@ -52,10 +52,10 @@ public class CategoryService {
      * Обновить категорию по uuid
      */
     @Transactional
-    public CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto) throws ResponseException{
-        var categoryEntity=categoryRepository.getByUuid(uuid);
-        mapper.updateFromDto(categoryInputDto,categoryEntity);
-        var categoryEntity1=categoryRepository.save(categoryEntity);
+    public CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto) throws ResponseException {
+        var categoryEntity = categoryRepository.getByUuid(uuid);
+        mapper.updateFromDto(categoryInputDto, categoryEntity);
+        var categoryEntity1 = categoryRepository.save(categoryEntity);
         return mapper.toDto(categoryEntity1);
     }
 
@@ -63,7 +63,7 @@ public class CategoryService {
      * Удалить категорию по uuid
      */
     @Transactional
-    public void delete(UUID uuid) throws ResponseException{
+    public void delete(UUID uuid) throws ResponseException {
         categoryRepository.getByUuid(uuid);
         categoryRepository.deleteByUuid(uuid);
     }
@@ -72,10 +72,10 @@ public class CategoryService {
      * Получить список всех категорий
      */
     @Transactional
-    public List<CategoryDto> getList(){
+    public List<CategoryDto> getList() {
         return categoryRepository.findAll()
                 .stream()
-                .map( mapper::toDto )
+                .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
 
