@@ -5,7 +5,6 @@ import com.maxima.orderService.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.maxima.orderService.entity.*;
 import com.maxima.orderService.repo.*;
 import com.maxima.orderService.dto.CategoryDto;
 import com.maxima.orderService.dto.CategoryCreateDto;
@@ -55,7 +54,7 @@ public class CategoryService {
     @Transactional
     public CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto) throws ResponseException{
         var categoryEntity=categoryRepository.getByUuid(uuid);
-        mapper.updateFromDto(categoryInputDto,categoryEntity);//categoryEntity.setName(categoryInputDto.getName());
+        mapper.updateFromDto(categoryInputDto,categoryEntity);
         var categoryEntity1=categoryRepository.save(categoryEntity);
         return mapper.toDto(categoryEntity1);
     }
