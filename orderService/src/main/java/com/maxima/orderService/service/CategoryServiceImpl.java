@@ -25,7 +25,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryRepository repository;
 
     private final CategoryMapper mapper;
 
@@ -34,9 +34,9 @@ public class CategoryServiceImpl implements CategoryService{
      */
     @Transactional
     public CategoryDto create(CategoryCreateDto dto) {
-        var categoryEntity0 = mapper.toEntity(dto);
-        var categoryEntity = categoryRepository.save(categoryEntity0);
-        return mapper.toDto(categoryEntity);
+        var entity = mapper.toEntity(dto);
+        entity = repository.save(entity);
+        return mapper.toDto(entity);
     }
 
     /**
@@ -44,19 +44,19 @@ public class CategoryServiceImpl implements CategoryService{
      */
     @Transactional
     public CategoryDto find(UUID uuid) throws ResponseException {
-        var categoryEntity = categoryRepository.getByUuid(uuid);
-        return mapper.toDto(categoryEntity);
+        var entity = repository.getByUuid(uuid);
+        return mapper.toDto(entity);
     }
 
     /**
      * Обновить категорию по uuid
      */
     @Transactional
-    public CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto) throws ResponseException {
-        var categoryEntity = categoryRepository.getByUuid(uuid);
-        mapper.updateFromDto(categoryInputDto, categoryEntity);
-        var categoryEntity1 = categoryRepository.save(categoryEntity);
-        return mapper.toDto(categoryEntity1);
+    public CategoryDto update(UUID uuid, CategoryCreateDto categoryCreateDto) throws ResponseException {
+        var entity = repository.getByUuid(uuid);
+        mapper.updateFromDto(categoryCreateDto, entity);
+        entity = repository.save(entity);
+        return mapper.toDto(entity);
     }
 
     /**
@@ -64,8 +64,8 @@ public class CategoryServiceImpl implements CategoryService{
      */
     @Transactional
     public void delete(UUID uuid) throws ResponseException {
-        categoryRepository.getByUuid(uuid);
-        categoryRepository.deleteByUuid(uuid);
+        repository.getByUuid(uuid);
+        repository.deleteByUuid(uuid);
     }
 
     /**
@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService{
      */
     @Transactional
     public List<CategoryDto> getList() {
-        return categoryRepository.findAll()
+        return repository.findAll()
                 .stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
