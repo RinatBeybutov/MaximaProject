@@ -17,8 +17,6 @@ import java.util.stream.Collectors;
 
 import com.maxima.orderService.exceptions.ResponseException;
 
-import java.util.stream.StreamSupport;
-
 import java.util.UUID;
 
 /**
@@ -37,8 +35,9 @@ public class CategoryService {
      */
     @Transactional
     public CategoryDto create(CategoryCreateDto dto){
-        CategoryEntity categoryEntity=categoryRepository.save(mapper.dtoToEntity(dto));
-        return mapper.entityToDto(categoryEntity);
+        var categoryEntity0=mapper.toEntity(dto);
+        var categoryEntity=categoryRepository.save(categoryEntity0);
+        return mapper.toDto(categoryEntity);
     }
 
     /**
@@ -46,8 +45,8 @@ public class CategoryService {
      */
     @Transactional
     public CategoryDto find(UUID uuid) throws ResponseException{
-        CategoryEntity categoryEntity=categoryRepository.findByUuidRequired(uuid);
-        return mapper.entityToDto(categoryEntity);
+        var categoryEntity=categoryRepository.getByUuid(uuid);
+        return mapper.toDto(categoryEntity);
     }
 
     /**
@@ -55,9 +54,10 @@ public class CategoryService {
      */
     @Transactional
     public CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto) throws ResponseException{
-        CategoryEntity categoryEntity=categoryRepository.findByUuidRequired(uuid);
-        categoryEntity.setName(categoryInputDto.getName());
-        return mapper.entityToDto(categoryRepository.save(categoryEntity));
+        var categoryEntity=categoryRepository.getByUuid(uuid);
+        mapper.updateFromDto(categoryInputDto,categoryEntity);//categoryEntity.setName(categoryInputDto.getName());
+        var categoryEntity1=categoryRepository.save(categoryEntity);
+        return mapper.toDto(categoryEntity1);
     }
 
     /**
@@ -65,7 +65,7 @@ public class CategoryService {
      */
     @Transactional
     public void delete(UUID uuid) throws ResponseException{
-        categoryRepository.findByUuidRequired(uuid);
+        categoryRepository.getByUuid(uuid);
         categoryRepository.deleteByUuid(uuid);
     }
 
@@ -74,8 +74,10 @@ public class CategoryService {
      */
     @Transactional
     public List<CategoryDto> getList(){
-        return categoryRepository.findAll().stream()
-               .map( t -> mapper.entityToDto(t) ).collect(Collectors.toList());
+        return categoryRepository.findAll()
+                .stream()
+                .map( mapper::toDto )
+                .collect(Collectors.toList());
     }
 
 }
