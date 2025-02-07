@@ -18,6 +18,9 @@ import org.springframework.http.HttpStatus;
 
 import java.util.UUID;
 import static com.maxima.orderService.config.ApiConfig.CATEGORIES;
+
+import io.swagger.v3.oas.annotations.*;
+ 
 /**
 * Класс Рест Контроллера для реализации API для работы с Категориями
 */
@@ -50,7 +53,7 @@ public class CategoryController {
      * @param uuid идентификатор категории
      */
     @GetMapping("/{uuid}")
-    public ResponseEntity<CategoryDto> find(@PathVariable("uuid") UUID uuid){
+    public ResponseEntity<CategoryDto> find(@PathVariable("uuid") @Parameter(example="fcc49792-9c0b-49f7-9fce-5d9d631d045f", required = true) UUID uuid){
         return ResponseEntity.ok(service.find(uuid));
     }
 
@@ -59,7 +62,7 @@ public class CategoryController {
      * @param categoryCreateDto идентификатор категории
      */
     @PutMapping("/{uuid}")
-    public ResponseEntity<CategoryDto> update(@PathVariable("uuid") UUID uuid, @RequestBody CategoryCreateDto categoryCreateDto){
+    public ResponseEntity<CategoryDto> update(@PathVariable("uuid") @Parameter(example="fcc49792-9c0b-49f7-9fce-5d9d631d045f", required = true) UUID uuid, @RequestBody CategoryCreateDto categoryCreateDto){
         return ResponseEntity.ok(service.update(uuid,categoryCreateDto));
     }
 
@@ -68,7 +71,7 @@ public class CategoryController {
      * @param uuid идентификатор категории
      */
     @DeleteMapping("/{uuid}")
-    public ResponseEntity<Void> delete(@PathVariable("uuid") UUID uuid) {
+    public ResponseEntity<Void> delete(@PathVariable("uuid") @Parameter(example="fcc49792-9c0b-49f7-9fce-5d9d631d045f", required = true) UUID uuid) {
         service.delete(uuid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
