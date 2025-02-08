@@ -9,7 +9,6 @@ import com.maxima.userService.repository.UserRepository;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,8 +27,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
@@ -57,7 +56,7 @@ class UserControllerIntegrationTest {
   private String url;
 
   @BeforeAll
-  static void set() {
+  static void setDto() {
     ObjectMapper objectMapper = new ObjectMapper();
     try {
       dto = objectMapper.readValue(
@@ -79,12 +78,11 @@ class UserControllerIntegrationTest {
                                               UserViewDto.class);
 
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
-    assertNotEquals(null, response.getBody());
+    assertNotNull(response.getBody());
   }
 
   @Test
-  void testGetList() {
-    //Возвращение пустого списка
+  void testGetListEmpty() {
     var response = restTemplate.exchange(url,
                                          HttpMethod.GET,
                                          null,
@@ -92,35 +90,43 @@ class UserControllerIntegrationTest {
                                          });
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(0, Objects.requireNonNull(response.getBody()).size());
-
-    //Возвращение списка из одного элемента
-    repository.save(mapper.toEntity(dto));
-
-    response = restTemplate.exchange(url,
-                                     HttpMethod.GET,
-                                     null,
-                                     new ParameterizedTypeReference<>() {
-                                     });
-
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(1, Objects.requireNonNull(response.getBody()).size());
-
-    //Возвращение списка из 2 элементов
-    repository.save(mapper.toEntity(dto));
-
-    response = restTemplate.exchange(url,
-                                     HttpMethod.GET,
-                                     null,
-                                     new ParameterizedTypeReference<>() {
-                                     });
-
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(2, Objects.requireNonNull(response.getBody()).size());
+    assertNotNull(response.getBody());
+    assertEquals(0, response.getBody().size());
   }
 
   @Test
-  void testGetOne() {
+  void testGetListOfOne() {
+    repository.save(mapper.toEntity(dto));
+
+    var response = restTemplate.exchange(url,
+                                         HttpMethod.GET,
+                                         null,
+                                         new ParameterizedTypeReference<List<UserViewDto>>() {
+                                         });
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertEquals(1, response.getBody().size());
+  }
+
+  @Test
+  void testGetListOfMany() {
+    repository.save(mapper.toEntity(dto));
+    repository.save(mapper.toEntity(dto));
+
+    var response = restTemplate.exchange(url,
+                                         HttpMethod.GET,
+                                         null,
+                                         new ParameterizedTypeReference<List<UserViewDto>>() {
+                                         });
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
+    assertEquals(2, response.getBody().size());
+  }
+
+  @Test
+  void testGetOneSuccess() {
     var user = repository.save(mapper.toEntity(dto));
     var uuid = user.getUuid();
 
@@ -129,14 +135,21 @@ class UserControllerIntegrationTest {
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(mapper.toDto(user), response.getBody());
-
-    repository.deleteAll();
-    assertEquals(HttpStatus.NOT_FOUND,
-                 restTemplate.getForEntity(url + "/" + uuid, Void.class).getStatusCode());
   }
 
   @Test
-  void testUpdate() {
+  void testGetOneNotFound() {
+    var user = repository.save(mapper.toEntity(dto));
+    var uuid = user.getUuid();
+    repository.deleteAll();
+
+    var response = restTemplate.getForEntity(url + "/" + uuid, Void.class);
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+  }
+
+  @Test
+  void testUpdateSuccess() {
     var user = repository.save(mapper.toEntity(dto));
     var uuid = user.getUuid();
     var newDto = new UserCreateDto("new name", "newemail@mail.ru");
@@ -150,18 +163,27 @@ class UserControllerIntegrationTest {
                                          UserViewDto.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(newDto.getName(), Objects.requireNonNull(response.getBody()).getName());
+    assertNotNull(response.getBody());
+    assertEquals(newDto.getName(), response.getBody().getName());
     assertEquals(newDto.getEmail(), response.getBody().getEmail());
-
-    repository.deleteAll();
-    assertEquals(HttpStatus.NOT_FOUND, restTemplate.exchange(url + "/" + uuid,
-                                                             HttpMethod.PUT,
-                                                             requestEntity,
-                                                             Void.class).getStatusCode());
   }
 
   @Test
-  void testDelete() {
+  void testUpdateNotFound() {
+    var user = repository.save(mapper.toEntity(dto));
+    var uuid = user.getUuid();
+    repository.deleteAll();
+
+    var response = restTemplate.exchange(url + "/" + uuid,
+                                         HttpMethod.PUT,
+                                         null,
+                                         Void.class);
+
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+  }
+
+  @Test
+  void testDeleteSuccess() {
     var user = repository.save(mapper.toEntity(dto));
     var uuid = user.getUuid();
 
@@ -172,8 +194,15 @@ class UserControllerIntegrationTest {
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
     assertEquals(0, repository.findAll().size());
+  }
 
-    response = restTemplate.exchange(url + "/" + uuid,
+  @Test
+  void testDeleteNotFound() {
+    var user = repository.save(mapper.toEntity(dto));
+    var uuid = user.getUuid();
+    repository.deleteAll();
+
+    var response = restTemplate.exchange(url + "/" + uuid,
                                      HttpMethod.DELETE,
                                      null,
                                      Void.class);
