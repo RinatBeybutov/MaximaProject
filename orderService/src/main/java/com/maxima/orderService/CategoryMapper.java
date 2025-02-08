@@ -14,7 +14,5 @@ public interface CategoryMapper {
 
     CategoryEntity toEntity(CategoryCreateDto dto);
 
-    void updateFromDto(CategoryCreateDto categoryInputDto, @MappingTarget CategoryEntity categoryEntity);
-
-
+    void update(CategoryCreateDto categoryInputDto, @MappingTarget CategoryEntity categoryEntity);
 }

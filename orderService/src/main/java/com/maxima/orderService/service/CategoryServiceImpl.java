@@ -54,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService{
     @Transactional
     public CategoryDto update(UUID uuid, CategoryCreateDto categoryCreateDto) throws ResponseException {
         var entity = repository.getByUuid(uuid);
-        mapper.updateFromDto(categoryCreateDto, entity);
+        mapper.update(categoryCreateDto, entity);
         entity = repository.save(entity);
         return mapper.toDto(entity);
     }
@@ -64,8 +64,8 @@ public class CategoryServiceImpl implements CategoryService{
      */
     @Transactional
     public void delete(UUID uuid) throws ResponseException {
-        repository.getByUuid(uuid);
-        repository.deleteByUuid(uuid);
+        var entity = repository.getByUuid(uuid);
+        repository.deleteByUuid(entity.getUuid());
     }
 
     /**
