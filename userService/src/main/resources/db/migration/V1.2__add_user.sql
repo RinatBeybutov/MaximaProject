@@ -1,7 +1,7 @@
 insert into user_service.users (id, uuid, name, registered_at, email)
-values (1, uuid_generate_v4(), 'Владимир', '2021-01-01', 'vladimir@gmail.com'),
-       (2, uuid_generate_v4(), 'Тимур', '2021-01-01', 'timur@gmail.com'),
-       (3, uuid_generate_v4(), 'Константин', '2021-01-01', 'konstantin@gmail.com');
+values (10, '77ff09f2-28cd-4ec0-865b-2e49174', 'Владимир', '01.01.2021', 'vladimir@gmail.com'),
+       (20,'af8c649c-90a7-40e2-9a96-84dbd8', 'Тимур', '01.01.2021', 'timur@gmail.com'),
+       (30,'f41e4124-8e87-4142-936a-7452ba', 'Константин', '01.01.2021', 'konstantin@gmail.com'),
 ;
 
 

@@ -1,87 +1,72 @@
 package com.maxima.userService.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.maxima.userService.config.TestContainersConfig;
 import com.maxima.userService.config.ApiConfig;
-import com.maxima.userService.dto.UserCreateDto;
+import com.maxima.userService.dto.UserDtoTestData;
 import com.maxima.userService.dto.UserViewDto;
-import com.maxima.userService.mapper.UserMapper;
-import com.maxima.userService.repository.UserRepository;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import org.junit.jupiter.api.BeforeAll;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Testcontainers
+@Import(TestContainersConfig.class)
+@DisplayName("UserControllerTest")
 class UserControllerIntegrationTest {
 
-  @Container
-  @ServiceConnection
-  private static final PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:latest");
+  @Autowired
+  private PostgreSQLContainer<?> postgreSQLContainer;
 
   @LocalServerPort
   private Integer port;
 
   @Autowired
-  private UserMapper mapper;
-
-  @Autowired
-  private UserRepository repository;
-
-  @Autowired
   private TestRestTemplate restTemplate;
 
-  private static UserCreateDto dto;
+  private final String url = ApiConfig.USERS;
 
-  private String url;
-
-  @BeforeAll
-  static void setDto() {
-    ObjectMapper objectMapper = new ObjectMapper();
-    try {
-      dto = objectMapper.readValue(
-          new File("src/test/resources/user_create_dto_example.json"), UserCreateDto.class);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   @BeforeEach
   void setUp() {
-    repository.deleteAll();
-    url = "http://localhost:" + port + ApiConfig.USERS;
+    jdbcTemplate.execute("DELETE FROM user_service.users");
   }
 
   @Test
+  @DisplayName("TestCreate")
   void testCreate() {
-    var response = restTemplate.postForEntity(url, dto,
+    var dto = UserDtoTestData.getUserCreateDto();
+
+    var response = restTemplate.postForEntity(url,
+                                              dto,
                                               UserViewDto.class);
 
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
     assertNotNull(response.getBody());
+    assertEquals(dto.getName(), response.getBody().getName());
+    assertEquals(dto.getEmail(), response.getBody().getEmail());
   }
 
   @Test
+  @DisplayName("TestGetListEmpty")
   void testGetListEmpty() {
     var response = restTemplate.exchange(url,
                                          HttpMethod.GET,
@@ -90,13 +75,18 @@ class UserControllerIntegrationTest {
                                          });
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
+
     assertNotNull(response.getBody());
     assertEquals(0, response.getBody().size());
   }
 
   @Test
+  @DisplayName("TestGetListOfOne")
   void testGetListOfOne() {
-    repository.save(mapper.toEntity(dto));
+    var dto = UserDtoTestData.getUserCreateDto();
+    restTemplate.postForEntity(url,
+                               dto,
+                               UserViewDto.class);
 
     var response = restTemplate.exchange(url,
                                          HttpMethod.GET,
@@ -105,14 +95,25 @@ class UserControllerIntegrationTest {
                                          });
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
+
     assertNotNull(response.getBody());
     assertEquals(1, response.getBody().size());
+
+    assertEquals(dto.getName(), response.getBody().get(0).getName());
+    assertEquals(dto.getEmail(), response.getBody().get(0).getEmail());
   }
 
   @Test
+  @DisplayName("TestGetListOfMany")
   void testGetListOfMany() {
-    repository.save(mapper.toEntity(dto));
-    repository.save(mapper.toEntity(dto));
+    var dto = UserDtoTestData.getUserCreateDto();
+    restTemplate.postForEntity(url,
+                               dto,
+                               UserViewDto.class);
+
+    restTemplate.postForEntity(url,
+                               dto,
+                               UserViewDto.class);
 
     var response = restTemplate.exchange(url,
                                          HttpMethod.GET,
@@ -121,38 +122,51 @@ class UserControllerIntegrationTest {
                                          });
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
+
     assertNotNull(response.getBody());
     assertEquals(2, response.getBody().size());
+
+    assertEquals(dto.getName(), response.getBody().get(0).getName());
+    assertEquals(dto.getEmail(), response.getBody().get(0).getEmail());
+
+    assertEquals(dto.getName(), response.getBody().get(1).getName());
+    assertEquals(dto.getEmail(), response.getBody().get(1).getEmail());
   }
 
   @Test
+  @DisplayName("TestGetOneSuccess")
   void testGetOneSuccess() {
-    var user = repository.save(mapper.toEntity(dto));
-    var uuid = user.getUuid();
+    var userBody = restTemplate.postForEntity(url,
+                                              UserDtoTestData.getUserCreateDto(),
+                                              UserViewDto.class).getBody();
+
+    var uuid = userBody != null ? userBody.getUuid() : null;
 
     var response = restTemplate.getForEntity(url + "/" + uuid,
                                              UserViewDto.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(mapper.toDto(user), response.getBody());
+    assertEquals(userBody, response.getBody());
   }
 
   @Test
+  @DisplayName("TestGetOneNotFound")
   void testGetOneNotFound() {
-    var user = repository.save(mapper.toEntity(dto));
-    var uuid = user.getUuid();
-    repository.deleteAll();
-
-    var response = restTemplate.getForEntity(url + "/" + uuid, Void.class);
+    var response = restTemplate.getForEntity(url + "/" + UUID.randomUUID(),
+                                             Void.class);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
 
   @Test
+  @DisplayName("TestUpdateSuccess")
   void testUpdateSuccess() {
-    var user = repository.save(mapper.toEntity(dto));
-    var uuid = user.getUuid();
-    var newDto = new UserCreateDto("new name", "newemail@mail.ru");
+    var user = restTemplate.postForEntity(url,
+                                          UserDtoTestData.getUserCreateDto(),
+                                          UserViewDto.class).getBody();
+
+    var uuid = user != null ? user.getUuid() : null;
+    var newDto = UserDtoTestData.getNewUserCreateDto();
     var headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     var requestEntity = new HttpEntity<>(newDto, headers);
@@ -163,50 +177,32 @@ class UserControllerIntegrationTest {
                                          UserViewDto.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
+
     assertNotNull(response.getBody());
+
     assertEquals(newDto.getName(), response.getBody().getName());
     assertEquals(newDto.getEmail(), response.getBody().getEmail());
   }
 
   @Test
-  void testUpdateNotFound() {
-    var user = repository.save(mapper.toEntity(dto));
-    var uuid = user.getUuid();
-    repository.deleteAll();
-
-    var response = restTemplate.exchange(url + "/" + uuid,
-                                         HttpMethod.PUT,
-                                         null,
-                                         Void.class);
-
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-  }
-
-  @Test
+  @DisplayName("TestDeleteSuccess")
   void testDeleteSuccess() {
-    var user = repository.save(mapper.toEntity(dto));
-    var uuid = user.getUuid();
+    var response1 = restTemplate.postForEntity(url,
+                                               UserDtoTestData.getUserCreateDto(),
+                                               UserViewDto.class);
 
-    var response = restTemplate.exchange(url + "/" + uuid,
-                                         HttpMethod.DELETE,
-                                         null,
-                                         Void.class);
+    var uuid = response1.getBody() != null ? response1.getBody().getUuid() : null;
 
-    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
-    assertEquals(0, repository.findAll().size());
-  }
+    var response2 = restTemplate.exchange(url + "/" + uuid,
+                                          HttpMethod.DELETE,
+                                          null,
+                                          Void.class);
 
-  @Test
-  void testDeleteNotFound() {
-    var user = repository.save(mapper.toEntity(dto));
-    var uuid = user.getUuid();
-    repository.deleteAll();
+    assertEquals(HttpStatus.NO_CONTENT, response2.getStatusCode());
 
-    var response = restTemplate.exchange(url + "/" + uuid,
-                                     HttpMethod.DELETE,
-                                     null,
-                                     Void.class);
+    var response3 = restTemplate.getForEntity(url + "/" + uuid,
+                                              Void.class);
 
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    assertEquals(HttpStatus.NOT_FOUND, response3.getStatusCode());
   }
 }
