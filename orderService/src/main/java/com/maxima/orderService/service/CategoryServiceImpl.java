@@ -65,7 +65,7 @@ public class CategoryServiceImpl implements CategoryService{
     @Transactional
     public void delete(UUID uuid) throws ResponseException {
         var entity = repository.getByUuid(uuid);
-        repository.deleteByUuid(entity.getUuid());
+        repository.delete(entity);
     }
 
     /**
