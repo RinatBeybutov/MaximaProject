@@ -1,16 +1,14 @@
 package com.maxima.userService.config;
 
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.context.annotation.Bean;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
-@TestConfiguration
-public class TestContainersConfig {
+@Testcontainers
+public abstract class TestContainersConfig {
 
+  @Container
   @ServiceConnection
-  @Bean(initMethod = "start", destroyMethod = "stop")
-  public PostgreSQLContainer<?> postgreSQLContainer() {
-    return new PostgreSQLContainer<>("postgres:latest");
-  }
+  static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 }

@@ -2,9 +2,7 @@ package com.maxima.userService.controller;
 
 import com.maxima.userService.config.TestContainersConfig;
 import com.maxima.userService.config.ApiConfig;
-import com.maxima.userService.dto.UserDtoTestData;
 import com.maxima.userService.dto.UserViewDto;
-import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,30 +10,24 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.context.annotation.Import;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.testcontainers.containers.PostgreSQLContainer;
 
+import static com.maxima.userService.testData.UserDtoTestData.getNewUserCreateDto;
+import static com.maxima.userService.testData.UserDtoTestData.getNewUserViewDto;
+import static com.maxima.userService.testData.UserDtoTestData.getUserCreateDto;
+import static com.maxima.userService.testData.UserDtoTestData.getUserViewDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import(TestContainersConfig.class)
-@DisplayName("UserControllerTest")
-class UserControllerIntegrationTest {
-
-  @Autowired
-  private PostgreSQLContainer<?> postgreSQLContainer;
-
-  @LocalServerPort
-  private Integer port;
+@DisplayName("Тестирование API для сущности UserEntity")
+class UserApiIT extends TestContainersConfig {
 
   @Autowired
   private TestRestTemplate restTemplate;
@@ -51,9 +43,9 @@ class UserControllerIntegrationTest {
   }
 
   @Test
-  @DisplayName("TestCreate")
+  @DisplayName("Проверка создания объекта")
   void testCreate() {
-    var dto = UserDtoTestData.getUserCreateDto();
+    var dto = getUserCreateDto();
 
     var response = restTemplate.postForEntity(url,
                                               dto,
@@ -61,29 +53,31 @@ class UserControllerIntegrationTest {
 
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertEquals(dto.getName(), response.getBody().getName());
-    assertEquals(dto.getEmail(), response.getBody().getEmail());
+    var user = response.getBody();
+    assertThat(user)
+        .usingRecursiveComparison()
+        .ignoringFields("uuid", "registeredAt")
+        .isEqualTo(dto);
   }
 
   @Test
-  @DisplayName("TestGetListEmpty")
+  @DisplayName("Проверка получения всех пользователей - пустой список")
   void testGetListEmpty() {
     var response = restTemplate.exchange(url,
                                          HttpMethod.GET,
                                          null,
-                                         new ParameterizedTypeReference<List<UserViewDto>>() {
-                                         });
+                                         UserViewDto[].class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
     assertNotNull(response.getBody());
-    assertEquals(0, response.getBody().size());
+    assertEquals(0, response.getBody().length);
   }
 
   @Test
-  @DisplayName("TestGetListOfOne")
+  @DisplayName("Проверка получения всех пользователей - список из одной записи")
   void testGetListOfOne() {
-    var dto = UserDtoTestData.getUserCreateDto();
+    var dto = getUserCreateDto();
     restTemplate.postForEntity(url,
                                dto,
                                UserViewDto.class);
@@ -91,22 +85,26 @@ class UserControllerIntegrationTest {
     var response = restTemplate.exchange(url,
                                          HttpMethod.GET,
                                          null,
-                                         new ParameterizedTypeReference<List<UserViewDto>>() {
-                                         });
+                                         UserViewDto[].class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
 
     assertNotNull(response.getBody());
-    assertEquals(1, response.getBody().size());
 
-    assertEquals(dto.getName(), response.getBody().get(0).getName());
-    assertEquals(dto.getEmail(), response.getBody().get(0).getEmail());
+    var users = response.getBody();
+
+    assertEquals(1, users.length);
+
+    assertThat(users[0])
+        .usingRecursiveComparison()
+        .ignoringFields("uuid")
+        .isEqualTo(getUserViewDto());
   }
 
   @Test
-  @DisplayName("TestGetListOfMany")
+  @DisplayName("Проверка получения всех пользователей - список из нескольких записей")
   void testGetListOfMany() {
-    var dto = UserDtoTestData.getUserCreateDto();
+    var dto = getUserCreateDto();
     restTemplate.postForEntity(url,
                                dto,
                                UserViewDto.class);
@@ -118,26 +116,25 @@ class UserControllerIntegrationTest {
     var response = restTemplate.exchange(url,
                                          HttpMethod.GET,
                                          null,
-                                         new ParameterizedTypeReference<List<UserViewDto>>() {
-                                         });
+                                         UserViewDto[].class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-
     assertNotNull(response.getBody());
-    assertEquals(2, response.getBody().size());
 
-    assertEquals(dto.getName(), response.getBody().get(0).getName());
-    assertEquals(dto.getEmail(), response.getBody().get(0).getEmail());
+    var users = response.getBody();
 
-    assertEquals(dto.getName(), response.getBody().get(1).getName());
-    assertEquals(dto.getEmail(), response.getBody().get(1).getEmail());
+    assertEquals(2, users.length);
+    assertThat(users[0])
+        .usingRecursiveComparison()
+        .ignoringFields("uuid")
+        .isEqualTo(getUserViewDto());
   }
 
   @Test
-  @DisplayName("TestGetOneSuccess")
+  @DisplayName("Проверка на получение пользователя по UUID")
   void testGetOneSuccess() {
     var userBody = restTemplate.postForEntity(url,
-                                              UserDtoTestData.getUserCreateDto(),
+                                              getUserCreateDto(),
                                               UserViewDto.class).getBody();
 
     var uuid = userBody != null ? userBody.getUuid() : null;
@@ -150,7 +147,7 @@ class UserControllerIntegrationTest {
   }
 
   @Test
-  @DisplayName("TestGetOneNotFound")
+  @DisplayName("Проверка на получение пользователя по UUID - не найден")
   void testGetOneNotFound() {
     var response = restTemplate.getForEntity(url + "/" + UUID.randomUUID(),
                                              Void.class);
@@ -159,14 +156,14 @@ class UserControllerIntegrationTest {
   }
 
   @Test
-  @DisplayName("TestUpdateSuccess")
+  @DisplayName("Проверка на обновление пользователя по UUID")
   void testUpdateSuccess() {
     var user = restTemplate.postForEntity(url,
-                                          UserDtoTestData.getUserCreateDto(),
+                                          getUserCreateDto(),
                                           UserViewDto.class).getBody();
 
     var uuid = user != null ? user.getUuid() : null;
-    var newDto = UserDtoTestData.getNewUserCreateDto();
+    var newDto = getNewUserCreateDto();
     var headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     var requestEntity = new HttpEntity<>(newDto, headers);
@@ -177,18 +174,21 @@ class UserControllerIntegrationTest {
                                          UserViewDto.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
-
     assertNotNull(response.getBody());
 
-    assertEquals(newDto.getName(), response.getBody().getName());
-    assertEquals(newDto.getEmail(), response.getBody().getEmail());
+    user = response.getBody();
+
+    assertThat(user)
+        .usingRecursiveComparison()
+        .ignoringFields("uuid", "registeredAt")
+        .isEqualTo(getNewUserViewDto());
   }
 
   @Test
-  @DisplayName("TestDeleteSuccess")
+  @DisplayName("Проверка на удаление пользователя по UUID")
   void testDeleteSuccess() {
     var response1 = restTemplate.postForEntity(url,
-                                               UserDtoTestData.getUserCreateDto(),
+                                               getUserCreateDto(),
                                                UserViewDto.class);
 
     var uuid = response1.getBody() != null ? response1.getBody().getUuid() : null;
