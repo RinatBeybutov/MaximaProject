@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 import lombok.Data;
 
@@ -27,7 +27,7 @@ public class UserEntity {
   private String name;
 
   @Column(name = "registered_at")
-  private Date registeredAt;
+  private LocalDate registeredAt;
 
   private String email;
 

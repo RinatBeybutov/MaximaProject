@@ -3,8 +3,6 @@ package com.maxima.userService.testData;
 import com.maxima.userService.dto.UserCreateDto;
 import com.maxima.userService.dto.UserViewDto;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.UUID;
 
 public class UserDtoTestData {
@@ -46,10 +44,7 @@ public class UserDtoTestData {
         .email("vladimir@gmail.com")
         .name("Владимир")
         .uuid(UUID.fromString("39e89964-5f36-46c7-a6c1-324014b75463"))
-        .registeredAt(Date.from(LocalDate.parse("2021-01-01")
-                                    .atStartOfDay()
-                                    .atZone(ZoneId.of("Europe/London"))
-                                    .toInstant()))
+        .registeredAt(LocalDate.parse("2021-01-01"))
         .build();
   }
 
