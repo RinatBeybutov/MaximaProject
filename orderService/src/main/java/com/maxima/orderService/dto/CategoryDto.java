@@ -9,6 +9,7 @@ import java.util.UUID;
  */
 @Schema(description = "Дто сущности категории")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDto {
