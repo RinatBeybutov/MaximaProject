@@ -4,6 +4,7 @@ import com.maxima.userService.dto.UserCreateDto;
 import com.maxima.userService.dto.UserViewDto;
 import com.maxima.userService.mapper.UserMapper;
 import com.maxima.userService.repository.UserRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
   @Transactional
   public UserViewDto create(UserCreateDto dto) {
     var entity = mapper.toEntity(dto);
+    entity.setRegisteredAt(LocalDate.now());
     entity = repository.save(entity);
     return mapper.toDto(entity);
   }
