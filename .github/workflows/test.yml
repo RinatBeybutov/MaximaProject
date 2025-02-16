@@ -16,7 +16,7 @@ jobs:
           cache: maven
       - name: Maven UserService Package
         working-directory: ./MaximaProject/UserService/
-        run: mvn -B clean package -Tests
+        run:  mvn -B clean package -DskipTests
       - name: Run UserService Tests
         working-directory: ./MaximaProject/UserService/
         run: mvn test
