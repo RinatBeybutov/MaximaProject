@@ -1,4 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS order_service AUTHORIZATION postgres;
+CREATE SCHEMA IF NOT EXISTS order_service;
 
 create table if not exists order_service.categories(
      id int primary key,
