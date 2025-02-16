@@ -15,8 +15,8 @@ jobs:
           distribution: 'adopt'
           cache: maven
       - name: Maven UserService Package
-        working-directory: ./MaximaProject/userService/
+        working-directory: ./userService/
         run:  mvn -B clean package -DskipTests
       - name: Run UserService Tests
-        working-directory: ./MaximaProject/userService/
+        working-directory: ./userService/
         run: mvn test
