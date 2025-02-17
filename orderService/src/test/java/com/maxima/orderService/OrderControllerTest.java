@@ -1,6 +1,6 @@
 package com.maxima.orderService;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpEntity;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class OrderControllerTest {
 
     @LocalServerPort
@@ -42,24 +44,22 @@ public class OrderControllerTest {
     );
 
     @Test
-    public void testCategoryEndpoints() {
-        System.out.println("1. create");         
-
-        // Create a new category
-        CategoryCreateDto categoryCreateDto = new CategoryCreateDto("Тестовая категория");
-
+    @DisplayName("controller test - create")
+    @Order(1)
+    public void testCreate() {
         ResponseEntity<CategoryDto> createResponse =
-                restTemplate.postForEntity("/api/v1/categories", categoryCreateDto, CategoryDto.class);
+                restTemplate.postForEntity("/api/v1/categories", TestData.categoryCreateDto, CategoryDto.class);
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
         CategoryDto сategoryDto = createResponse.getBody();
 
-        assert сategoryDto != null;
- 
-        //Retrieve
-        System.out.println("2. get");  
-
+        assertNotNull(сategoryDto);
+    }
+    @Test
+    @DisplayName("controller test - get one")
+    @Order(2)
+    public void testGetOne() {
         ResponseEntity<CategoryDto> getResponse =
-                restTemplate.getForEntity("/api/v1/categories/" + "fcc49792-9c0b-49f7-9fce-5d9d631d042f", CategoryDto.class);
+                restTemplate.getForEntity("/api/v1/categories/" + TestData.UUID, CategoryDto.class);
         assertEquals(HttpStatus.OK, getResponse.getStatusCode());
 
         CategoryDto categoryFromGet = getResponse.getBody();
@@ -67,43 +67,49 @@ public class OrderControllerTest {
         assert categoryFromGet != null;
 
         assertEquals("Чипсы", categoryFromGet.getName());
+    }
 
-        // Retrieve All
-        System.out.println("3. getAll");  
 
+    @Test
+    @DisplayName("controller test - get all")
+    @Order(3)
+    public void testGetAll() {
         ResponseEntity<List<CategoryDto>> getAllResponse =
-                restTemplate.exchange("/api/v1/categories", HttpMethod.GET, null, new ParameterizedTypeReference<List<CategoryDto>>(){} );
+                restTemplate.exchange("/api/v1/categories", HttpMethod.GET, null, new ParameterizedTypeReference<List<CategoryDto>>() {
+                });
         assertEquals(HttpStatus.OK, getAllResponse.getStatusCode());
 
         List<CategoryDto> categoryFromGetAll = getAllResponse.getBody();
         assert categoryFromGetAll != null;
 
         assertEquals(5, categoryFromGetAll.size());
+    }
 
-        // Put
-        System.out.println("4. update");  
-
-        CategoryCreateDto categoryPutDto = new CategoryCreateDto("Тестовая категория1");
-
+    @Test
+    @DisplayName("controller test - update")
+    @Order(4)
+    public void testUpdate() {
+        CategoryCreateDto categoryPutDto = new CategoryCreateDto(TestData.CATEGORY_NAME);
 
         ResponseEntity<CategoryDto> putResponse =
-                restTemplate.exchange("/api/v1/categories/" + "fcc49792-9c0b-49f7-9fce-5d9d631d042f", HttpMethod.PUT, new HttpEntity<CategoryCreateDto>(categoryPutDto), CategoryDto.class);
+                restTemplate.exchange("/api/v1/categories/" + TestData.UUID, HttpMethod.PUT, new HttpEntity<CategoryCreateDto>(categoryPutDto), CategoryDto.class);
         assertEquals(HttpStatus.OK, putResponse.getStatusCode());
 
         CategoryDto categoryFromPut = putResponse.getBody();
 
         assert categoryFromPut != null;
 
-        assertEquals("Тестовая категория1", categoryFromPut.getName());
+        assertEquals(TestData.CATEGORY_NAME, categoryFromPut.getName());
+    }
 
-        // Delete 
-        System.out.println("5. delete");
-
-        restTemplate.delete("/api/v1/categories/" + "fcc49792-9c0b-49f7-9fce-5d9d631d042f"); 
-
-        assert 4 == restTemplate.exchange("/api/v1/categories", HttpMethod.GET, null, new ParameterizedTypeReference<List<CategoryDto>>(){} )
+    @Test
+    @DisplayName("controller test - delete")
+    @Order(5)
+    public void testDelete() {
+        restTemplate.delete("/api/v1/categories/" + TestData.UUID);
+        assertEquals(4, restTemplate.exchange("/api/v1/categories", HttpMethod.GET, null, new ParameterizedTypeReference<List<CategoryDto>>(){} )
                                 .getBody()
-                                .size();
+                                .size());
     }
 
 }
