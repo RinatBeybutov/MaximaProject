@@ -39,9 +39,7 @@ public class OrderControllerTest {
      */
     @Container
     @ServiceConnection
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            "postgres"
-    );
+    static PostgreSQLContainer<?> postgres=TestContainer.get();
 
     @Test
     @DisplayName("controller test - create")
