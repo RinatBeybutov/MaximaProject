@@ -6,8 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
-import java.io.Serializable;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
