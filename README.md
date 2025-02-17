@@ -10,10 +10,13 @@ task/{НОМЕР_ЗАДАЧИ}-{КРАТКОЕ-НАЗВАНИЕ-ЗАДАЧИ}
 Пример:
 task/1-add-user-service
 
-#  Эндпоинт для захода в браузере для swagger 
+#  Эндпоинты для захода в браузере для swagger 
 
 Для тестирования запросов  UserService
 http://localhost:8082/swagger-ui/index.html
+
+Для тестирования запросов  OrderService
+http://localhost:8083/swagger-ui/index.html
 
 # Комментарий к коммиту
 

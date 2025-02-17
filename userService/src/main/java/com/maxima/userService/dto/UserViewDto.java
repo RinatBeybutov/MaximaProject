@@ -1,7 +1,7 @@
 package com.maxima.userService.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +22,7 @@ public class UserViewDto {
   private String name;
 
   @Schema(description = "Дата регистрации", example = "2020-01-01")
-  private Date registeredAt;
+  private LocalDate registeredAt;
 
   @Schema(description = "Email пользователя", example = "user@mail.com")
   private String email;
