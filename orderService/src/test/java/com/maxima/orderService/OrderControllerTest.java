@@ -97,7 +97,7 @@ public class OrderControllerTest {
 
         CategoryDto categoryFromPut = putResponse.getBody();
 
-        assert categoryFromPut != null;
+        assertNotNull(categoryFromPut);
 
         assertEquals(TestData.CATEGORY_NAME, categoryFromPut.getName());
     }
