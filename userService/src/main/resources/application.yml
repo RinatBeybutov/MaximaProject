@@ -21,6 +21,7 @@ spring:
     user: postgres
     password: postgres
     schemas: user_service
+    url: jdbc:postgresql://localhost:5432/shop
     locations: classpath:db/migration
 logging:
   level:

@@ -10,7 +10,9 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shop
       - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_DATASOURCE_PASSWORD=secretPassword12345
+      - SPRING_FLYWAY_URL=jdbc:postgresql://db:5432/shop
+      - SPRING_FLYWAY_PASSWORD=secretPassword12345
     depends_on:
       - db
     networks:
@@ -22,7 +24,7 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=secretPassword12345
       - POSTGRES_DB=shop
     volumes:
       - shop_data:/var/lib/postgresql/data
