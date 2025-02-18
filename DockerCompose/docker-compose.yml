@@ -19,7 +19,7 @@ services:
       - shop-network
 
   db:
-    image: postgres:latest
+    image: postgres:15
     ports:
       - "5432:5432"
     environment:
@@ -34,7 +34,7 @@ services:
   dozzle:
     image: amir20/dozzle:latest
     ports:
-      - "8081:8080"
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
