@@ -2,14 +2,17 @@
 spring:
   jpa:
     hibernate:
-     ddl-auto: update
+     ddl-auto: none #update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        show_sql: true
     database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
-    url: jdbc:postgresql://10.53.16.4:5432/shop
+    url: jdbc:postgresql://localhost:5432/shop
     user: postgres
     password: KooKo_099
     schemas: public
@@ -23,8 +26,19 @@ spring:
     create-schemas: true
 
   datasource:
-    url: jdbc:postgresql://10.53.16.4:5432/shop
+    url: jdbc:postgresql://localhost:5432/shop
     username: postgres
     password: KooKo_099
     driver-class-name: org.postgresql.Driver
+
+    hikari:
+      maximum-pool-size: 10
+
+logging:
+  level:
+    org:
+      hibernate:
+        orm:
+          jdbc:
+            bind: TRACE
 
