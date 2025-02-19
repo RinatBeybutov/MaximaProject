@@ -16,15 +16,10 @@ import com.maxima.orderService.dto.*;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpEntity;
 
-import org.testcontainers.junit.jupiter.Testcontainers;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Testcontainers
-public class OrderControllerTest extends TestContainerConfig{
+public class OrderControllerTest extends TestContainerConfig {
     @Autowired
     private TestRestTemplate restTemplate;
-
-    private static String createdCategoryUuid;
 
     @Test
     @DisplayName("Проверка создания объекта")
@@ -33,29 +28,29 @@ public class OrderControllerTest extends TestContainerConfig{
                 restTemplate.postForEntity("/api/v1/categories", TestData.getCategoryCreateDto(), CategoryDto.class);
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
         CategoryDto categoryDto = createResponse.getBody();
-        createdCategoryUuid = categoryDto.getUuid().toString();
+        String uuid = categoryDto.getUuid().toString();
 
         assertNotNull(categoryDto);
         assertThat(categoryDto)
                 .usingRecursiveComparison()
-                .ignoringFields("uuid","id")
+                .ignoringFields("uuid", "id")
                 .isEqualTo(TestData.getCategoryDtoForCreate());
 
-        restTemplate.delete("/api/v1/categories/" + createdCategoryUuid);
+        restTemplate.delete("/api/v1/categories/" + uuid);
     }
 
     @Test
     @DisplayName("Проверка получения категории по UUID")
     public void testGetOne() {
         ResponseEntity<CategoryDto> getResponse =
-                restTemplate.getForEntity("/api/v1/categories/" + TestData.testUUID, CategoryDto.class);
+                restTemplate.getForEntity("/api/v1/categories/" + TestData.CATEGORY_UUID, CategoryDto.class);
         assertEquals(HttpStatus.OK, getResponse.getStatusCode());
 
-        CategoryDto categoryFromGet = getResponse.getBody();
-        assertNotNull(categoryFromGet);
-        assertThat(categoryFromGet)
+        CategoryDto category = getResponse.getBody();
+        assertNotNull(category);
+        assertThat(category)
                 .usingRecursiveComparison()
-                .ignoringFields("uuid","id")
+                .ignoringFields("uuid", "id")
                 .isEqualTo(TestData.getCategoryDto());
     }
 
@@ -66,12 +61,12 @@ public class OrderControllerTest extends TestContainerConfig{
                 restTemplate.getForEntity("/api/v1/categories", CategoryDto[].class);
         assertEquals(HttpStatus.OK, getAllResponse.getStatusCode());
 
-        CategoryDto[] categoryFromGetAll = getAllResponse.getBody();
-        assertNotNull(categoryFromGetAll);
-        //assertEquals(4, categoryFromGetAll.length);
-        assertThat(categoryFromGetAll[0])
+        CategoryDto[] categories = getAllResponse.getBody();
+        assertNotNull(categories);
+        assertEquals(4, categories.length);
+        assertThat(categories[0])
                 .usingRecursiveComparison()
-                .ignoringFields("uuid","id")
+                .ignoringFields("uuid", "id")
                 .isEqualTo(TestData.getCategoryDtoFirstInList());
     }
 
@@ -83,33 +78,46 @@ public class OrderControllerTest extends TestContainerConfig{
                 restTemplate.postForEntity("/api/v1/categories", TestData.getCategoryCreateDto(), CategoryDto.class);
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
         CategoryDto categoryDto = createResponse.getBody();
-        createdCategoryUuid = categoryDto.getUuid().toString();
+        String uuid = categoryDto.getUuid().toString();
 
         //обновление
         CategoryCreateDto categoryPutDto = new CategoryCreateDto(TestData.CATEGORY_NAME);
         ResponseEntity<CategoryDto> putResponse =
-                restTemplate.exchange("/api/v1/categories/" + createdCategoryUuid, HttpMethod.PUT, new HttpEntity<CategoryCreateDto>(categoryPutDto), CategoryDto.class);
+                restTemplate.exchange("/api/v1/categories/" + uuid, HttpMethod.PUT, new HttpEntity<CategoryCreateDto>(categoryPutDto), CategoryDto.class);
         assertEquals(HttpStatus.OK, putResponse.getStatusCode());
 
         //тестирование
-        var outputDto=putResponse.getBody();
+        var outputDto = putResponse.getBody();
         assertNotNull(outputDto);
         assertThat(outputDto)
                 .usingRecursiveComparison()
-                .ignoringFields("uuid","id")
+                .ignoringFields("uuid", "id")
                 .isEqualTo(TestData.getCategoryDtoForUpdate());
 
         //удаление
-        restTemplate.delete("/api/v1/categories/" + createdCategoryUuid);
+        restTemplate.delete("/api/v1/categories/" + uuid);
     }
 
     @Test
     @DisplayName("Проверка удаления категории")
     public void testDelete() {
-        restTemplate.delete("/api/v1/categories/" + TestData.testUUID2);
-        var categories=restTemplate.getForEntity("/api/v1/categories", CategoryDto[].class)
+        //создание новой категории
+        ResponseEntity<CategoryDto> createResponse =
+                restTemplate.postForEntity("/api/v1/categories", TestData.getCategoryCreateDto(), CategoryDto.class);
+        assertEquals(HttpStatus.OK, createResponse.getStatusCode());
+        CategoryDto categoryDto = createResponse.getBody();
+        String uuid = categoryDto.getUuid().toString();
+
+        //удаление
+        restTemplate.delete("/api/v1/categories/" + uuid);
+        var categories = restTemplate.getForEntity("/api/v1/categories", CategoryDto[].class)
                 .getBody();
         assertNotNull(categories);
-        assertEquals(3, categories.length);
+        assertEquals(4, categories.length);
+
+        //проверка на Not found
+        ResponseEntity<CategoryDto> getResponse =
+                restTemplate.getForEntity("/api/v1/categories/" + uuid, CategoryDto.class);
+        assertEquals(HttpStatus.NOT_FOUND, getResponse.getStatusCode());
     }
 }

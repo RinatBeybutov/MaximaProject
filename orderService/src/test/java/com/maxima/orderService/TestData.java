@@ -7,8 +7,7 @@ import java.util.UUID;
 import lombok.Getter;
 
 public class TestData {
-    public static final String testUUID="fcc49792-9c0b-49f7-9fce-5d9d631d042f";
-    public static final String testUUID2="fcc49792-9c0b-49f7-9fce-5d9d631d044f";
+    public static final String CATEGORY_UUID="fcc49792-9c0b-49f7-9fce-5d9d631d042f";
     public static final String CATEGORY_NAME="Тестовая категория1";
     @Getter
     private static final CategoryCreateDto categoryCreateDto = new CategoryCreateDto("Тестовая категория");
