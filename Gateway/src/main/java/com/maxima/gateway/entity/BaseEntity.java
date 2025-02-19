@@ -6,8 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
-import java.io.Serializable;
-import java.util.Objects;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity{
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +25,6 @@ public abstract class BaseEntity implements Serializable {
   @PrePersist
   private void generateUuid() {
     setUuid(UUID.randomUUID());
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof BaseEntity)) {
-      return false;
-    }
-    BaseEntity that = (BaseEntity) o;
-    return id.equals(that.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
   }
 
 }
