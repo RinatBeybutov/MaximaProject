@@ -5,7 +5,7 @@ import com.maxima.orderService.CategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.maxima.orderService.repo.*;
+import com.maxima.orderService.repository.*;
 import com.maxima.orderService.dto.CategoryDto;
 import com.maxima.orderService.dto.CategoryCreateDto;
 

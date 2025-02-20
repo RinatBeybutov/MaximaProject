@@ -1,4 +1,4 @@
-package com.maxima.orderService.repo;
+package com.maxima.orderService.repository;
 
 import com.maxima.orderService.entity.*;
 import org.springframework.data.repository.CrudRepository;

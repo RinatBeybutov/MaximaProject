@@ -12,7 +12,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
-    url: jdbc:postgresql://localhost:5432/shop
+    url: jdbc:postgresql://10.53.16.4:5432/shop
     user: postgres
     password: KooKo_099
     schemas: public
@@ -26,7 +26,7 @@ spring:
     create-schemas: true
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/shop
+    url: jdbc:postgresql://10.53.16.4:5432/shop
     username: postgres
     password: KooKo_099
     driver-class-name: org.postgresql.Driver
