@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Репозиторий для работы с сущностями пользователей.
- * Предоставляет методы для выполнения операций CRUD с пользователями.
  */
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 

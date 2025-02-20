@@ -24,12 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Контроллер для управления пользователями. Этот контроллер предоставляет REST API для выполнения
- * операций CRUD (создание, чтение, обновление, удаление) с пользователями. Все методы возвращают
- * данные в формате JSON.
+ * Контроллер для сущности категорий {@link CategoryEntity}
  */
-
-
 @Tag(name = "Пользователи", description = "Операции CRUD с пользователями ")
 @RestController
 @RequiredArgsConstructor
