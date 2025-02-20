@@ -20,3 +20,9 @@ jobs:
       - name: Run UserService Tests
         working-directory: ./userService/
         run: mvn -B test --file pom.xml
+      - name: Checkstyle for UserService
+        working-directory: ./userService/
+        run: mvn checkstyle:check
+      - name: Checkstyle for OrderService
+        working-directory: ./orderService/
+        run: mvn checkstyle:check
