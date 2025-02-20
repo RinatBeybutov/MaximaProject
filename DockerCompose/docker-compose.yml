@@ -17,6 +17,23 @@ services:
     networks:
       - shop-network
 
+  order-service:
+    build:
+      context: ./images/order-service
+      dockerfile: Dockerfile
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shop
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=secretPassword12345
+      - SPRING_FLYWAY_URL=jdbc:postgresql://db:5432/shop
+      - SPRING_FLYWAY_PASSWORD=secretPassword12345
+    depends_on:
+      - db
+    networks:
+      - shop-network
+
   db:
     image: postgres:15
     ports:
