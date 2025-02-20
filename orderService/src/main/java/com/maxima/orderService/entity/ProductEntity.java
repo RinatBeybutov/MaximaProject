@@ -1,4 +1,4 @@
-package com.maxima.gateway.entity;
+package com.maxima.orderService.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.maxima.gateway.entity;
+package com.maxima.orderService.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
@@ -7,13 +7,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @MappedSuperclass
-public abstract class BaseEntity{
+public class BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
