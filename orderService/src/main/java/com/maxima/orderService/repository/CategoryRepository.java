@@ -12,10 +12,7 @@ import com.maxima.orderService.exceptions.ResponseException;
 
 public interface CategoryRepository extends CrudRepository<CategoryEntity, Long> {
     CategoryEntity save(CategoryEntity c);
-    void deleteByUuid(UUID uuid);
     void delete(CategoryEntity entity);
-    boolean existsByUuid(UUID uuid);
-    List<CategoryEntity> findByName(String name);
     Optional<CategoryEntity> findByUuid(UUID uuid);
     List<CategoryEntity> findAll();
 

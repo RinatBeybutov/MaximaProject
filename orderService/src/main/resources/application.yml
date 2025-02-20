@@ -1,8 +1,12 @@
+server:
+  port: 8083
 
 spring:
+  application:
+    name: orderService
   jpa:
     hibernate:
-     ddl-auto: none #update
+     ddl-auto: none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -12,23 +16,22 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
-    url: jdbc:postgresql://10.53.16.4:5432/shop
+    url: jdbc:postgresql://localhost:5432/shop
     user: postgres
-    password: KooKo_099
+    password: postgres
     schemas: public
     sql-migration-prefix: V
     enabled: true
 
     baseline-on-migrate: true
-    #validate-on-migrate: true
     driver-class-name: org.postgresql.Driver
     locations: db/migration
     create-schemas: true
 
   datasource:
-    url: jdbc:postgresql://10.53.16.4:5432/shop
+    url: jdbc:postgresql://localhost:5432/shop
     username: postgres
-    password: KooKo_099
+    password: postgres
     driver-class-name: org.postgresql.Driver
 
     hikari:
