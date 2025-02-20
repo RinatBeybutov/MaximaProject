@@ -1,5 +1,10 @@
 package com.maxima.orderService.exceptions;
 
-public class ResponseException extends RuntimeException{
-    
+/**
+ * Исключение, представляющее собой общее исключение для обработки ответов. Это исключение может
+ * быть использовано для сигнализации об ошибках, возникающих в процессе обработки запросов в
+ * сервисе.
+ */
+public class ResponseException extends RuntimeException {
+
 }

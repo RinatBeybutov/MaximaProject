@@ -1,5 +1,7 @@
 package com.maxima.userService.controller;
 
+import static com.maxima.userService.config.ApiConfig.USERS;
+
 import com.maxima.userService.dto.UserCreateDto;
 import com.maxima.userService.dto.UserViewDto;
 import com.maxima.userService.service.UserService;
@@ -21,7 +23,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.maxima.userService.config.ApiConfig.USERS;
+/**
+ * Контроллер для управления пользователями. Этот контроллер предоставляет REST API для выполнения
+ * операций CRUD (создание, чтение, обновление, удаление) с пользователями. Все методы возвращают
+ * данные в формате JSON.
+ */
+
 
 @Tag(name = "Пользователи", description = "Операции CRUD с пользователями ")
 @RestController

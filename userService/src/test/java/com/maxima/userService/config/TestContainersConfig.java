@@ -7,6 +7,11 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+/**
+ * Конфигурация для использования Testcontainers в интеграционных тестах. Этот класс предоставляет
+ * контейнер PostgreSQL, который запускается перед выполнением тестов и автоматически настраивает
+ * подключение к базе данных через Spring Boot.
+ */
 @Testcontainers
 public abstract class TestContainersConfig {
 
