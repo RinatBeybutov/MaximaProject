@@ -12,7 +12,7 @@ import java.util.UUID;
 import lombok.Data;
 
 /**
- *  Сущность пользователь
+ *  Сущность пользователя.
  */
 @Data
 @Entity

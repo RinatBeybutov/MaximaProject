@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Дто сущности пользователь
+ * Дто сущности пользователя.
  */
 @Builder
 @AllArgsConstructor

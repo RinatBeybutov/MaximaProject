@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 /**
- * Интерфейс для маппинга (преобразования) между сущностями и DTO Категорий.
+ * Интерфейс для преобразования между сущностями и DTO Категорий.
  */
 
 @Mapper(componentModel = "spring")
