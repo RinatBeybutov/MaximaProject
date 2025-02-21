@@ -1,5 +1,16 @@
 package com.maxima.userService.controller;
 
+import static com.maxima.userService.testData.UserDtoTestData.NUMBER_OF_USERS;
+import static com.maxima.userService.testData.UserDtoTestData.USER_NOT_FOUND_MESSAGE;
+import static com.maxima.userService.testData.UserDtoTestData.userUpdateDto;
+import static com.maxima.userService.testData.UserDtoTestData.updatedUserDto;
+import static com.maxima.userService.testData.UserDtoTestData.userCreateDto;
+import static com.maxima.userService.testData.UserDtoTestData.createdViewDto;
+import static com.maxima.userService.testData.UserDtoTestData.vladimirUserDto;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.maxima.userService.config.TestContainersConfig;
 import com.maxima.userService.config.ApiConfig;
 import com.maxima.userService.dto.UserViewDto;
@@ -15,16 +26,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-import static com.maxima.userService.testData.UserDtoTestData.NUMBER_OF_USERS;
-import static com.maxima.userService.testData.UserDtoTestData.USER_NOT_FOUND_MESSAGE;
-import static com.maxima.userService.testData.UserDtoTestData.userUpdateDto;
-import static com.maxima.userService.testData.UserDtoTestData.updatedUserDto;
-import static com.maxima.userService.testData.UserDtoTestData.userCreateDto;
-import static com.maxima.userService.testData.UserDtoTestData.createdViewDto;
-import static com.maxima.userService.testData.UserDtoTestData.vladimirUserDto;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("Тестирование API для сущности UserEntity")

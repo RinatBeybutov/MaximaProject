@@ -9,6 +9,9 @@ import jakarta.persistence.PrePersist;
 import java.util.UUID;
 import lombok.Data;
 
+/**
+ * Базовый класс для всех сущностей, предоставляющий общие поля и функциональность.
+ */
 @Data
 @MappedSuperclass
 public class BaseEntity {
