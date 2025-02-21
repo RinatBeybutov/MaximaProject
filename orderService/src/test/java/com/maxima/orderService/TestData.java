@@ -2,11 +2,12 @@ package com.maxima.orderService;
 
 import com.maxima.orderService.dto.CategoryCreateDto;
 import com.maxima.orderService.dto.CategoryDto;
-
 import java.util.UUID;
-
 import lombok.Getter;
 
+/**
+ * Класс с данными для теста
+ */
 public class TestData {
 
   public static final String CATEGORY_UUID = "fcc49792-9c0b-49f7-9fce-5d9d631d042f";

@@ -1,5 +1,9 @@
 package com.maxima.orderService;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.maxima.orderService.dto.CategoryCreateDto;
 import com.maxima.orderService.dto.CategoryDto;
 import org.junit.Test;
@@ -9,16 +13,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpEntity;
 
+/**
+ * Класс интегационных тестов для контроллера CategoryController
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OrderApiITests extends TestContainersConfig {
+public class OrderApiIntegrationTests extends TestContainersConfig {
 
   @Autowired
   private TestRestTemplate restTemplate;

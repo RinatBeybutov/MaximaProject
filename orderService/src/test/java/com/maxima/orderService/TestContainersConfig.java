@@ -5,6 +5,9 @@ import org.testcontainers.junit.jupiter.Container;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+/**
+ * Класс конфигурации контейнеров
+ */
 @Testcontainers
 public class TestContainersConfig {
 
