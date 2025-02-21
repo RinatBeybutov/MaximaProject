@@ -10,29 +10,30 @@ import java.util.UUID;
  * Сервис для реализации работы с Категориями
  */
 public interface CategoryService {
-    /**
-     * Создать категорию
-     */
-    CategoryDto create(CategoryCreateDto dto);
 
-    /**
-     * Найти категорию по uuid
-     */
-    CategoryDto find(UUID uuid);
+  /**
+   * Создать категорию
+   */
+  CategoryDto create(CategoryCreateDto dto);
 
-    /**
-     * Обновить категорию по uuid
-     */
-    CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto);
+  /**
+   * Найти категорию по uuid
+   */
+  CategoryDto find(UUID uuid);
 
-    /**
-     * Удалить категорию по uuid
-     */
-    void delete(UUID uuid);
+  /**
+   * Обновить категорию по uuid
+   */
+  CategoryDto update(UUID uuid, CategoryCreateDto categoryInputDto);
 
-    /**
-     * Получить список всех категорий
-     */
-    List<CategoryDto> getList();
+  /**
+   * Удалить категорию по uuid
+   */
+  void delete(UUID uuid);
+
+  /**
+   * Получить список всех категорий
+   */
+  List<CategoryDto> getList();
 }
 

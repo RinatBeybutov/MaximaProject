@@ -7,12 +7,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 public class TestContainersConfig {
-    /**
-     * Докер контейнер для postgres
-     */
-    @Container
-    @ServiceConnection
-    public static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            "postgres:latest"
-    );
+
+  /**
+   * Докер контейнер для postgres
+   */
+  @Container
+  @ServiceConnection
+  public static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
+      "postgres:latest"
+  );
 }

@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "categories", schema = "order_service")
 public class CategoryEntity extends BaseEntity {
 
-    private String name;
+  private String name;
 
 }

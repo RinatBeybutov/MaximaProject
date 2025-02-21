@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryCreateDto {
-    @Schema(description = "Название категории")
-    private String name;
+
+  @Schema(description = "Название категории")
+  private String name;
 }

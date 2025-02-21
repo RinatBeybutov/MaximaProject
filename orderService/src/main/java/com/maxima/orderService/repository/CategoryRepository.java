@@ -11,19 +11,20 @@ import com.maxima.orderService.exceptions.ResponseException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Репозиторий для работы с сущностями категорий.
- * Предоставляет методы для выполнения операций CRUD с категориями.
+ * Репозиторий для работы с сущностями категорий. Предоставляет методы для выполнения операций CRUD
+ * с категориями.
  */
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
-    CategoryEntity save(CategoryEntity entity);
 
-    void delete(CategoryEntity entity);
+  CategoryEntity save(CategoryEntity entity);
 
-    Optional<CategoryEntity> findByUuid(UUID uuid);
+  void delete(CategoryEntity entity);
 
-    List<CategoryEntity> findAll();
+  Optional<CategoryEntity> findByUuid(UUID uuid);
 
-    default CategoryEntity getByUuid(UUID uuid) throws ResponseException {
-        return findByUuid(uuid).orElseThrow(() -> new ResponseException());
-    }
+  List<CategoryEntity> findAll();
+
+  default CategoryEntity getByUuid(UUID uuid) throws ResponseException {
+    return findByUuid(uuid).orElseThrow(() -> new ResponseException());
+  }
 }

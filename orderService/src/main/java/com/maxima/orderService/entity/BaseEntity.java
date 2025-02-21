@@ -18,16 +18,16 @@ import lombok.Data;
 @MappedSuperclass
 public class BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(name = "uuid", unique = true)
-    private UUID uuid;
+  @Column(name = "uuid", unique = true)
+  private UUID uuid;
 
-    @PrePersist
-    private void generateUuid() {
-        setUuid(UUID.randomUUID());
-    }
+  @PrePersist
+  private void generateUuid() {
+    setUuid(UUID.randomUUID());
+  }
 
 }
