@@ -45,6 +45,6 @@ jobs:
           java-version: '21'
           distribution: 'adopt'
           cache: maven
-      - name: Checkstyle for OlderService
-        working-directory: ./olderService/
+      - name: Checkstyle for OrderService
+        working-directory: ./orderService/
         run: mvn -P check-code-style validate
