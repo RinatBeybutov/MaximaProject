@@ -1,6 +1,6 @@
 package com.maxima.orderService.repository;
 
-import com.maxima.orderService.entity.*;
+import com.maxima.orderService.entity.CategoryEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,12 +15,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Предоставляет методы для выполнения операций CRUD с категориями.
  */
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
-    CategoryEntity save(CategoryEntity c);
+    CategoryEntity save(CategoryEntity entity);
+
     void delete(CategoryEntity entity);
+
     Optional<CategoryEntity> findByUuid(UUID uuid);
+
     List<CategoryEntity> findAll();
 
-    default CategoryEntity getByUuid(UUID uuid) throws ResponseException{
-        return findByUuid(uuid).orElseThrow( () -> new ResponseException() );
+    default CategoryEntity getByUuid(UUID uuid) throws ResponseException {
+        return findByUuid(uuid).orElseThrow(() -> new ResponseException());
     }
 }
