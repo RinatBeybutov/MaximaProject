@@ -10,6 +10,10 @@ import java.util.UUID;
 import com.maxima.orderService.exceptions.ResponseException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+/**
+ * Репозиторий для работы с сущностями категорий.
+ * Предоставляет методы для выполнения операций CRUD с категориями.
+ */
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
     CategoryEntity save(CategoryEntity c);
     void delete(CategoryEntity entity);

@@ -5,6 +5,10 @@ import com.maxima.userService.dto.UserViewDto;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Интерфейс сервиса для управления пользователями.
+ *
+ */
 public interface UserService {
 
   UserViewDto create(UserCreateDto userCreateDto);

@@ -50,3 +50,20 @@ Gateway - 8081
 UserService - 8082
 OrderService - 8083
 
+# Запуск скрипта на проверку стиля кода
+
+## Сервис пользователей
+
+``` bash
+mvn -P check-code-style validate
+cd .\userService\
+```
+
+## Сервис заказов
+
+``` bash
+mvn -P check-code-style validate
+cd .\orderService\
+```
+
+
