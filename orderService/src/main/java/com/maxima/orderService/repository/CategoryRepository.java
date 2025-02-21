@@ -12,14 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * с категориями.
  */
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
-
-  CategoryEntity save(CategoryEntity entity);
-
-  void delete(CategoryEntity entity);
-
   Optional<CategoryEntity> findByUuid(UUID uuid);
-
-  List<CategoryEntity> findAll();
 
   default CategoryEntity getByUuid(UUID uuid) throws ResponseException {
     return findByUuid(uuid).orElseThrow(() -> new ResponseException());

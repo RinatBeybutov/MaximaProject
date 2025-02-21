@@ -1,10 +1,9 @@
 CREATE SCHEMA IF NOT EXISTS order_service;
 
 create table if not exists order_service.categories(
-     id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+     id BIGSERIAL PRIMARY KEY,
      uuid UUID,
-     name varchar,
-     CONSTRAINT pk_categories PRIMARY KEY (id)
+     name varchar
 );
 
 COMMENT ON TABLE order_service.categories IS 'таблица категорий';
