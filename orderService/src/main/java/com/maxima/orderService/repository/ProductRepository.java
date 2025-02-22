@@ -1,6 +1,6 @@
-package com.maxima.gateway.repository;
+package com.maxima.orderService.repository;
 
-import com.maxima.gateway.entity.ProductEntity;
+import com.maxima.orderService.entity.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
