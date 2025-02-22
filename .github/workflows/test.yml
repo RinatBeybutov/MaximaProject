@@ -30,10 +30,10 @@ jobs:
           java-version: '21'
           distribution: 'adopt'
           cache: maven
-      - name: Maven UserService Package
+      - name: Maven OrderService Package
         working-directory: ./orderService/
         run:  mvn -B clean package -DskipTests
-      - name: Run UserService Tests
+      - name: Run OrderService Tests
         working-directory: ./orderService/
         run: mvn -B test --file pom.xml
   userServiceCheckstyle:
