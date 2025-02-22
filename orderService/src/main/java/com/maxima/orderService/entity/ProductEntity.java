@@ -1,4 +1,4 @@
-package com.maxima.gateway.entity;
+package com.maxima.orderService.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Сущность, представляющая продукты в системе.
+ */
 @Data
 @Entity
 @AllArgsConstructor
