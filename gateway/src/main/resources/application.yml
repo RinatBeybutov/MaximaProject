@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service-route
+          predicates:
+            - Path=/api/v1/users/**
+          uri: http://user-service:8082
+
+        - id: order-service-route
+          predicates:
+            - Path=/api/v1/products/**, /api/v1/orders/**, /api/v1/categories/**
+          uri: http://order-service:8083
+
+server:
+  port: 8081
