@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public class UserDtoTestData {
 
-  public static final String USER_NOT_FOUND_MESSAGE = "Пользователь с таким UUID не найден";
+  public static final String USER_NOT_FOUND_MESSAGE = "User not found";
 
   public static final int NUMBER_OF_USERS = 3;
 
