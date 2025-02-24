@@ -1,16 +1,19 @@
 package com.maxima.userService.config;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * Исключение, которое выбрасывается в сервисах и обрабатывается глобальным перехватчиком.
  */
 
-@Data
-@AllArgsConstructor
+
+@Getter
 public class LocalizedEntityNotFoundException extends RuntimeException {
 
-  private String messageKey;
+  private final String messageKey;
+
+  public LocalizedEntityNotFoundException(String messageKey) {
+    this.messageKey = messageKey;
+  }
 
 }
