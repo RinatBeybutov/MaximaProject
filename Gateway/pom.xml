@@ -65,6 +65,12 @@
       <artifactId>hibernate-core</artifactId>
       <version>6.6.1.Final</version>
     </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations-jakarta</artifactId>
+      <version>2.2.22</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 
   <build>
