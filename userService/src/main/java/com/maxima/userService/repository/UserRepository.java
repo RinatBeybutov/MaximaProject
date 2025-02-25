@@ -15,6 +15,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
   default UserEntity getUser(UUID uuid) {
     return findByUuid(uuid).orElseThrow(
-        () -> new EntityNotFoundException(String.format("error.user.not_found=%s", uuid)));
+        () -> new EntityNotFoundException("error.user.not_found"));
   }
 }

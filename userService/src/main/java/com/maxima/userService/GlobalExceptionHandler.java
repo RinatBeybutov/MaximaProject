@@ -21,10 +21,7 @@ public class GlobalExceptionHandler extends RuntimeException {
   @ExceptionHandler(EntityNotFoundException.class)
   public ResponseEntity<String> EntityNotFoundException(EntityNotFoundException e,
                                                         WebRequest request) {
-    String[] parts = e.getMessage().split("=");
-    String errorKey = parts[0];
-    String uuid = parts.length > 1 ? parts[1] : "unknown";
-    String errorMessage = messageSource.getMessage(errorKey, new Object[]{uuid}, request.getLocale());
+    String errorMessage = messageSource.getMessage(e.getMessage(), null, request.getLocale());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
   }
 }
