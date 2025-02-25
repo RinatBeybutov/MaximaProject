@@ -1,5 +1,8 @@
 package com.maxima.orderService.entity;
 
+/**
+ * Перечисление с состояниями заказа
+ */
 public enum OrderStatus {
   CREATED(1),
   IN_PROGRESS(2),

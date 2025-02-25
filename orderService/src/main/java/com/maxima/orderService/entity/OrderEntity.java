@@ -36,7 +36,7 @@ public class OrderEntity extends BaseEntity {
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(name = "product_to_order",
       joinColumns = {
-        @JoinColumn(name="order_id", referencedColumnName = "id"),
+        @JoinColumn(name = "order_id", referencedColumnName = "id"),
       },
       inverseJoinColumns = {
         @JoinColumn(name = "product_id", referencedColumnName = "id")
