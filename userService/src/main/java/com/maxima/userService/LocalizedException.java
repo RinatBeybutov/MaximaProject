@@ -13,14 +13,14 @@ import org.springframework.web.context.request.WebRequest;
  * Класс глобального перехватчика ошибок
  */
 @ControllerAdvice
-public class GlobalExceptionHandler extends RuntimeException {
+public class LocalizedException extends RuntimeException {
 
   @Autowired
   private MessageSource messageSource;
 
   @ExceptionHandler(EntityNotFoundException.class)
-  public ResponseEntity<String> EntityNotFoundException(EntityNotFoundException e,
-                                                        WebRequest request) {
+  public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException e,
+                                                              WebRequest request) {
     String errorMessage = messageSource.getMessage(e.getMessage(), null, request.getLocale());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
   }
