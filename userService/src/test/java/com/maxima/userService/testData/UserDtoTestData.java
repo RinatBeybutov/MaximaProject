@@ -5,6 +5,10 @@ import com.maxima.userService.dto.UserViewDto;
 import java.time.LocalDate;
 import java.util.UUID;
 
+/**
+ * Класс UserDtoTestData содержит статические методы и константы для создания тестовых данных для
+ * DTO пользователей.
+ */
 public class UserDtoTestData {
 
   public static final String USER_NOT_FOUND_MESSAGE = "Пользователь с таким UUID не найден";
@@ -39,6 +43,11 @@ public class UserDtoTestData {
         .build();
   }
 
+  /**
+   * Создает экземпляр UserViewDto с тестовыми данными для пользователя Владимира.
+   *
+   * @return UserViewDto с предустановленными значениями email, name, uuid и registeredAt.
+   */
   public static UserViewDto vladimirUserDto() {
     return UserViewDto.builder()
         .email("vladimir@gmail.com")

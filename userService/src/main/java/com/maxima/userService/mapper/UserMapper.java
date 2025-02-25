@@ -7,6 +7,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
+/**
+ * Интерфейс для преобразования сущности пользователя.
+ */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
 

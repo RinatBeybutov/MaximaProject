@@ -11,7 +11,9 @@ import java.time.LocalDate;
 import java.util.UUID;
 import lombok.Data;
 
-
+/**
+ *  Сущность пользователя.
+ */
 @Data
 @Entity
 @Table(schema = "user_service", name = "users")
