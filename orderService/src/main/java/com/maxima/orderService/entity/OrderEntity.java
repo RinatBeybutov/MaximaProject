@@ -1,6 +1,12 @@
 package com.maxima.orderService.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -9,6 +15,9 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * Сущность заказа
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +28,7 @@ public class OrderEntity extends BaseEntity {
   private Date createdAt;
 
   @Column(name = "user_uuid")
-  private UUID user_uuid;
+  private UUID userUuid;
 
   @Column(name = "status")
   private OrderStatus status;

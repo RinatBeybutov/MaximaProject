@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Сущность связи продукта и заказа
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,11 +24,11 @@ public class ProductToOrderEntity {
   private Long id;
 
   @Column(name = "product_id")
-  private Long product_id;
+  private Long productId;
 
   @Column(name = "count")
   private Long count;
 
   @Column(name = "order_id")
-  private Long order_id;
+  private Long orderId;
 }
