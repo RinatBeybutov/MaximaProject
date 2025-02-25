@@ -1,6 +1,6 @@
 package com.maxima.userService;
 
-import com.maxima.userService.config.LocalizedEntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -13,16 +13,18 @@ import org.springframework.web.context.request.WebRequest;
  * Класс глобального перехватчика ошибок
  */
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends RuntimeException {
 
   @Autowired
   private MessageSource messageSource;
 
-  @ExceptionHandler(LocalizedEntityNotFoundException.class)
-  public ResponseEntity<String> handleEntityNotFoundException(LocalizedEntityNotFoundException e,
-                                                              WebRequest request) {
-    String errorMessage = messageSource.getMessage(e.getMessageKey(),
-                                                   null, request.getLocale());
+  @ExceptionHandler(EntityNotFoundException.class)
+  public ResponseEntity<String> EntityNotFoundException(EntityNotFoundException e,
+                                                        WebRequest request) {
+    String[] parts = e.getMessage().split("=");
+    String errorKey = parts[0];
+    String uuid = parts.length > 1 ? parts[1] : "unknown";
+    String errorMessage = messageSource.getMessage(errorKey, new Object[]{uuid}, request.getLocale());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
   }
 }

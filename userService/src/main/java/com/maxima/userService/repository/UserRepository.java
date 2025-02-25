@@ -1,6 +1,5 @@
 package com.maxima.userService.repository;
 
-import com.maxima.userService.config.LocalizedEntityNotFoundException;
 import com.maxima.userService.entity.UserEntity;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.Optional;
@@ -16,6 +15,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
   default UserEntity getUser(UUID uuid) {
     return findByUuid(uuid).orElseThrow(
-        () -> new LocalizedEntityNotFoundException("error.user.not_found"));
+        () -> new EntityNotFoundException(String.format("error.user.not_found=%s", uuid)));
   }
 }
