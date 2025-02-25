@@ -7,7 +7,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import java.util.UUID;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Базовый класс для всех сущностей, предоставляющий общие поля и функциональность.
@@ -18,6 +21,7 @@ public class BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter(AccessLevel.PRIVATE)
   private Long id;
 
   @Column(name = "uuid", unique = true)

@@ -1,6 +1,8 @@
 package com.maxima.orderService.entity;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +23,15 @@ public class OrderEntity extends BaseEntity {
 
   @Column(name = "status")
   private OrderStatus status;
+
+  @ManyToMany(cascade = CascadeType.ALL)
+  @JoinTable(name = "product_to_order",
+      joinColumns = {
+        @JoinColumn(name="order_id", referencedColumnName = "id"),
+      },
+      inverseJoinColumns = {
+        @JoinColumn(name = "product_id", referencedColumnName = "id")
+      }
+  )
+  private Set<ProductEntity> products = new HashSet<>();
 }
