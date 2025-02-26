@@ -1,19 +1,16 @@
 package com.maxima.orderService.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import java.util.HashSet;
-import java.util.Set;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.UUID;
+import lombok.Setter;
 
 /**
  * Сущность заказа
@@ -31,16 +28,14 @@ public class OrderEntity extends BaseEntity {
   private UUID userUuid;
 
   @Column(name = "status")
-  private OrderStatus status;
+  @Getter(AccessLevel.PRIVATE)
+  @Setter(AccessLevel.PRIVATE)
+  private Integer status;
 
-  @ManyToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "product_to_order",
-      joinColumns = {
-        @JoinColumn(name = "order_id", referencedColumnName = "id"),
-      },
-      inverseJoinColumns = {
-        @JoinColumn(name = "product_id", referencedColumnName = "id")
-      }
-  )
-  private Set<ProductEntity> products = new HashSet<>();
+  public void setStatus(OrderStatus orderStatus){
+    status = orderStatus.getStatus();
+  }
+  public OrderStatus getStatus(){
+    return OrderStatus.forInt(status);
+  }
 }

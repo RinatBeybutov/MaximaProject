@@ -18,10 +18,8 @@ import lombok.Setter;
 @Data
 @MappedSuperclass
 public class BaseEntity {
-
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Getter(AccessLevel.PRIVATE)
   private Long id;
 
   @Column(name = "uuid", unique = true)
@@ -31,5 +29,4 @@ public class BaseEntity {
   private void generateUuid() {
     setUuid(UUID.randomUUID());
   }
-
 }

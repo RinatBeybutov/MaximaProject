@@ -18,4 +18,8 @@ public enum OrderStatus {
   public int getStatus() {
     return status;
   }
+
+  public static OrderStatus forInt(int status){
+    return values()[status - 1];
+  }
 }
