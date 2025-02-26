@@ -21,6 +21,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "products", schema = "order_service")
 public class OrderEntity extends BaseEntity {
+
   @Column(name = "date")
   private Date createdAt;
 
@@ -32,10 +33,11 @@ public class OrderEntity extends BaseEntity {
   @Setter(AccessLevel.PRIVATE)
   private Integer status;
 
-  public void setStatus(OrderStatus orderStatus){
+  public void setStatus(OrderStatus orderStatus) {
     status = orderStatus.getStatus();
   }
-  public OrderStatus getStatus(){
+
+  public OrderStatus getStatus() {
     return OrderStatus.forInt(status);
   }
 }
