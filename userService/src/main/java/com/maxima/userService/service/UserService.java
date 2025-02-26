@@ -7,7 +7,6 @@ import java.util.UUID;
 
 /**
  * Интерфейс сервиса для управления пользователями.
- *
  */
 public interface UserService {
 

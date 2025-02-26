@@ -4,6 +4,7 @@ import static com.maxima.userService.config.ApiConfig.USERS;
 
 import com.maxima.userService.dto.UserCreateDto;
 import com.maxima.userService.dto.UserViewDto;
+import com.maxima.userService.entity.UserEntity;
 import com.maxima.userService.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Контроллер для сущности категорий {@link CategoryEntity}
+ * Контроллер для сущности пользователей {@link UserEntity}
  */
 @Tag(name = "Пользователи", description = "Операции CRUD с пользователями ")
 @RestController
