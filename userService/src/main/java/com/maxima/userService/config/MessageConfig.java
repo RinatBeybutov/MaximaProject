@@ -20,6 +20,7 @@ public class MessageConfig {
     ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
     messageSource.setBasename("classpath:messages");
     messageSource.setDefaultEncoding("UTF-8");
+    Locale.setDefault(Locale.forLanguageTag("ru"));
     return messageSource;
   }
 

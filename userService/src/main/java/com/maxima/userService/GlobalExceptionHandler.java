@@ -1,5 +1,6 @@
 package com.maxima.userService;
 
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(LocalizedException.class)
   public ResponseEntity<String> handleLocalizedException(LocalizedException e,
                                                          WebRequest request) {
-    String errorMessage = messageSource.getMessage(e.getMessage(), null, request.getLocale());
+    String errorMessage = messageSource.getMessage(e.getMessage(), null, Locale.getDefault());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
   }
 }
