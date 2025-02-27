@@ -22,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Класс Рест контроллера для реализации Api для работы с продуктами.
+ */
+
 @Tag(name = "Продукты", description = "Операции CRUD для работы с продуктами")
 @RestController
 @RequestMapping(PRODUCTS)
@@ -30,37 +34,65 @@ public class ProductController {
 
   private final ProductService service;
 
+  /**
+   * Создать новый продукт.
+   * @param productCreateDto название продукта
+   */
+
   @PostMapping
   @Operation(summary = "Создать продукт")
-  public ResponseEntity<ProductViewDto>create(@RequestBody ProductCreateDto productCreateDto){
+  public ResponseEntity<ProductViewDto> create(@RequestBody ProductCreateDto productCreateDto) {
     return ResponseEntity.ok(service.create(productCreateDto));
   }
 
+  /**
+   * Получить список продуктов.
+   */
+
   @GetMapping
   @Operation(summary = "Получить список продуктов")
-  public ResponseEntity<List<ProductViewDto>> getList(){
+  public ResponseEntity<List<ProductViewDto>> getList() {
     return ResponseEntity.ok(service.getList());
   }
+
+  /**
+   * Получить продукт по его UUID.
+   * @param uuid идентификатор продукта
+   */
 
   @GetMapping
   @Operation(summary = "Получение продукта по его UUID")
   public ResponseEntity<ProductViewDto> find(
-      @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc", required = true) UUID uuid){
+      @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc",
+          required = true) UUID uuid) {
     return ResponseEntity.ok(service.find(uuid));
   }
+
+  /**
+   * Обновление продукта по его UUID.
+   *
+   * @param productCreateDto идентификатор продукта
+   */
 
   @PutMapping
   @Operation(summary = "Обновление продукта по его UUID")
   public ResponseEntity<ProductViewDto> update(
-      @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc", required = true) UUID uuid,
-      @RequestBody ProductCreateDto productCreateDto){
+      @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc",
+          required = true) UUID uuid,
+      @RequestBody ProductCreateDto productCreateDto) {
     return ResponseEntity.ok(service.update(uuid, productCreateDto));
   }
+
+  /**
+   * Удаление продукта по его UUID.
+   * @param uuid идентификатор продукта
+   */
 
   @DeleteMapping
   @Operation(summary = "Удаление продукта по его UUID")
   public ResponseEntity<Void> delete(
-      @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc", required = true) UUID uuid){
+      @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc",
+          required = true) UUID uuid) {
     service.delete(uuid);
     return new ResponseEntity<>(HttpStatus.OK);
   }
