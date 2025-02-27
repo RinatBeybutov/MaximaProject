@@ -19,8 +19,8 @@ public enum OrderStatus {
   }
 
   public static OrderStatus forInt(int value) {
-    for(var status : values()) {
-      if(status.getValue() == value) {
+    for (var status : values()) {
+      if (status.getValue() == value) {
         return status;
       }
     }
