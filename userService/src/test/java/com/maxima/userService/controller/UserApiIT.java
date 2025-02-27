@@ -2,19 +2,19 @@ package com.maxima.userService.controller;
 
 import static com.maxima.userService.testData.UserDtoTestData.NUMBER_OF_USERS;
 import static com.maxima.userService.testData.UserDtoTestData.USER_NOT_FOUND_MESSAGE;
-import static com.maxima.userService.testData.UserDtoTestData.userUpdateDto;
+import static com.maxima.userService.testData.UserDtoTestData.WRONG_UUID;
+import static com.maxima.userService.testData.UserDtoTestData.createdViewDto;
 import static com.maxima.userService.testData.UserDtoTestData.updatedUserDto;
 import static com.maxima.userService.testData.UserDtoTestData.userCreateDto;
-import static com.maxima.userService.testData.UserDtoTestData.createdViewDto;
+import static com.maxima.userService.testData.UserDtoTestData.userUpdateDto;
 import static com.maxima.userService.testData.UserDtoTestData.vladimirUserDto;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.assertj.core.api.Assertions.assertThat;
 
-import com.maxima.userService.config.TestContainersConfig;
 import com.maxima.userService.config.ApiConfig;
+import com.maxima.userService.config.TestContainersConfig;
 import com.maxima.userService.dto.UserViewDto;
-import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +91,7 @@ class UserApiIT extends TestContainersConfig {
   @Test
   @DisplayName("Проверка на получение пользователя по UUID - не найден")
   void testGetOneNotFound() {
-    var response = restTemplate.getForEntity(url + "/" + UUID.randomUUID(),
+    var response = restTemplate.getForEntity(url + "/" + WRONG_UUID,
                                              String.class);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
