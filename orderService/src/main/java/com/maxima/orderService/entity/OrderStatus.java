@@ -18,6 +18,9 @@ public enum OrderStatus {
     this.value = status;
   }
 
+  /**
+   * Метод для получения значения перечисления по целому значению
+   */
   public static OrderStatus forInt(int value) {
     for (var status : values()) {
       if (status.getValue() == value) {
