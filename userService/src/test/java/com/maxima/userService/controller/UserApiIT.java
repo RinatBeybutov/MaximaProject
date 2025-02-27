@@ -95,7 +95,7 @@ class UserApiIT extends TestContainersConfig {
                                              String.class);
 
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    assertEquals(USER_NOT_FOUND_MESSAGE, response.getBody());
+    assertEquals(USER_NOT_FOUND_MESSAGE.formatted(WRONG_UUID), response.getBody());
   }
 
   @Test
@@ -155,6 +155,6 @@ class UserApiIT extends TestContainersConfig {
                                                   String.class);
 
     assertEquals(HttpStatus.NOT_FOUND, errorResponse.getStatusCode());
-    assertEquals(USER_NOT_FOUND_MESSAGE, errorResponse.getBody());
+    assertEquals(USER_NOT_FOUND_MESSAGE.formatted(uuid), errorResponse.getBody());
   }
 }
