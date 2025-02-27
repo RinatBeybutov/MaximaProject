@@ -1,5 +1,18 @@
 version: "3.9"
 services:
+
+  gateway:
+    build:
+      context: ./images/gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - order-service
+      - user-service
+    networks:
+      - shop-network
+
   user-service:
     build:
       context: ./images/user-service
