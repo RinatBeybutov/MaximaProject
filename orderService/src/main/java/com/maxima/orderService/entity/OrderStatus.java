@@ -1,7 +1,9 @@
 package com.maxima.orderService.entity;
 
+import lombok.Getter;
+
 /**
- * Перечисление с состояниями заказа
+ * Перечисление со статусами заказа
  */
 public enum OrderStatus {
   CREATED(1),
@@ -9,17 +11,19 @@ public enum OrderStatus {
   CANCELED(3),
   FINISHED(4);
 
-  private final int status;
+  @Getter
+  private final int value;
 
   OrderStatus(int status) {
-    this.status = status;
+    this.value = status;
   }
 
-  public int getStatus() {
-    return status;
-  }
-
-  public static OrderStatus forInt(int status) {
-    return values()[status - 1];
+  public static OrderStatus forInt(int value) {
+    for(var status : values()) {
+      if(status.getValue() == value) {
+        return status;
+      }
+    }
+    throw new IllegalArgumentException("Неверное значение индекса для enum OrderStatus");
   }
 }

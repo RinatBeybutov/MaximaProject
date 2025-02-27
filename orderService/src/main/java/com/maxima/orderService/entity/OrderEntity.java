@@ -34,7 +34,7 @@ public class OrderEntity extends BaseEntity {
   private Integer status;
 
   public void setStatus(OrderStatus orderStatus) {
-    status = orderStatus.getStatus();
+    status = orderStatus.getValue();
   }
 
   public OrderStatus getStatus() {
