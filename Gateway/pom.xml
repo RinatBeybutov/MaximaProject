@@ -10,10 +10,10 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.maxima</groupId>
-  <artifactId>Gateway</artifactId>
+  <artifactId>gateway</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Gateway</name>
-  <description>Gateway</description>
+  <name>gateway</name>
+  <description>gateway</description>
   <url/>
   <licenses>
     <license/>
@@ -42,36 +42,12 @@
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
-      <version>3.4.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.36</version>
-    </dependency>
-    <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>42.7.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate.orm</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>6.6.1.Final</version>
-    </dependency>
-    <dependency>
-      <groupId>io.swagger.core.v3</groupId>
-      <artifactId>swagger-annotations-jakarta</artifactId>
-      <version>2.2.22</version>
-      <scope>compile</scope>
-    </dependency>
+
   </dependencies>
+
 
   <build>
     <plugins>

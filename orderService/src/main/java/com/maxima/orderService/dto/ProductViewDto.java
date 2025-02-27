@@ -20,6 +20,9 @@ public class ProductViewDto {
   @Schema(description = "Глобальный индитификатор продукта", example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc")
   private UUID uuid;
 
+  @Schema(description = "Идентификатор категории, к которой относится продукт")
+  private Integer categoryId;
+
   @Schema(description = "Название продукта", example = "Сыр")
   private String name;
 

@@ -16,7 +16,4 @@ public class ProductCreateDto {
   @Schema(description = "Название продукта", example = "Томаты")
   private String name;
 
-  @Schema(description = "Идентификатор категории, к которой относится продукт")
-  private Integer categoryId;
-
 }
