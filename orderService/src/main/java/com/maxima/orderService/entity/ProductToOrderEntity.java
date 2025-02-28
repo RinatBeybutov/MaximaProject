@@ -35,10 +35,10 @@ public class ProductToOrderEntity {
   private OrderEntity order;
 
   @Column(name = "product_id", insertable = false, updatable = false)
-  Long productId;
+  private Long productId;
 
   @Column(name = "order_id", insertable = false, updatable = false)
-  Long orderId;
+  private Long orderId;
 
   @Column(name = "count")
   private Long count;

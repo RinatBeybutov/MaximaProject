@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(schema = "order_service", name = "product")
+@Table(schema = "order_service", name = "products")
 public class ProductEntity extends BaseEntity {
 
   private String name;
