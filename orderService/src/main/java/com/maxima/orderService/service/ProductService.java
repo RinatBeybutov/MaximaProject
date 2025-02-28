@@ -9,6 +9,7 @@ import java.util.UUID;
  * Интерфейс для управления продуктами.
  */
 public interface ProductService {
+
   ProductViewDto create(ProductCreateDto productCreateDto);
 
   List<ProductViewDto> getList();
