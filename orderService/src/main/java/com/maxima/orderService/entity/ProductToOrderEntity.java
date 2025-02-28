@@ -34,6 +34,12 @@ public class ProductToOrderEntity {
   @JoinColumn(name = "order_id")
   private OrderEntity order;
 
+  @Column(name = "product_id", insertable = false, updatable = false)
+  Long productId;
+
+  @Column(name = "order_id", insertable = false, updatable = false)
+  Long orderId;
+
   @Column(name = "count")
   private Long count;
 }

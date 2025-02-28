@@ -3,12 +3,12 @@ package com.maxima.orderService.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import java.util.Date;
 import java.util.UUID;
 import lombok.Setter;
 
@@ -23,7 +23,7 @@ import lombok.Setter;
 public class OrderEntity extends BaseEntity {
 
   @Column(name = "date")
-  private Date createdAt;
+  private LocalDateTime createdAt;
 
   @Column(name = "user_uuid")
   private UUID userUuid;
@@ -38,6 +38,6 @@ public class OrderEntity extends BaseEntity {
   }
 
   public OrderStatus getStatus() {
-    return OrderStatus.forInt(status);
+    return OrderStatus.fromValue(status);
   }
 }

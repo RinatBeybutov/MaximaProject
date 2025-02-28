@@ -21,7 +21,7 @@ public enum OrderStatus {
   /**
    * Метод для получения значения перечисления по целому значению
    */
-  public static OrderStatus forInt(int value) {
+  public static OrderStatus fromValue(int value) {
     for (var status : values()) {
       if (status.getValue() == value) {
         return status;
