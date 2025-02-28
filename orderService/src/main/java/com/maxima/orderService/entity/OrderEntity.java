@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "products", schema = "order_service")
+@Table(name = "order", schema = "order_service")
 public class OrderEntity extends BaseEntity {
 
   @Column(name = "date")
