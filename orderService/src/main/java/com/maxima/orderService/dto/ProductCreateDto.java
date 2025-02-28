@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * ДТО для создания продукта.
+ */
 @Schema(description = "ДТО для создания продукта")
 @Builder
 @AllArgsConstructor

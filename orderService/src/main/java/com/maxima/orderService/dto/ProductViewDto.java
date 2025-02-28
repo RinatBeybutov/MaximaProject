@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * ДТО сущности продукта.
+ */
 @Schema(description = "ДТО сущности продукта")
 @Data
 @Builder

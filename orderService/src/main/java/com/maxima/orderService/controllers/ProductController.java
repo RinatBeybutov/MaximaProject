@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Класс Рест контроллера для реализации Api для работы с продуктами.
  */
-
 @Tag(name = "Продукты", description = "Операции CRUD для работы с продуктами")
 @RestController
 @RequestMapping(PRODUCTS)
@@ -36,9 +35,9 @@ public class ProductController {
 
   /**
    * Создать новый продукт.
+   *
    * @param productCreateDto название продукта
    */
-
   @PostMapping
   @Operation(summary = "Создать продукт")
   public ResponseEntity<ProductViewDto> create(@RequestBody ProductCreateDto productCreateDto) {
@@ -48,7 +47,6 @@ public class ProductController {
   /**
    * Получить список продуктов.
    */
-
   @GetMapping
   @Operation(summary = "Получить список продуктов")
   public ResponseEntity<List<ProductViewDto>> getList() {
@@ -57,10 +55,10 @@ public class ProductController {
 
   /**
    * Получить продукт по его UUID.
+   *
    * @param uuid идентификатор продукта
    */
-
-  @GetMapping
+  @GetMapping("/{uuid}")
   @Operation(summary = "Получение продукта по его UUID")
   public ResponseEntity<ProductViewDto> find(
       @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc",
@@ -73,8 +71,7 @@ public class ProductController {
    *
    * @param productCreateDto идентификатор продукта
    */
-
-  @PutMapping
+  @PutMapping("/{uuid}")
   @Operation(summary = "Обновление продукта по его UUID")
   public ResponseEntity<ProductViewDto> update(
       @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc",
@@ -85,10 +82,10 @@ public class ProductController {
 
   /**
    * Удаление продукта по его UUID.
+   *
    * @param uuid идентификатор продукта
    */
-
-  @DeleteMapping
+  @DeleteMapping("/{uuid}")
   @Operation(summary = "Удаление продукта по его UUID")
   public ResponseEntity<Void> delete(
       @PathVariable("uuid") @Parameter(example = "1867e5bc-3b07-45f8-b2a6-be1e01274adc",
