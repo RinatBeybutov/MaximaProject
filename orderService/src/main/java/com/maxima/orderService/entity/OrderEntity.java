@@ -22,7 +22,7 @@ import lombok.Setter;
 @Table(name = "orders", schema = "order_service")
 public class OrderEntity extends BaseEntity {
 
-  @Column(name = "date")
+  @Column(name = "created_at")
   private LocalDateTime createdAt;
 
   @Column(name = "user_uuid")
