@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Дто сущности заказа
+ */
 @Schema(description = "Дто сущности заказа")
 @Data
 @Builder

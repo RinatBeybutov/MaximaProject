@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Дто сущности заказа для ввода с фронтэнда
+ */
 @Schema(description = "Дто сущности заказа для ввода с фронтэнда")
 @Data
 @Builder
