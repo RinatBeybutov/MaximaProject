@@ -3,6 +3,7 @@ package com.maxima.orderService.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,5 @@ public class ProductEntity extends BaseEntity {
   private String name;
 
   @Column(name = "category_id")
-  private Long categoryId;
+  private UUID categoryId;
 }

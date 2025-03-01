@@ -1,8 +1,9 @@
 package com.maxima.orderService.service;
 
-import com.maxima.orderService.CategoryMapper;
+import com.maxima.orderService.mapper.CategoryMapper;
 import com.maxima.orderService.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import com.maxima.orderService.dto.CategoryDto;
 import com.maxima.orderService.dto.CategoryCreateDto;
@@ -21,6 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository repository;
 
+  @Qualifier("categoryMapper")
   private final CategoryMapper mapper;
 
   /**
