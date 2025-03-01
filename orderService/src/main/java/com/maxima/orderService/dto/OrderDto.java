@@ -18,7 +18,7 @@ public class OrderDto {
   @Schema(description = "Идентификатор заказа", example = "1")
   private Long id;
 
-  @Schema(description = "Глобальный идентификатор заказа", example = "fcc49792-9c0b-49f7-9fce-5d9d631d045f")
+  @Schema(description = "Глобальный идентификатор заказа", example = "acc49792-9c0b-49f7-9fce-5d9d631d045f")
   private UUID uuid;
 
   private LocalDateTime createdAt;
