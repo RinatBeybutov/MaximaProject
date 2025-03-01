@@ -6,32 +6,32 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Сервис для реализации работы с Категориями
+ * Сервис для реализации работы с Заказами
  */
 public interface OrderService {
 
   /**
-   * Создать категорию
+   * Создать Заказ
    */
   OrderDto create(OrderCreateDto dto);
 
   /**
-   * Найти категорию по uuid
+   * Найти Заказ по uuid
    */
   OrderDto find(UUID uuid);
 
   /**
-   * Обновить категорию по uuid
+   * Обновить Заказ по uuid
    */
   OrderDto update(UUID uuid, OrderCreateDto categoryInputDto);
 
   /**
-   * Удалить категорию по uuid
+   * Удалить Заказ по uuid
    */
   void delete(UUID uuid);
 
   /**
-   * Получить список всех категорий
+   * Получить список всех Заказов
    */
   List<OrderDto> getList(UUID uuid);
 }
