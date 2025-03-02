@@ -38,6 +38,7 @@ public class OrderEntity extends BaseEntity {
   }
 
   public OrderStatus getStatus() {
-    return OrderStatus.fromValue(status);
+    return status == null ? null : OrderStatus.fromValue(status);
   }
+
 }

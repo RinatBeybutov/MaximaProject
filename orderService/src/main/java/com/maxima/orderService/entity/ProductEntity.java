@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Table(schema = "order_service", name = "products")
 public class ProductEntity extends BaseEntity {
 
+  @Column(name = "name")
   private String name;
 
   @Column(name = "category_id")

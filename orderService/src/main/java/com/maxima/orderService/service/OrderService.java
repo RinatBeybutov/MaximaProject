@@ -2,6 +2,7 @@ package com.maxima.orderService.service;
 
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderDto;
+import com.maxima.orderService.dto.OrderUpdateDto;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public interface OrderService {
   /**
    * Обновить Заказ по uuid
    */
-  OrderDto update(UUID uuid, OrderCreateDto categoryInputDto);
+  OrderDto update(UUID uuid, OrderUpdateDto orderUpdateDto);
 
   /**
    * Удалить Заказ по uuid

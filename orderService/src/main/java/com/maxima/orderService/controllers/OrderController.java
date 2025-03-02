@@ -4,6 +4,7 @@ import static com.maxima.orderService.config.ApiConfig.ORDERS;
 
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderDto;
+import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -69,14 +70,14 @@ public class OrderController {
   /**
    * Обновить заказ по UUID
    *
-   * @param orderCreateDto идентификатор заказа
+   * @param orderUpdateDto идентификатор заказа
    */
   @Operation(summary = "Обновить заказ по UUID")
   @PutMapping("/{uuid}")
   public ResponseEntity<OrderDto> update(
       @PathVariable("uuid") @Parameter(example = "acc49792-9c0b-49f7-9fce-5d9d631d045f", required = true) UUID uuid,
-      @RequestBody OrderCreateDto orderCreateDto) {
-    return ResponseEntity.ok(service.update(uuid, orderCreateDto));
+      @RequestBody OrderUpdateDto orderUpdateDto) {
+    return ResponseEntity.ok(service.update(uuid, orderUpdateDto));
   }
 
   /**

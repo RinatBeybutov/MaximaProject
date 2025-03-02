@@ -1,7 +1,7 @@
 package com.maxima.orderService.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,11 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderCreateDto {
-
-  private LocalDateTime createdAt;
-
   private UUID userUuid;
 
-  private Integer status;
+  private Map<UUID,Long> productsCost;
 
 }

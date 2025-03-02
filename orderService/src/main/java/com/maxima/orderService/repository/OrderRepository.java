@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
   Optional<OrderEntity> findByUuid(UUID uuid);
 
-  List<OrderEntity> findAllByUuid(UUID uuid);
+  List<OrderEntity> findAllByUserUuid(UUID uuid);
 
   default OrderEntity getByUuid(UUID uuid) throws ResponseException {
     return findByUuid(uuid).orElseThrow(ResponseException::new);
