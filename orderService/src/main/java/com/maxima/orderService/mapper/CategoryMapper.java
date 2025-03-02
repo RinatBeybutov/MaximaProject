@@ -9,7 +9,6 @@ import org.mapstruct.MappingTarget;
 /**
  * Интерфейс для преобразования между сущностями и DTO Категорий.
  */
-
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
 

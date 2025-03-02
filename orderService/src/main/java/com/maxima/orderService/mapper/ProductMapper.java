@@ -8,16 +8,22 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
+
+
 /**
  * Интерфейс для преобразования между сущностями и DTO Категорий.
  */
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ProductMapper {
 
+
   ProductViewDto toDto(ProductEntity productEntity);
 
-  @Mapping(target = "categoryId", source = "categoryUuid")
   ProductEntity toEntity(ProductCreateDto dto);
 
+
   void update(ProductCreateDto productInputDto, @MappingTarget ProductEntity productEntity);
+
+
+
 }
