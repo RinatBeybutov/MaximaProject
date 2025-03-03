@@ -1,13 +1,13 @@
 package com.maxima.userService.controller;
 
-import static com.maxima.userService.testData.UserDtoTestData.NUMBER_OF_USERS;
-import static com.maxima.userService.testData.UserDtoTestData.USER_NOT_FOUND_MESSAGE;
-import static com.maxima.userService.testData.UserDtoTestData.WRONG_UUID;
-import static com.maxima.userService.testData.UserDtoTestData.createdViewDto;
-import static com.maxima.userService.testData.UserDtoTestData.updatedUserDto;
-import static com.maxima.userService.testData.UserDtoTestData.userCreateDto;
-import static com.maxima.userService.testData.UserDtoTestData.userUpdateDto;
-import static com.maxima.userService.testData.UserDtoTestData.vladimirUserDto;
+import static com.maxima.userService.testData.UserApiTestData.NUMBER_OF_USERS;
+import static com.maxima.userService.testData.UserApiTestData.USER_NOT_FOUND_MESSAGE;
+import static com.maxima.userService.testData.UserApiTestData.WRONG_UUID;
+import static com.maxima.userService.testData.UserApiTestData.createdViewDto;
+import static com.maxima.userService.testData.UserApiTestData.updatedUserDto;
+import static com.maxima.userService.testData.UserApiTestData.userCreateDto;
+import static com.maxima.userService.testData.UserApiTestData.userUpdateDto;
+import static com.maxima.userService.testData.UserApiTestData.vladimirUserDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

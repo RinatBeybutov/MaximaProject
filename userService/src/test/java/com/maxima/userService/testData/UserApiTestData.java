@@ -9,7 +9,7 @@ import java.util.UUID;
  * Класс UserDtoTestData содержит статические методы и константы для создания тестовых данных для
  * DTO пользователей.
  */
-public class UserDtoTestData {
+public class UserApiTestData {
 
   public static final UUID WRONG_UUID = UUID.fromString("974df0be-8fe6-4cb8-8e71-b307567c3e60");
 
