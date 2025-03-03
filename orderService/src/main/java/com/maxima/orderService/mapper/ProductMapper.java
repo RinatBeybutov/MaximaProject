@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
-
 /**
  * Интерфейс для преобразования между сущностями и DTO Категорий.
  */
@@ -20,9 +19,5 @@ public interface ProductMapper {
 
   ProductEntity toEntity(ProductCreateDto dto);
 
-
   void update(ProductCreateDto productInputDto, @MappingTarget ProductEntity productEntity);
-
-
-
 }
