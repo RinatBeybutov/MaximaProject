@@ -1,4 +1,4 @@
-package com.maxima.orderService.mapper;
+package com.maxima.orderService;
 
 import com.maxima.orderService.dto.CategoryDto;
 import com.maxima.orderService.entity.CategoryEntity;
@@ -9,7 +9,6 @@ import org.mapstruct.MappingTarget;
 /**
  * Интерфейс для преобразования между сущностями и DTO Категорий.
  */
-
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
 

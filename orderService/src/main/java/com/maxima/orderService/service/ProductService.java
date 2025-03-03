@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 public interface ProductService {
 
-  ProductViewDto create(ProductCreateDto productCreateDto);
+  ProductViewDto create(ProductCreateDto dto);
 
   List<ProductViewDto> getList();
 

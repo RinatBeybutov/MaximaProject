@@ -21,16 +21,17 @@ public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository repository;
 
-  private final CategoryMapper mapper;
+
+  private final CategoryMapper categoryMapper;
 
   /**
    * Создать категорию
    */
   @Transactional
   public CategoryDto create(CategoryCreateDto dto) {
-    var entity = mapper.toEntity(dto);
+    var entity = categoryMapper.toEntity(dto);
     entity = repository.save(entity);
-    return mapper.toDto(entity);
+    return categoryMapper.toDto(entity);
   }
 
   /**
@@ -39,7 +40,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Transactional
   public CategoryDto find(UUID uuid) throws ResponseException {
     var entity = repository.getByUuid(uuid);
-    return mapper.toDto(entity);
+    return categoryMapper.toDto(entity);
   }
 
   /**
@@ -49,9 +50,9 @@ public class CategoryServiceImpl implements CategoryService {
   public CategoryDto update(UUID uuid, CategoryCreateDto categoryCreateDto)
       throws ResponseException {
     var entity = repository.getByUuid(uuid);
-    mapper.update(categoryCreateDto, entity);
+    categoryMapper.update(categoryCreateDto, entity);
     entity = repository.save(entity);
-    return mapper.toDto(entity);
+    return categoryMapper.toDto(entity);
   }
 
   /**
@@ -70,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
   public List<CategoryDto> getList() {
     return repository.findAll()
         .stream()
-        .map(mapper::toDto)
+        .map(categoryMapper::toDto)
         .collect(Collectors.toList());
   }
 
