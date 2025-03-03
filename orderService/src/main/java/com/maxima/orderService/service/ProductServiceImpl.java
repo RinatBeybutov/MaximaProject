@@ -22,16 +22,16 @@ public class ProductServiceImpl implements ProductService {
 
   private final CategoryRepository categoryRepository;
 
-  private final ProductMapper productMapper;
+  private final ProductMapper mapper;
 
   @Override
   @Transactional
   public ProductViewDto create(ProductCreateDto dto) {
     var category = categoryRepository.getByUuid(dto.getCategoryUuid());
-    var entity = productMapper.toEntity(dto);
+    var entity = mapper.toEntity(dto);
     entity.setCategory(category);
     entity = repository.save(entity);
-    return productMapper.toDto(entity);
+    return mapper.toDto(entity);
   }
 
   @Override
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
   public List<ProductViewDto> getList() {
     return repository.findAll()
         .stream()
-        .map(productMapper::toDto)
+        .map(mapper::toDto)
         .toList();
   }
 
@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
   @Transactional(readOnly = true)
   public ProductViewDto find(UUID uuid) {
     var entity = repository.getByUuid(uuid);
-    return productMapper.toDto(entity);
+    return mapper.toDto(entity);
   }
 
   @Override
@@ -55,10 +55,10 @@ public class ProductServiceImpl implements ProductService {
   public ProductViewDto update(UUID uuid, ProductCreateDto productCreateDto) {
     var entity = repository.getByUuid(uuid);
     var category = categoryRepository.getByUuid(productCreateDto.getCategoryUuid());
-    productMapper.update(productCreateDto, entity);
+    mapper.update(productCreateDto, entity);
     entity.setCategory(category);
     entity = repository.save(entity);
-    return productMapper.toDto(entity);
+    return mapper.toDto(entity);
   }
 
   @Override

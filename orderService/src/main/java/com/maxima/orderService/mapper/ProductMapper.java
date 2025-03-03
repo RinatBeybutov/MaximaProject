@@ -11,7 +11,7 @@ import org.mapstruct.MappingTarget;
 /**
  * Интерфейс для преобразования между сущностями и DTO Категорий.
  */
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring")
 public interface ProductMapper {
 
   @Mapping(source = "category.uuid", target = "categoryUuid")
