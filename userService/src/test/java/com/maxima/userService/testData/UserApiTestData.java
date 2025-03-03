@@ -1,6 +1,7 @@
 package com.maxima.userService.testData;
 
 import com.maxima.userService.dto.UserCreateDto;
+import com.maxima.userService.dto.UserFilterDto;
 import com.maxima.userService.dto.UserViewDto;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -42,6 +43,12 @@ public class UserApiTestData {
     return UserViewDto.builder()
         .name("new name")
         .email("newemail@mail.com")
+        .build();
+  }
+
+  public static UserFilterDto filter() {
+    return UserFilterDto.builder()
+        .nameEquals("Владимир")
         .build();
   }
 

@@ -37,7 +37,9 @@
     <mapstruct.version>1.5.3.Final</mapstruct.version>
     <swagger.version>2.6.0</swagger.version>
     <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
-    <jsonassert.version>1.5.1</jsonassert.version>
+    <puppycrawl.tools.version>10.13.0</puppycrawl.tools.version>
+    <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+    <maven.checkstyle.plugin.version>3.3.1</maven.checkstyle.plugin.version>
   </properties>
   <dependencies>
 
@@ -178,7 +180,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
+        <version>${maven.surefire.plugin.version}</version>
         <configuration>
           <includes>
             <include>**/*IT.java</include>
@@ -196,7 +198,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>3.3.1</version>
+            <version>${maven.checkstyle.plugin.version}</version>
             <configuration>
               <configLocation>codestyle.xml</configLocation>
               <consoleOutput>true</consoleOutput>
@@ -212,7 +214,7 @@
               <dependency>
                 <groupId>com.puppycrawl.tools</groupId>
                 <artifactId>checkstyle</artifactId>
-                <version>10.13.0</version>
+                <version>${puppycrawl.tools.version}</version>
               </dependency>
             </dependencies>
             <executions>
