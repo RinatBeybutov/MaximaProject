@@ -1,6 +1,6 @@
 package com.maxima.orderService.service;
 
-import com.maxima.orderService.CategoryMapper;
+import com.maxima.orderService.mapper.CategoryMapper;
 import com.maxima.orderService.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
