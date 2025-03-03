@@ -37,15 +37,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   @Transactional(readOnly = true)
-  public List<UserViewDto> getList() {
-    return repository.findAll().stream()
-        .map(mapper::toDto)
-        .toList();
-  }
-
-  @Override
-  @Transactional(readOnly = true)
-  public List<UserViewDto> getFilteredList(UserFilterDto dto) {
+  public List<UserViewDto> getList(UserFilterDto dto) {
     var users = repository.findAll().stream();
 
     if (dto != null) {
@@ -56,7 +48,8 @@ public class UserServiceImpl implements UserService {
       }
     }
 
-    return users.map(mapper::toDto).toList();
+    return users.map(mapper::toDto)
+        .toList();
   }
 
   @Override

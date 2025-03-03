@@ -83,8 +83,8 @@ class UserApiIT extends TestContainersConfig {
     headers.setContentType(MediaType.APPLICATION_JSON);
     var requestEntity = new HttpEntity<>(filter(), headers);
 
-    var response = restTemplate.exchange(url + "/filter",
-                                         HttpMethod.POST,
+    var response = restTemplate.exchange(url,
+                                         HttpMethod.GET,
                                          requestEntity,
                                          UserViewDto[].class);
 

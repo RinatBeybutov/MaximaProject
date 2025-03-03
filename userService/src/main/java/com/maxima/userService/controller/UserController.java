@@ -44,15 +44,8 @@ public class UserController {
 
   @Operation(summary = "Получение списка пользователей")
   @GetMapping
-  public ResponseEntity<List<UserViewDto>> getList() {
-    return ResponseEntity.ok(service.getList());
-  }
-
-  @Operation(summary = "Получение отфильтрованного списка пользователей")
-  @PostMapping("/filter")
-  public ResponseEntity<List<UserViewDto>> getFilteredList(
-      @RequestBody(required = false) UserFilterDto dto) {
-    return ResponseEntity.ok(service.getFilteredList(dto));
+  public ResponseEntity<List<UserViewDto>> getList(@RequestBody(required = false) UserFilterDto dto) {
+    return ResponseEntity.ok(service.getList(dto));
   }
 
   @Operation(summary = "Получение пользователя по UUID")

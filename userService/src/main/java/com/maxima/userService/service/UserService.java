@@ -13,9 +13,7 @@ public interface UserService {
 
   UserViewDto create(UserCreateDto userCreateDto);
 
-  List<UserViewDto> getList();
-
-  List<UserViewDto> getFilteredList(UserFilterDto dto);
+  List<UserViewDto> getList(UserFilterDto dto);
 
   UserViewDto getOne(UUID uuid);
 
