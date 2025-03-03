@@ -22,44 +22,43 @@ public class CategoryServiceImpl implements CategoryService {
   private final CategoryRepository repository;
 
 
-  private final CategoryMapper categoryMapper;
+  private final CategoryMapper mapper;
 
   /**
    * Создать категорию
    */
   @Transactional
   public CategoryDto create(CategoryCreateDto dto) {
-    var entity = categoryMapper.toEntity(dto);
+    var entity = mapper.toEntity(dto);
     entity = repository.save(entity);
-    return categoryMapper.toDto(entity);
+    return mapper.toDto(entity);
   }
 
   /**
    * Найти категорию по uuid
    */
   @Transactional
-  public CategoryDto find(UUID uuid) throws ResponseException {
+  public CategoryDto find(UUID uuid) {
     var entity = repository.getByUuid(uuid);
-    return categoryMapper.toDto(entity);
+    return mapper.toDto(entity);
   }
 
   /**
    * Обновить категорию по uuid
    */
   @Transactional
-  public CategoryDto update(UUID uuid, CategoryCreateDto categoryCreateDto)
-      throws ResponseException {
+  public CategoryDto update(UUID uuid, CategoryCreateDto categoryCreateDto) {
     var entity = repository.getByUuid(uuid);
-    categoryMapper.update(categoryCreateDto, entity);
+    mapper.update(categoryCreateDto, entity);
     entity = repository.save(entity);
-    return categoryMapper.toDto(entity);
+    return mapper.toDto(entity);
   }
 
   /**
    * Удалить категорию по uuid
    */
   @Transactional
-  public void delete(UUID uuid) throws ResponseException {
+  public void delete(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     repository.delete(entity);
   }
@@ -71,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
   public List<CategoryDto> getList() {
     return repository.findAll()
         .stream()
-        .map(categoryMapper::toDto)
+        .map(mapper::toDto)
         .collect(Collectors.toList());
   }
 

@@ -25,5 +25,4 @@ public class ProductViewDto {
 
   @Schema(description = "Название продукта", example = "Сыр")
   private String name;
-
 }
