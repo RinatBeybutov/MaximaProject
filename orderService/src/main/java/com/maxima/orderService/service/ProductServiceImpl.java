@@ -2,8 +2,8 @@ package com.maxima.orderService.service;
 
 import com.maxima.orderService.dto.ProductCreateDto;
 import com.maxima.orderService.dto.ProductViewDto;
-import com.maxima.orderService.exceptions.ResponseException;
 import com.maxima.orderService.mapper.ProductMapper;
+import com.maxima.orderService.repository.CategoryRepository;
 import com.maxima.orderService.repository.ProductRepository;
 import java.util.List;
 import java.util.UUID;
@@ -20,13 +20,16 @@ public class ProductServiceImpl implements ProductService {
 
   private final ProductRepository repository;
 
+  private final CategoryRepository categoryRepository;
 
   private final ProductMapper productMapper;
 
   @Override
   @Transactional
-  public ProductViewDto create(ProductCreateDto dto) throws ResponseException {
+  public ProductViewDto create(ProductCreateDto dto) {
+    var category = categoryRepository.getByUuid(dto.getCategoryUuid());
     var entity = productMapper.toEntity(dto);
+    entity.setCategory(category);
     entity = repository.save(entity);
     return productMapper.toDto(entity);
   }
@@ -42,24 +45,25 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional(readOnly = true)
-  public ProductViewDto find(UUID uuid) throws ResponseException {
+  public ProductViewDto find(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     return productMapper.toDto(entity);
   }
 
   @Override
   @Transactional
-  public ProductViewDto update(UUID uuid, ProductCreateDto productCreateDto)
-      throws ResponseException {
+  public ProductViewDto update(UUID uuid, ProductCreateDto productCreateDto) {
     var entity = repository.getByUuid(uuid);
+    var category = categoryRepository.getByUuid(productCreateDto.getCategoryUuid());
     productMapper.update(productCreateDto, entity);
+    entity.setCategory(category);
     entity = repository.save(entity);
     return productMapper.toDto(entity);
   }
 
   @Override
   @Transactional
-  public void delete(UUID uuid) throws ResponseException {
+  public void delete(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     repository.delete(entity);
   }
