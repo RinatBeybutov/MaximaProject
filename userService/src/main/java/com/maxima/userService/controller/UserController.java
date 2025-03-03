@@ -3,6 +3,7 @@ package com.maxima.userService.controller;
 import static com.maxima.userService.config.ApiConfig.USERS;
 
 import com.maxima.userService.dto.UserCreateDto;
+import com.maxima.userService.dto.UserFilterDto;
 import com.maxima.userService.dto.UserViewDto;
 import com.maxima.userService.entity.UserEntity;
 import com.maxima.userService.service.UserService;
@@ -37,14 +38,21 @@ public class UserController {
 
   @Operation(summary = "Создание пользователя")
   @PostMapping
-  public ResponseEntity<UserViewDto> create(@Valid @RequestBody UserCreateDto userCreateDto) {
-    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(userCreateDto));
+  public ResponseEntity<UserViewDto> create(@Valid @RequestBody UserCreateDto dto) {
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
   }
 
   @Operation(summary = "Получение списка пользователей")
   @GetMapping
   public ResponseEntity<List<UserViewDto>> getList() {
     return ResponseEntity.ok(service.getList());
+  }
+
+  @Operation(summary = "Получение отфильтрованного списка пользователей")
+  @PostMapping("/filter")
+  public ResponseEntity<List<UserViewDto>> getFilteredList(
+      @RequestBody(required = false) UserFilterDto dto) {
+    return ResponseEntity.ok(service.getFilteredList(dto));
   }
 
   @Operation(summary = "Получение пользователя по UUID")

@@ -1,7 +1,9 @@
 package com.maxima.userService.service;
 
 import com.maxima.userService.dto.UserCreateDto;
+import com.maxima.userService.dto.UserFilterDto;
 import com.maxima.userService.dto.UserViewDto;
+import com.maxima.userService.filter.UserFilter;
 import com.maxima.userService.mapper.UserMapper;
 import com.maxima.userService.repository.UserRepository;
 import java.time.LocalDate;
@@ -22,6 +24,8 @@ public class UserServiceImpl implements UserService {
 
   private final UserMapper mapper;
 
+  private final List<UserFilter> filters;
+
   @Override
   @Transactional
   public UserViewDto create(UserCreateDto dto) {
@@ -37,6 +41,22 @@ public class UserServiceImpl implements UserService {
     return repository.findAll().stream()
         .map(mapper::toDto)
         .toList();
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<UserViewDto> getFilteredList(UserFilterDto dto) {
+    var users = repository.findAll().stream();
+
+    if (dto != null) {
+      for (UserFilter userFilter : filters) {
+        if (userFilter.isApplicable(dto)) {
+          users = userFilter.filter(users, dto);
+        }
+      }
+    }
+
+    return users.map(mapper::toDto).toList();
   }
 
   @Override
