@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * с продуктами.
  */
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
+
   Optional<ProductEntity> findByUuid(UUID uuid);
 
   default ProductEntity getByUuid(UUID uuid) throws ResponseException {

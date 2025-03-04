@@ -17,8 +17,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderCreateDto {
+
   private UUID userUuid;
 
-  private Map<UUID,Long> productsCost;
+  private Map<UUID, Long> productsNumber;
 
 }

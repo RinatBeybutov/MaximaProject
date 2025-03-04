@@ -5,6 +5,7 @@ import com.maxima.orderService.ProductToOrderMapper;
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
+import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.dto.ProductToOrderDto;
 import com.maxima.orderService.exceptions.ResponseException;
 import com.maxima.orderService.repository.OrderRepository;
@@ -38,16 +39,16 @@ public class OrderServiceImpl implements OrderService {
    * Создать заказ
    */
   @Transactional
-  public OrderDto create(OrderCreateDto dto) {
+  public OrderViewDto create(OrderCreateDto dto) {
     var orderEntity = mapper.toEntity(dto);
     orderEntity = repository.save(orderEntity);
-    for (var e : dto.getProductsCost().entrySet()) {
-      var productToOrderDto = new ProductToOrderDto(productRepository.getByUuid(e.getKey()),
-                                                    orderEntity, e.getValue());
+    for (var e : dto.getProductsNumber().entrySet()) {
+      var productToOrderDto = new ProductToOrderDto(productRepository.getByUuid(e.getKey()).getId(),
+                                                    orderEntity.getId(), e.getValue());
       var productToOrderEntity = productToOrderMapper.toEntity(productToOrderDto);
       productToOrderRepository.save(productToOrderEntity);
     }
-    return mapper.toDto(orderEntity);
+    return mapper.toViewDto(orderEntity);
   }
 
   /**
@@ -67,7 +68,6 @@ public class OrderServiceImpl implements OrderService {
       throws ResponseException {
     var entity = repository.getByUuid(uuid);
     mapper.update(orderUpdateDto, entity);
-    System.out.println(entity.getStatus());
     entity = repository.save(entity);
     return mapper.toDto(entity);
   }
@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
    * Получить список всех заказов по uuid пользователя
    */
   @Transactional
-  public List<OrderDto> getList(UUID userUuid) {
+  public List<OrderDto> toList(UUID userUuid) {
     return repository.findAllByUserUuid(userUuid)
         .stream()
         .map(mapper::toDto)

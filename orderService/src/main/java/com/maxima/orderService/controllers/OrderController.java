@@ -5,6 +5,7 @@ import static com.maxima.orderService.config.ApiConfig.ORDERS;
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
+import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -38,11 +39,11 @@ public class OrderController {
   /**
    * Создать новый заказ
    *
-   * @param orderCreateDto название заказа
+   * @param orderCreateDto дто заказа с фтонтэнда
    */
   @Operation(summary = "Создать заказ")
   @PostMapping
-  public ResponseEntity<OrderDto> create(@RequestBody OrderCreateDto orderCreateDto) {
+  public ResponseEntity<OrderViewDto> create(@RequestBody OrderCreateDto orderCreateDto) {
     return ResponseEntity.ok(service.create(orderCreateDto));
   }
 
@@ -51,26 +52,14 @@ public class OrderController {
    */
   @Operation(summary = "Получить список заказов по UUID пользователя")
   @GetMapping
-  public ResponseEntity<List<OrderDto>> getList(@RequestParam(name = "user") UUID uuid) {
-    return ResponseEntity.ok(service.getList(uuid));
-  }
-
-  /**
-   * Получить заказ по UUID
-   *
-   * @param uuid идентификатор заказа
-   */
-  @Operation(summary = "Получить заказ по UUID")
-  @GetMapping("/{uuid}")
-  public ResponseEntity<OrderDto> find(
-      @PathVariable("uuid") @Parameter(example = "acc49792-9c0b-49f7-9fce-5d9d631d045f", required = true) UUID uuid) {
-    return ResponseEntity.ok(service.find(uuid));
+  public ResponseEntity<List<OrderDto>> getList(@RequestParam(name = "user") UUID userUuid) {
+    return ResponseEntity.ok(service.toList(userUuid));
   }
 
   /**
    * Обновить заказ по UUID
    *
-   * @param orderUpdateDto идентификатор заказа
+   * @param uuid идентификатор заказа
    */
   @Operation(summary = "Обновить заказ по UUID")
   @PutMapping("/{uuid}")

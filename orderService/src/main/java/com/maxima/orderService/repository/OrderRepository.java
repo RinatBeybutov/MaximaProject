@@ -8,10 +8,11 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * Репозиторий для работы с сущностями заказов. Предоставляет методы для выполнения операций CRUD
- * с заказами.
+ * Репозиторий для работы с сущностями заказов. Предоставляет методы для выполнения операций CRUD с
+ * заказами.
  */
 public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
+
   Optional<OrderEntity> findByUuid(UUID uuid);
 
   List<OrderEntity> findAllByUserUuid(UUID uuid);

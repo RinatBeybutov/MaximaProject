@@ -16,14 +16,14 @@ import lombok.Setter;
  * Сущность заказа
  */
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "orders", schema = "order_service")
 public class OrderEntity extends BaseEntity {
 
   @Column(name = "created_at")
-  private LocalDateTime createdAt;
+  private LocalDateTime createdAt = LocalDateTime.now();
 
   @Column(name = "user_uuid")
   private UUID userUuid;
@@ -31,14 +31,14 @@ public class OrderEntity extends BaseEntity {
   @Column(name = "status")
   @Getter(AccessLevel.PRIVATE)
   @Setter(AccessLevel.PRIVATE)
-  private Integer status;
+  private Integer status = 1;
 
   public void setStatus(OrderStatus orderStatus) {
     status = orderStatus.getValue();
   }
 
   public OrderStatus getStatus() {
-    return status == null ? null : OrderStatus.fromValue(status);
+    return OrderStatus.fromValue(status);
   }
 
 }

@@ -8,14 +8,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ДТО для создания продукта.
+ * ДТО для изменения статуса продукта в БД
  */
-@Schema(description = "ДТО для создания продукта")
+@Schema(description = "ДТО для изменения статуса продукта в БД")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class OrderUpdateDto {
+
   @Schema(description = "Статус заказа", example = "CREATED")
   private OrderStatus status;
 

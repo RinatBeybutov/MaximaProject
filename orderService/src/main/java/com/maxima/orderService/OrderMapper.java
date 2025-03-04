@@ -3,31 +3,47 @@ package com.maxima.orderService;
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
+import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.entity.OrderEntity;
-import com.maxima.orderService.entity.OrderStatus;
-import java.time.LocalDateTime;
-import org.mapstruct.BeforeMapping;
+import com.maxima.orderService.entity.ProductToOrderEntity;
+import com.maxima.orderService.repository.OrderRepository;
+import com.maxima.orderService.repository.ProductToOrderRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Интерфейс для преобразования между сущностями и DTO Заказов.
  */
 
-@Mapper(componentModel = "spring")
-public interface OrderMapper {
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
+public abstract class OrderMapper {
 
-  OrderDto toDto(OrderEntity orderEntity);
+  @Autowired
+  private ProductToOrderRepository repository;
 
-  OrderEntity toEntity(OrderCreateDto dto);
+  @Autowired
+  private OrderRepository orderRepository;
 
-  void update(OrderUpdateDto dto, @MappingTarget OrderEntity orderEntity);
+  public abstract OrderDto toDto(OrderEntity orderEntity);
 
-  @BeforeMapping
-  default void fillFields(@MappingTarget OrderEntity orderEntity) {
-    if (orderEntity.getStatus() == null) {
-      orderEntity.setStatus(OrderStatus.CREATED);
-      orderEntity.setCreatedAt(LocalDateTime.now());
-    }
+  public abstract OrderViewDto toViewDto(OrderEntity orderEntity);
+
+  public abstract OrderEntity toEntity(OrderCreateDto dto);
+
+  public abstract void update(OrderUpdateDto dto, @MappingTarget OrderEntity orderEntity);
+
+  @AfterMapping
+  public void fillFields1(@MappingTarget OrderViewDto dto) {
+    List<ProductToOrderEntity> v = repository.findAllByOrderId(
+        orderRepository.getByUuid(dto.getUuid()).getId());
+    var v1 = v.stream()
+        .map(e -> e.getOrder().getUuid())
+        .collect(Collectors.toList());
+    dto.setProducts(v1);
   }
 }
