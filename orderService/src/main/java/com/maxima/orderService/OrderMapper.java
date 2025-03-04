@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Интерфейс для преобразования между сущностями и DTO Заказов.
  */
-
 @Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public abstract class OrderMapper {
 
@@ -37,6 +36,9 @@ public abstract class OrderMapper {
 
   public abstract void update(OrderUpdateDto dto, @MappingTarget OrderEntity orderEntity);
 
+  /**
+   * Метод для заполнения поля products в дто заказов
+   */
   @AfterMapping
   public void fillFields1(@MappingTarget OrderViewDto dto) {
     List<ProductToOrderEntity> v = repository.findAllByOrderId(
