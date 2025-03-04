@@ -21,6 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryRepository repository;
 
+
   private final CategoryMapper mapper;
 
   /**
@@ -37,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
    * Найти категорию по uuid
    */
   @Transactional
-  public CategoryDto find(UUID uuid) throws ResponseException {
+  public CategoryDto find(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     return mapper.toDto(entity);
   }
@@ -46,8 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
    * Обновить категорию по uuid
    */
   @Transactional
-  public CategoryDto update(UUID uuid, CategoryCreateDto categoryCreateDto)
-      throws ResponseException {
+  public CategoryDto update(UUID uuid, CategoryCreateDto categoryCreateDto) {
     var entity = repository.getByUuid(uuid);
     mapper.update(categoryCreateDto, entity);
     entity = repository.save(entity);
@@ -58,7 +58,7 @@ public class CategoryServiceImpl implements CategoryService {
    * Удалить категорию по uuid
    */
   @Transactional
-  public void delete(UUID uuid) throws ResponseException {
+  public void delete(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     repository.delete(entity);
   }
