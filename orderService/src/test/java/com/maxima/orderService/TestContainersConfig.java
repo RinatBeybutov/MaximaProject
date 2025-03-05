@@ -1,4 +1,4 @@
-package com.maxima.orderService.config;
+package com.maxima.orderService;
 
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
