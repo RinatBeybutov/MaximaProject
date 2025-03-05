@@ -14,6 +14,6 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> 
   Optional<CategoryEntity> findByUuid(UUID uuid);
 
   default CategoryEntity getByUuid(UUID uuid) throws ResponseException {
-    return findByUuid(uuid).orElseThrow(() -> new ResponseException());
+    return findByUuid(uuid).orElseThrow(ResponseException::new);
   }
 }

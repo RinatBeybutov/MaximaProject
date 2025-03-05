@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
   Optional<ProductEntity> findByUuid(UUID uuid);
 
-  default ProductEntity getByUuid(UUID uuid) throws ResponseException {
+  default ProductEntity getByUuid(UUID uuid)  {
     return findByUuid(uuid).orElseThrow(ResponseException::new);
   }
 }

@@ -4,6 +4,7 @@ import static com.maxima.userService.testData.UserApiTestData.NUMBER_OF_USERS;
 import static com.maxima.userService.testData.UserApiTestData.USER_NOT_FOUND_MESSAGE;
 import static com.maxima.userService.testData.UserApiTestData.WRONG_UUID;
 import static com.maxima.userService.testData.UserApiTestData.createdViewDto;
+import static com.maxima.userService.testData.UserApiTestData.filter;
 import static com.maxima.userService.testData.UserApiTestData.updatedUserDto;
 import static com.maxima.userService.testData.UserApiTestData.userCreateDto;
 import static com.maxima.userService.testData.UserApiTestData.userUpdateDto;
@@ -25,7 +26,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("Тестирование API для сущности UserEntity")
@@ -71,6 +71,28 @@ class UserApiIT extends TestContainersConfig {
     var users = response.getBody();
 
     assertEquals(NUMBER_OF_USERS, users.length);
+    assertThat(users[0])
+        .usingRecursiveComparison()
+        .isEqualTo(vladimirUserDto());
+  }
+
+  @Test
+  @DisplayName("Проверка нак получение отфильтрованного списка пользователей")
+  void testGetFilteredList() {
+    var headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    var requestEntity = new HttpEntity<>(filter(), headers);
+
+    var response = restTemplate.exchange(url,
+                                         HttpMethod.GET,
+                                         requestEntity,
+                                         UserViewDto[].class);
+
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
+
+    var users = response.getBody();
+
     assertThat(users[0])
         .usingRecursiveComparison()
         .isEqualTo(vladimirUserDto());

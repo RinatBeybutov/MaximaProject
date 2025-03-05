@@ -22,5 +22,4 @@ public class ProductCreateDto {
 
   @Schema(description = "Глобальный идентификатор категории, к которой относится продукт", example = "05e34db4-b626-4bbc-ab47-e32e2dbab680")
   private UUID categoryUuid;
-
 }
