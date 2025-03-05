@@ -44,7 +44,7 @@ public abstract class OrderMapper {
     var productToOrderList = repository.findAllByOrderId(
         orderRepository.getByUuid(dto.getUuid()).getId());
     var productsList = productToOrderList.stream()
-        .map(e -> e.getOrder().getUuid())
+        .map(e -> e.getProduct().getUuid())
         .collect(Collectors.toList());
     dto.setProducts(productsList);
   }
