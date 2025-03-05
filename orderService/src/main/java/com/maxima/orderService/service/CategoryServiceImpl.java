@@ -1,6 +1,6 @@
 package com.maxima.orderService.service;
 
-import com.maxima.orderService.CategoryMapper;
+import com.maxima.orderService.mapper.CategoryMapper;
 import com.maxima.orderService.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,6 @@ import com.maxima.orderService.dto.CategoryCreateDto;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.maxima.orderService.exceptions.ResponseException;
 import java.util.UUID;
 
 /**
