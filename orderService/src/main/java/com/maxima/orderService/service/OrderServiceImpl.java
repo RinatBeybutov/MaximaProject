@@ -1,7 +1,7 @@
 package com.maxima.orderService.service;
 
-import com.maxima.orderService.OrderMapper;
-import com.maxima.orderService.ProductToOrderMapper;
+import com.maxima.orderService.mapper.OrderMapper;
+import com.maxima.orderService.mapper.ProductToOrderMapper;
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;

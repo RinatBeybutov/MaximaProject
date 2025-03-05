@@ -1,4 +1,4 @@
-package com.maxima.orderService;
+package com.maxima.orderService.mapper;
 
 import com.maxima.orderService.dto.ProductToOrderDto;
 import com.maxima.orderService.entity.ProductToOrderEntity;
