@@ -40,12 +40,12 @@ public abstract class OrderMapper {
    * Метод для заполнения поля products в дто заказов
    */
   @AfterMapping
-  public void fillFields1(@MappingTarget OrderViewDto dto) {
-    List<ProductToOrderEntity> v = repository.findAllByOrderId(
+  public void fillProducts(@MappingTarget OrderViewDto dto) {
+    var productToOrderList = repository.findAllByOrderId(
         orderRepository.getByUuid(dto.getUuid()).getId());
-    var v1 = v.stream()
+    var productsList = productToOrderList.stream()
         .map(e -> e.getOrder().getUuid())
         .collect(Collectors.toList());
-    dto.setProducts(v1);
+    dto.setProducts(productsList);
   }
 }
