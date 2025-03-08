@@ -10,7 +10,7 @@ comment on TABLE order_service.orders is 'таблица заказов';
 
 comment on COLUMN order_service.orders.id is 'идентификатор записи в БД, первичный ключ';
 
-comment on COLUMN order_service.orders.UUID is 'UUID - идентификатор записи';
+comment on COLUMN order_service.orders.uuid is 'UUID - идентификатор записи';
 
 comment on COLUMN order_service.orders.date is 'дата и время создания заказа';
 
