@@ -1,12 +1,12 @@
 package com.maxima.orderService.service;
 
+import com.maxima.orderService.entity.OrderEntity;
+import com.maxima.orderService.entity.ProductToOrderEntity;
 import com.maxima.orderService.mapper.OrderMapper;
-import com.maxima.orderService.mapper.ProductToOrderMapper;
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.dto.OrderViewDto;
-import com.maxima.orderService.dto.ProductToOrderDto;
 import com.maxima.orderService.exceptions.ResponseException;
 import com.maxima.orderService.repository.OrderRepository;
 import com.maxima.orderService.repository.ProductRepository;
@@ -33,7 +33,19 @@ public class OrderServiceImpl implements OrderService {
 
   private final OrderMapper mapper;
 
-  private final ProductToOrderMapper productToOrderMapper;
+  private void fillProducts(OrderViewDto dto) {
+    var productToOrderList = productToOrderRepository.findAllByOrderId(
+        repository.getByUuid(dto.getUuid()).getId());
+    var productsList = productToOrderList.stream()
+        .map(e -> e.getProduct().getUuid())
+        .collect(Collectors.toList());
+    dto.setProducts(productsList);
+  }
+  private OrderViewDto mapToViewDto(OrderEntity orderEntity){
+    OrderViewDto dto = mapper.toViewDto(orderEntity);
+    fillProducts(dto);
+    return dto;
+  }
 
   /**
    * Создать заказ
@@ -43,12 +55,13 @@ public class OrderServiceImpl implements OrderService {
     var orderEntity = mapper.toEntity(dto);
     orderEntity = repository.save(orderEntity);
     for (var entry : dto.getProductsNumber().entrySet()) {
-      var productToOrderDto = new ProductToOrderDto(productRepository.getByUuid(entry.getKey()).getId(),
-                                                    orderEntity.getId(), entry.getValue());
-      var productToOrderEntity = productToOrderMapper.toEntity(productToOrderDto);
+      var productToOrderEntity = new ProductToOrderEntity();
+      productToOrderEntity.setOrder(orderEntity);
+      productToOrderEntity.setProduct(productRepository.getByUuid(entry.getKey()));
+      productToOrderEntity.setCount(entry.getValue());
       productToOrderRepository.save(productToOrderEntity);
     }
-    return mapper.toViewDto(orderEntity);
+    return mapToViewDto(orderEntity);
   }
 
   /**

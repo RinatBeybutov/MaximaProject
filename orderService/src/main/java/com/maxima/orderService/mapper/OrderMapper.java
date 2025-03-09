@@ -5,47 +5,20 @@ import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.entity.OrderEntity;
-import com.maxima.orderService.entity.ProductToOrderEntity;
-import com.maxima.orderService.repository.OrderRepository;
-import com.maxima.orderService.repository.ProductToOrderRepository;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Интерфейс для преобразования между сущностями и DTO Заказов.
  */
-@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
-public abstract class OrderMapper {
+@Mapper(componentModel = "spring")
+public interface OrderMapper {
 
-  @Autowired
-  private ProductToOrderRepository repository;
+  OrderDto toDto(OrderEntity orderEntity);
 
-  @Autowired
-  private OrderRepository orderRepository;
+  OrderViewDto toViewDto(OrderEntity orderEntity);
 
-  public abstract OrderDto toDto(OrderEntity orderEntity);
+  OrderEntity toEntity(OrderCreateDto dto);
 
-  public abstract OrderViewDto toViewDto(OrderEntity orderEntity);
-
-  public abstract OrderEntity toEntity(OrderCreateDto dto);
-
-  public abstract void update(OrderUpdateDto dto, @MappingTarget OrderEntity orderEntity);
-
-  /**
-   * Метод для заполнения поля products в дто заказов
-   */
-  @AfterMapping
-  public void fillProducts(@MappingTarget OrderViewDto dto) {
-    var productToOrderList = repository.findAllByOrderId(
-        orderRepository.getByUuid(dto.getUuid()).getId());
-    var productsList = productToOrderList.stream()
-        .map(e -> e.getProduct().getUuid())
-        .collect(Collectors.toList());
-    dto.setProducts(productsList);
-  }
+  void update(OrderUpdateDto dto, @MappingTarget OrderEntity orderEntity);
 }
