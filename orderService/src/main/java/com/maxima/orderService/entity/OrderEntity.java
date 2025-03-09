@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import java.util.UUID;
 import lombok.Setter;
 
@@ -15,13 +14,12 @@ import lombok.Setter;
  * Сущность заказа
  */
 @Data
-@NoArgsConstructor
 @Entity
 @Table(name = "orders", schema = "order_service")
 public class OrderEntity extends BaseEntity {
 
   @Column(name = "created_at")
-  private LocalDateTime createdAt = LocalDateTime.now();
+  private LocalDateTime createdAt;
 
   @Column(name = "user_uuid")
   private UUID userUuid;
@@ -39,4 +37,8 @@ public class OrderEntity extends BaseEntity {
     return OrderStatus.fromValue(status);
   }
 
+  public OrderEntity(){
+    createdAt = LocalDateTime.now();
+    status = 1;
+  }
 }
