@@ -1,7 +1,6 @@
 package com.maxima.orderService.service;
 
 import com.maxima.orderService.dto.OrderCreateDto;
-import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.dto.OrderViewDto;
 import java.util.List;
@@ -20,12 +19,12 @@ public interface OrderService {
   /**
    * Найти Заказ по uuid
    */
-  OrderDto find(UUID uuid);
+  OrderViewDto find(UUID uuid);
 
   /**
    * Обновить Заказ по uuid
    */
-  OrderDto update(UUID uuid, OrderUpdateDto orderUpdateDto);
+  OrderViewDto update(UUID uuid, OrderUpdateDto orderUpdateDto);
 
   /**
    * Удалить Заказ по uuid
@@ -35,6 +34,6 @@ public interface OrderService {
   /**
    * Получить список всех Заказов
    */
-  List<OrderDto> toList(UUID uuid);
+  List<OrderViewDto> toList(UUID uuid);
 }
 

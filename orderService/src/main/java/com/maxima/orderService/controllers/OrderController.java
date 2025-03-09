@@ -3,7 +3,6 @@ package com.maxima.orderService.controllers;
 import static com.maxima.orderService.config.ApiConfig.ORDERS;
 
 import com.maxima.orderService.dto.OrderCreateDto;
-import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.service.OrderService;
@@ -52,7 +51,7 @@ public class OrderController {
    */
   @Operation(summary = "Получить список заказов по UUID пользователя")
   @GetMapping
-  public ResponseEntity<List<OrderDto>> getList(@RequestParam(name = "user") UUID userUuid) {
+  public ResponseEntity<List<OrderViewDto>> getList(@RequestParam(name = "user") UUID userUuid) {
     return ResponseEntity.ok(service.toList(userUuid));
   }
 
@@ -63,7 +62,7 @@ public class OrderController {
    */
   @Operation(summary = "Обновить заказ по UUID")
   @PutMapping("/{uuid}")
-  public ResponseEntity<OrderDto> update(
+  public ResponseEntity<OrderViewDto> update(
       @PathVariable("uuid") @Parameter(example = "acc49792-9c0b-49f7-9fce-5d9d631d045f", required = true) UUID uuid,
       @RequestBody OrderUpdateDto orderUpdateDto) {
     return ResponseEntity.ok(service.update(uuid, orderUpdateDto));

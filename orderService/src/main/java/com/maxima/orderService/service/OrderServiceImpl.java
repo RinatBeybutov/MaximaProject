@@ -4,7 +4,6 @@ import com.maxima.orderService.entity.OrderEntity;
 import com.maxima.orderService.entity.ProductToOrderEntity;
 import com.maxima.orderService.mapper.OrderMapper;
 import com.maxima.orderService.dto.OrderCreateDto;
-import com.maxima.orderService.dto.OrderDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.exceptions.ResponseException;
@@ -68,21 +67,21 @@ public class OrderServiceImpl implements OrderService {
    * Найти заказ по uuid
    */
   @Transactional
-  public OrderDto find(UUID uuid) throws ResponseException {
+  public OrderViewDto find(UUID uuid) throws ResponseException {
     var entity = repository.getByUuid(uuid);
-    return mapper.toDto(entity);
+    return mapToViewDto(entity);
   }
 
   /**
    * Обновить заказ по uuid
    */
   @Transactional
-  public OrderDto update(UUID uuid, OrderUpdateDto orderUpdateDto)
+  public OrderViewDto update(UUID uuid, OrderUpdateDto orderUpdateDto)
       throws ResponseException {
     var entity = repository.getByUuid(uuid);
     mapper.update(orderUpdateDto, entity);
     entity = repository.save(entity);
-    return mapper.toDto(entity);
+    return mapToViewDto(entity);
   }
 
   /**
@@ -98,10 +97,10 @@ public class OrderServiceImpl implements OrderService {
    * Получить список всех заказов по uuid пользователя
    */
   @Transactional
-  public List<OrderDto> toList(UUID userUuid) {
+  public List<OrderViewDto> toList(UUID userUuid) {
     return repository.findAllByUserUuid(userUuid)
         .stream()
-        .map(mapper::toDto)
+        .map(e -> mapToViewDto(e))
         .collect(Collectors.toList());
   }
 

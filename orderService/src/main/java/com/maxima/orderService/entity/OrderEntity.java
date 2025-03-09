@@ -15,7 +15,6 @@ import lombok.Setter;
  * Сущность заказа
  */
 @Data
-//@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "orders", schema = "order_service")
