@@ -22,7 +22,7 @@ import org.springframework.http.HttpEntity;
  * Класс интегационных тестов для контроллера CategoryController
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class OrderApiIT extends TestContainersConfig {
+class OrderApiIntegrationTests extends TestContainersConfig {
 
   @Autowired
   private TestRestTemplate restTemplate;
