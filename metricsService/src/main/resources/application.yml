@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: metricsService
+server:
+  port: 8084
+springdoc:
+  swagger-ui.url: /openapi.yaml
