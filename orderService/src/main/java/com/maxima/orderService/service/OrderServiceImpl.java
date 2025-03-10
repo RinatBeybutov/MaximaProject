@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
   public OrderViewDto create(OrderCreateDto dto) {
     var orderEntity = mapper.toEntity(dto);
     orderEntity = repository.save(orderEntity);
-    for (var entry : dto.getProductsNumber().entrySet()) {
+    for (var entry : dto.getProductsNumber()) {
       var productToOrderEntity = new ProductToOrderEntity();
       productToOrderEntity.setOrder(orderEntity);
       productToOrderEntity.setProduct(productRepository.getByUuid(entry.getKey()));
