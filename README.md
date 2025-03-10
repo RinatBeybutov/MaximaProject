@@ -66,4 +66,9 @@ mvn -P check-code-style validate
 cd .\orderService\
 ```
 
+## Метрик сервис
 
+``` bash
+mvn -P check-code-style validate
+cd .\metricsService\
+```

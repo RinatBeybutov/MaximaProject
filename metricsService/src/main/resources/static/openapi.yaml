@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Metrics Service API
+  version: 1.0.0
+servers:
+  - description: Test server
+    url: http://localhost:8084
+paths:
+  /metrics/orders:
+    get:
+      summary: Получение метрик заказов за определенный день
+      parameters:
+        - name: date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderMetricsDTO'
+components:
+  schemas:
+    OrderMetricsDTO:
+      type: object
+      properties:
+        totalOrders:
+          type: integer
+        hourly:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderMetricsHourlyDTO'
+
+    OrderMetricsHourlyDTO:
+      type: object
+      properties:
+       hour:
+        type: integer
+       count:
+        type: integer
+
