@@ -38,7 +38,5 @@ public class OrderEntity extends BaseEntity {
   }
 
   public OrderEntity(){
-    createdAt = LocalDateTime.now();
-    status = 1;
   }
 }

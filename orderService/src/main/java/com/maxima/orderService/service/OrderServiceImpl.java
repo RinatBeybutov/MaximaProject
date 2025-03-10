@@ -10,6 +10,8 @@ import com.maxima.orderService.exceptions.ResponseException;
 import com.maxima.orderService.repository.OrderRepository;
 import com.maxima.orderService.repository.ProductRepository;
 import com.maxima.orderService.repository.ProductToOrderRepository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -52,6 +54,7 @@ public class OrderServiceImpl implements OrderService {
   @Transactional
   public OrderViewDto create(OrderCreateDto dto) {
     var orderEntity = mapper.toEntity(dto);
+    orderEntity.setCreatedAt(LocalDateTime.now());
     orderEntity = repository.save(orderEntity);
     for (var entry : dto.getProductsNumber()) {
       var productToOrderEntity = new ProductToOrderEntity();
