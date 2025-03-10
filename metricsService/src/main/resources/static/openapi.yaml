@@ -3,8 +3,8 @@ info:
   title: Metrics Service API
   version: 1.0.0
 servers:
-- description: Test server
-  url: http://localhost:8084
+  - description: Test server
+    url: http://localhost:8084
 paths:
   /metrics/orders:
     get:
@@ -18,19 +18,28 @@ paths:
             format: date
       responses:
         '200':
-          description: Successful response
+          description: Успешный ответ
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderMetrics'
+                $ref: '#/components/schemas/OrderMetricsDTO'
 components:
   schemas:
-    OrderMetrics:
+    OrderMetricsDTO:
       type: object
       properties:
         totalOrders:
           type: integer
-        ordersPerHour:
-          type: object
-          additionalProperties:
-            type: integer
+        hourly:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderMetricsHourlyDTO'
+
+    OrderMetricsHourlyDTO:
+      type: object
+      properties:
+       hour:
+        type: integer
+       count:
+        type: integer
+
