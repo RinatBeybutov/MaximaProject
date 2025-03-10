@@ -1,9 +1,9 @@
 package com.maxima.orderService.repository;
 
 import com.maxima.orderService.entity.CategoryEntity;
-import com.maxima.orderService.exceptions.ResponseException;
 import java.util.Optional;
 import java.util.UUID;
+import com.maxima.orderService.exceptions.ResponseException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

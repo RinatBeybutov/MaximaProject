@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  * Класс глобального перехватчика ошибок
  */
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class CustomExceptionHandler {
 
   /**
    * Обработчик исключения из метода сервиса для генерации корректного http ответа об ошибке
