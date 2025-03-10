@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
    * Найти заказ по uuid
    */
   @Transactional
-  public OrderViewDto find(UUID uuid) throws ResponseException {
+  public OrderViewDto find(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     return mapToViewDto(entity);
   }
@@ -65,8 +65,7 @@ public class OrderServiceImpl implements OrderService {
    * Обновить заказ по uuid
    */
   @Transactional
-  public OrderViewDto update(UUID uuid, OrderUpdateDto orderUpdateDto)
-      throws ResponseException {
+  public OrderViewDto update(UUID uuid, OrderUpdateDto orderUpdateDto) {
     var entity = repository.getByUuid(uuid);
     mapper.update(orderUpdateDto, entity);
     entity = repository.save(entity);
@@ -77,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
    * Удалить заказ по uuid
    */
   @Transactional
-  public void delete(UUID uuid) throws ResponseException {
+  public void delete(UUID uuid){
     var entity = repository.getByUuid(uuid);
     repository.delete(entity);
   }
