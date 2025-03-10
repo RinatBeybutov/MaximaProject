@@ -34,20 +34,6 @@ public class OrderServiceImpl implements OrderService {
 
   private final OrderMapper mapper;
 
-  private void fillProducts(OrderViewDto dto) {
-    var productToOrderList = productToOrderRepository.findAllByOrderId(
-        repository.getByUuid(dto.getUuid()).getId());
-    var productsList = productToOrderList.stream()
-        .map(e -> e.getProduct().getUuid())
-        .collect(Collectors.toList());
-    dto.setProducts(productsList);
-  }
-  private OrderViewDto mapToViewDto(OrderEntity orderEntity){
-    OrderViewDto dto = mapper.toViewDto(orderEntity);
-    fillProducts(dto);
-    return dto;
-  }
-
   /**
    * Создать заказ
    */
@@ -107,4 +93,17 @@ public class OrderServiceImpl implements OrderService {
         .collect(Collectors.toList());
   }
 
+  private void fillProducts(OrderViewDto dto) {
+    var productToOrderList = productToOrderRepository.findAllByOrderId(
+            repository.getByUuid(dto.getUuid()).getId());
+    var productsList = productToOrderList.stream()
+            .map(e -> e.getProduct().getUuid())
+            .collect(Collectors.toList());
+    dto.setProducts(productsList);
+  }
+  private OrderViewDto mapToViewDto(OrderEntity orderEntity){
+    OrderViewDto dto = mapper.toViewDto(orderEntity);
+    fillProducts(dto);
+    return dto;
+  }
 }
