@@ -7,6 +7,7 @@ import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.exceptions.ResponseException;
+import com.maxima.orderService.mapper.ProductMapper;
 import com.maxima.orderService.repository.OrderRepository;
 import com.maxima.orderService.repository.ProductRepository;
 import com.maxima.orderService.repository.ProductToOrderRepository;
@@ -33,6 +34,8 @@ public class OrderServiceImpl implements OrderService {
   private final ProductRepository productRepository;
 
   private final OrderMapper mapper;
+
+  private final ProductMapper productMapper;
 
   /**
    * Создать заказ
@@ -96,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
     var productToOrderList = productToOrderRepository.findAllByOrderId(
             repository.getByUuid(dto.getUuid()).getId());
     var productsList = productToOrderList.stream()
-            .map(e -> e.getProduct().getUuid())
+            .map(e -> productMapper.toDto(e.getProduct()))
             .collect(Collectors.toList());
     dto.setProducts(productsList);
   }

@@ -29,5 +29,5 @@ public class OrderViewDto {
 
   private OrderStatus status;
 
-  private List<UUID> products;
+  private List<ProductViewDto> products;
 }
