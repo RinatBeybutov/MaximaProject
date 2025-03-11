@@ -92,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
     return repository.findAllByUserUuid(userUuid)
         .stream()
         .map(e -> mapToViewDto(e))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private void fillProducts(OrderViewDto dto) {
