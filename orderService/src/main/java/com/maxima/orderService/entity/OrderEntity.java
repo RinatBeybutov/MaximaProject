@@ -30,12 +30,12 @@ public class OrderEntity extends BaseEntity {
   private Integer status = 1;
 
   public void setStatus(OrderStatus orderStatus) {
-        status = orderStatus.getValue();
-    }
+    status = orderStatus.getValue();
+  }
 
   public OrderStatus getStatus() {
-        return OrderStatus.fromValue(status);
-    }
+    return OrderStatus.fromValue(status);
+  }
 
   public OrderEntity() {
   }
