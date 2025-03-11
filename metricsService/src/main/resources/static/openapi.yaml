@@ -3,7 +3,7 @@ info:
   title: Metrics Service API
   version: 1.0.0
 servers:
-  - description: Test server
+  - description: localhost
     url: http://localhost:8084
 paths:
   /metrics/orders:
@@ -22,10 +22,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderMetricsDTO'
+                $ref: '#/components/schemas/OrderMetricsDto'
 components:
   schemas:
-    OrderMetricsDTO:
+    OrderMetricsDto:
       type: object
       properties:
         totalOrders:
@@ -33,9 +33,9 @@ components:
         hourly:
           type: array
           items:
-            $ref: '#/components/schemas/OrderMetricsHourlyDTO'
+            $ref: '#/components/schemas/OrderMetricsHourlyDto'
 
-    OrderMetricsHourlyDTO:
+    OrderMetricsHourlyDto:
       type: object
       properties:
        hour:

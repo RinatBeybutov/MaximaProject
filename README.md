@@ -49,6 +49,7 @@ users
 Gateway - 8081
 UserService - 8082
 OrderService - 8083
+MetricsService - 8084
 
 # Запуск скрипта на проверку стиля кода
 
