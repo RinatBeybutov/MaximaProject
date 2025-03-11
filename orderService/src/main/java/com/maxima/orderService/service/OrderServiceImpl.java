@@ -6,12 +6,10 @@ import com.maxima.orderService.mapper.OrderMapper;
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.dto.OrderViewDto;
-import com.maxima.orderService.exceptions.ResponseException;
 import com.maxima.orderService.mapper.ProductMapper;
 import com.maxima.orderService.repository.OrderRepository;
 import com.maxima.orderService.repository.ProductRepository;
 import com.maxima.orderService.repository.ProductToOrderRepository;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -79,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
    * Удалить заказ по uuid
    */
   @Transactional
-  public void delete(UUID uuid){
+  public void delete(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     repository.delete(entity);
   }
@@ -103,7 +101,8 @@ public class OrderServiceImpl implements OrderService {
             .collect(Collectors.toList());
     dto.setProducts(productsList);
   }
-  private OrderViewDto mapToViewDto(OrderEntity orderEntity){
+
+  private OrderViewDto mapToViewDto(OrderEntity orderEntity) {
     OrderViewDto dto = mapper.toViewDto(orderEntity);
     fillProducts(dto);
     return dto;
