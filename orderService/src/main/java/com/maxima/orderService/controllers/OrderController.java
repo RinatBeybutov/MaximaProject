@@ -50,8 +50,8 @@ public class OrderController {
    * Получить список заказов по UUID пользователя
    */
   @Operation(summary = "Получить список заказов по UUID пользователя")
-  @GetMapping
-  public ResponseEntity<List<OrderViewDto>> getList(@RequestParam(name = "user") UUID userUuid) {
+  @GetMapping("/{uuid}")
+  public ResponseEntity<List<OrderViewDto>> getList(@PathVariable(name = "uuid") UUID userUuid) {
     return ResponseEntity.ok(service.getList(userUuid));
   }
 
