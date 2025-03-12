@@ -1,9 +1,8 @@
 CREATE TABLE IF NOT EXISTS order_service.products (
    id BIGSERIAL PRIMARY KEY,
-   uuid UUID,
+   uuid UUID UNIQUE,
    name TEXT,
    category_id INTEGER,
-   CONSTRAINT pk_products PRIMARY KEY (id)
 );
 
 COMMENT ON TABLE order_service.products IS 'Таблица продуктов';
