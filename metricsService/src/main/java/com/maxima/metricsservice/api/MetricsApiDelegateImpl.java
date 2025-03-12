@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Реализация делегата для метрик заказов.
+ */
 @RestController
 @RequiredArgsConstructor
 public class MetricsApiDelegateImpl implements MetricsApiDelegate {
