@@ -52,7 +52,7 @@ public class OrderController {
   @Operation(summary = "Получить список заказов по UUID пользователя")
   @GetMapping
   public ResponseEntity<List<OrderViewDto>> getList(@RequestParam(name = "user") UUID userUuid) {
-    return ResponseEntity.ok(service.toList(userUuid));
+    return ResponseEntity.ok(service.getList(userUuid));
   }
 
   /**

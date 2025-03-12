@@ -34,6 +34,6 @@ public interface OrderService {
   /**
    * Получить список всех Заказов
    */
-  List<OrderViewDto> toList(UUID uuid);
+  List<OrderViewDto> getList(UUID uuid);
 }
 

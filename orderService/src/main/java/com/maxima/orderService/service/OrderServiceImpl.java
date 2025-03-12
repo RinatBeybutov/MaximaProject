@@ -39,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
    * Создать заказ
    */
   @Transactional
+  @Override
   public OrderViewDto create(OrderCreateDto dto) {
     var orderEntity = mapper.toEntity(dto);
     orderEntity.setCreatedAt(LocalDateTime.now());
@@ -56,7 +57,8 @@ public class OrderServiceImpl implements OrderService {
   /**
    * Найти заказ по uuid
    */
-  @Transactional
+  @Transactional(readOnly = true)
+  @Override
   public OrderViewDto find(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     return mapToViewDto(entity);
@@ -66,6 +68,7 @@ public class OrderServiceImpl implements OrderService {
    * Обновить заказ по uuid
    */
   @Transactional
+  @Override
   public OrderViewDto update(UUID uuid, OrderUpdateDto orderUpdateDto) {
     var entity = repository.getByUuid(uuid);
     mapper.update(orderUpdateDto, entity);
@@ -77,6 +80,7 @@ public class OrderServiceImpl implements OrderService {
    * Удалить заказ по uuid
    */
   @Transactional
+  @Override
   public void delete(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     repository.delete(entity);
@@ -85,8 +89,9 @@ public class OrderServiceImpl implements OrderService {
   /**
    * Получить список всех заказов по uuid пользователя
    */
-  @Transactional
-  public List<OrderViewDto> toList(UUID userUuid) {
+  @Transactional(readOnly = true)
+  @Override
+  public List<OrderViewDto> getList(UUID userUuid) {
     return repository.findAllByUserUuid(userUuid)
         .stream()
         .map(e -> mapToViewDto(e))

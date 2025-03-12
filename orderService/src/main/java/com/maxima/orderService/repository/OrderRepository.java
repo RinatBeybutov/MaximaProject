@@ -1,7 +1,7 @@
 package com.maxima.orderService.repository;
 
 import com.maxima.orderService.entity.OrderEntity;
-import com.maxima.orderService.exceptions.ResponseException;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +17,7 @@ public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
 
   List<OrderEntity> findAllByUserUuid(UUID uuid);
 
-  default OrderEntity getByUuid(UUID uuid) throws ResponseException {
-    return findByUuid(uuid).orElseThrow(ResponseException::new);
+  default OrderEntity getByUuid(UUID uuid) {
+    return findByUuid(uuid).orElseThrow(RuntimeException::new);
   }
 }
