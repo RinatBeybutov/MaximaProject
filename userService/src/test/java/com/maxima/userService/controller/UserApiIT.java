@@ -4,7 +4,6 @@ import static com.maxima.userService.testData.UserApiTestData.NUMBER_OF_USERS;
 import static com.maxima.userService.testData.UserApiTestData.USER_NOT_FOUND_MESSAGE;
 import static com.maxima.userService.testData.UserApiTestData.WRONG_UUID;
 import static com.maxima.userService.testData.UserApiTestData.createdViewDto;
-import static com.maxima.userService.testData.UserApiTestData.filter;
 import static com.maxima.userService.testData.UserApiTestData.updatedUserDto;
 import static com.maxima.userService.testData.UserApiTestData.userCreateDto;
 import static com.maxima.userService.testData.UserApiTestData.userUpdateDto;
@@ -77,22 +76,16 @@ class UserApiIT extends TestContainersConfig {
   }
 
   @Test
-  @DisplayName("Проверка нак получение отфильтрованного списка пользователей")
+  @DisplayName("Проверка на получение отфильтрованного списка пользователей")
   void testGetFilteredList() {
-    var headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    var requestEntity = new HttpEntity<>(filter(), headers);
-
-    var response = restTemplate.exchange(url,
-                                         HttpMethod.GET,
-                                         requestEntity,
-                                         UserViewDto[].class);
+    var response = restTemplate.getForEntity(url + "?nameEquals=Владимир", UserViewDto[].class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertNotNull(response.getBody());
 
     var users = response.getBody();
 
+    assertEquals(users.length, 1);
     assertThat(users[0])
         .usingRecursiveComparison()
         .isEqualTo(vladimirUserDto());
