@@ -9,4 +9,6 @@ public class ApiConfig {
 
   public static final String PRODUCTS = "/api/v1/products";
 
+  public static final String ORDERS = "/api/v1/orders";
+
 }
