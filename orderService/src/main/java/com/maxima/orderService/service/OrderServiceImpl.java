@@ -3,7 +3,6 @@ package com.maxima.orderService.service;
 import com.maxima.orderService.dto.ProductWithCountDto;
 import com.maxima.orderService.entity.OrderEntity;
 import com.maxima.orderService.entity.OrderStatus;
-import com.maxima.orderService.entity.ProductEntity;
 import com.maxima.orderService.entity.ProductToOrderEntity;
 import com.maxima.orderService.mapper.OrderMapper;
 import com.maxima.orderService.dto.OrderCreateDto;

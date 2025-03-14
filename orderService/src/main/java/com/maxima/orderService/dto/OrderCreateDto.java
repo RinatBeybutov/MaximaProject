@@ -20,6 +20,6 @@ public class OrderCreateDto {
 
   private UUID userUuid;
 
-  private List<ProductWithCountDto> products;
+  private List<ProductWithCountCreateDto> products;
 
 }
