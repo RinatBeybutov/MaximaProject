@@ -3,19 +3,18 @@ package com.maxima.metricsservice.api;
 import com.maxima.metricsservice.service.MetricsService;
 import com.petProject.MetricsService.controller.MetricsApiDelegate;
 import com.petProject.MetricsService.dto.OrderMetricsDto;
+import io.swagger.v3.oas.annotations.servers.Servers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Реализация делегата для метрик заказов.
+ * Реализация Апи для метрик заказов.
  */
-@RestController
+@Servers
 @RequiredArgsConstructor
 public class MetricsApiDelegateImpl implements MetricsApiDelegate {
 
   private final MetricsService service;
-
 
   @Override
   public ResponseEntity<OrderMetricsDto> getMetrics() {
