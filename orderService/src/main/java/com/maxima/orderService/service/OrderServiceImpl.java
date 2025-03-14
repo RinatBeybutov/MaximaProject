@@ -3,6 +3,7 @@ package com.maxima.orderService.service;
 import com.maxima.orderService.dto.ProductWithCountDto;
 import com.maxima.orderService.entity.OrderEntity;
 import com.maxima.orderService.entity.OrderStatus;
+import com.maxima.orderService.entity.ProductEntity;
 import com.maxima.orderService.entity.ProductToOrderEntity;
 import com.maxima.orderService.mapper.OrderMapper;
 import com.maxima.orderService.dto.OrderCreateDto;
@@ -54,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
    * Найти заказ по uuid
    */
   @Transactional(readOnly = true)
+  @Override
   public OrderViewDto getOne(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     return mapToViewDto(entity);
@@ -111,7 +113,8 @@ public class OrderServiceImpl implements OrderService {
     for (var product : dto.getProducts()) {
       var productToOrderEntity = new ProductToOrderEntity();
       productToOrderEntity.setOrder(orderEntity);
-      productToOrderEntity.setProduct(productRepository.getByUuid(product.getUuid()));
+      var productEntity = productRepository.getByUuid(product.getUuid());
+      productToOrderEntity.setProduct(productEntity);
       productToOrderEntity.setCount(product.getCount());
       productToOrderRepository.save(productToOrderEntity);
     }
