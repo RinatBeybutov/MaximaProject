@@ -5,24 +5,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import java.util.UUID;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
  * Сущность заказа
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "orders", schema = "order_service")
+@NoArgsConstructor
 public class OrderEntity extends BaseEntity {
 
-  @Column(name = "date")
+  @Column(name = "created_at")
   private LocalDateTime createdAt;
 
   @Column(name = "user_uuid")

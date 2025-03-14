@@ -2,10 +2,11 @@ package com.maxima.orderService.mapper;
 
 import com.maxima.orderService.dto.ProductViewDto;
 import com.maxima.orderService.dto.ProductCreateDto;
+import com.maxima.orderService.dto.ProductWithCountDto;
 import com.maxima.orderService.entity.ProductEntity;
+import com.maxima.orderService.entity.ProductToOrderEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
 import org.mapstruct.MappingTarget;
 
 /**
@@ -20,4 +21,6 @@ public interface ProductMapper {
   ProductEntity toEntity(ProductCreateDto dto);
 
   void update(ProductCreateDto productInputDto, @MappingTarget ProductEntity productEntity);
+
+  ProductWithCountDto toCountDto(ProductToOrderEntity productToOrderEntity);
 }

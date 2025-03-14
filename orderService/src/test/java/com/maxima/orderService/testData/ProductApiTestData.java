@@ -11,7 +11,7 @@ public class ProductApiTestData {
 
   public static final UUID WRONG_UUID = UUID.fromString("974df0be-8fe6-4cb8-8e71-b307567c3e60");
 
-  public static final int NUMBER_OF_PRODUCTS = 4;
+  public static final int NUMBER_OF_PRODUCTS = 3;
 
   public static ProductCreateDto productCreateDto() {
     return ProductCreateDto.builder()
@@ -48,9 +48,9 @@ public class ProductApiTestData {
    */
   public static ProductViewDto colaProductDto() {
     return ProductViewDto.builder()
-        .name("Добрый кола")
+        .name("Coca-Cola")
         .categoryUuid(UUID.fromString("fcc49792-9c0b-49f7-9fce-5d9d631d045f"))
-        .uuid(UUID.fromString("19fdc3a4-022b-428e-9c68-531349181bfb"))
+        .uuid(UUID.fromString("bee49792-9c0b-49f7-9fce-5d9d631d045f"))
         .build();
   }
 }

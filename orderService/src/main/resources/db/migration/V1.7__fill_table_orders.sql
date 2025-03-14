@@ -1,4 +1,4 @@
-insert into order_service.orders (uuid, date, status, user_uuid)
+insert into order_service.orders (uuid, created_at, status, user_uuid)
 values ('63a31acf-5450-42a0-8f9b-5d732bbdf397',
         '2025-03-06 14:15:12', 1,
         '39e89964-5f36-46c7-a6c1-324014b75463'),
