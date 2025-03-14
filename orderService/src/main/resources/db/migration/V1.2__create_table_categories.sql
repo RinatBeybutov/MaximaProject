@@ -1,5 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS order_service;
-
 create table if not exists order_service.categories(
      id BIGSERIAL PRIMARY KEY,
      uuid UUID UNIQUE,

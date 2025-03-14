@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Schema(description = "ДТО сущности продукта")
 @Data
-@Builder
+//@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductViewDto {
