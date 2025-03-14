@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import java.util.UUID;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -16,6 +17,7 @@ import lombok.Setter;
 @Data
 @Entity
 @Table(name = "orders", schema = "order_service")
+@NoArgsConstructor
 public class OrderEntity extends BaseEntity {
 
   @Column(name = "created_at")
@@ -27,7 +29,7 @@ public class OrderEntity extends BaseEntity {
   @Column(name = "status")
   @Getter(AccessLevel.PRIVATE)
   @Setter(AccessLevel.PRIVATE)
-  private Integer status = 1;
+  private Integer status;
 
   public void setStatus(OrderStatus orderStatus) {
     status = orderStatus.getValue();
@@ -35,8 +37,5 @@ public class OrderEntity extends BaseEntity {
 
   public OrderStatus getStatus() {
     return OrderStatus.fromValue(status);
-  }
-
-  public OrderEntity() {
   }
 }

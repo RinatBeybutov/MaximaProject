@@ -19,7 +19,7 @@ public interface OrderService {
   /**
    * Найти Заказ по uuid
    */
-  OrderViewDto find(UUID uuid);
+  OrderViewDto getOne(UUID uuid);
 
   /**
    * Обновить Заказ по uuid

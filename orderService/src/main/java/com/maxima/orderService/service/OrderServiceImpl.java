@@ -1,6 +1,8 @@
 package com.maxima.orderService.service;
 
+import com.maxima.orderService.dto.ProductWithCountDto;
 import com.maxima.orderService.entity.OrderEntity;
+import com.maxima.orderService.entity.OrderStatus;
 import com.maxima.orderService.entity.ProductToOrderEntity;
 import com.maxima.orderService.mapper.OrderMapper;
 import com.maxima.orderService.dto.OrderCreateDto;
@@ -13,7 +15,6 @@ import com.maxima.orderService.repository.ProductToOrderRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,14 +44,9 @@ public class OrderServiceImpl implements OrderService {
   public OrderViewDto create(OrderCreateDto dto) {
     var orderEntity = mapper.toEntity(dto);
     orderEntity.setCreatedAt(LocalDateTime.now());
+    orderEntity.setStatus(OrderStatus.CREATED);
     orderEntity = repository.save(orderEntity);
-    for (var entry : dto.getProductsNumber()) {
-      var productToOrderEntity = new ProductToOrderEntity();
-      productToOrderEntity.setOrder(orderEntity);
-      productToOrderEntity.setProduct(productRepository.getByUuid(entry.getKey()));
-      productToOrderEntity.setCount(entry.getValue());
-      productToOrderRepository.save(productToOrderEntity);
-    }
+    saveProducts(dto, orderEntity);
     return mapToViewDto(orderEntity);
   }
 
@@ -58,8 +54,7 @@ public class OrderServiceImpl implements OrderService {
    * Найти заказ по uuid
    */
   @Transactional(readOnly = true)
-  @Override
-  public OrderViewDto find(UUID uuid) {
+  public OrderViewDto getOne(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     return mapToViewDto(entity);
   }
@@ -94,22 +89,31 @@ public class OrderServiceImpl implements OrderService {
   public List<OrderViewDto> getList(UUID userUuid) {
     return repository.findAllByUserUuid(userUuid)
         .stream()
-        .map(e -> mapToViewDto(e))
+        .map(this::mapToViewDto)
         .toList();
   }
 
-  private void fillProducts(OrderViewDto dto) {
-    var productToOrderList = productToOrderRepository.findAllByOrderId(
-            repository.getByUuid(dto.getUuid()).getId());
-    var productsList = productToOrderList.stream()
-            .map(e -> productMapper.toDto(e.getProduct()))
-            .collect(Collectors.toList());
-    dto.setProducts(productsList);
+  private List<ProductWithCountDto> getProducts(Long orderId) {
+    return productToOrderRepository.findAllByOrderId(orderId)
+        .stream()
+        .map(productMapper::toCountDto)
+        .toList();
   }
 
   private OrderViewDto mapToViewDto(OrderEntity orderEntity) {
     OrderViewDto dto = mapper.toViewDto(orderEntity);
-    fillProducts(dto);
+    var products = getProducts(orderEntity.getId());
+    dto.setProducts(products);
     return dto;
+  }
+
+  private void saveProducts(OrderCreateDto dto, OrderEntity orderEntity) {
+    for (var product : dto.getProducts()) {
+      var productToOrderEntity = new ProductToOrderEntity();
+      productToOrderEntity.setOrder(orderEntity);
+      productToOrderEntity.setProduct(productRepository.getByUuid(product.getUuid()));
+      productToOrderEntity.setCount(product.getCount());
+      productToOrderRepository.save(productToOrderEntity);
+    }
   }
 }

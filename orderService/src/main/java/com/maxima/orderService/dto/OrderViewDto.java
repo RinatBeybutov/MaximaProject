@@ -29,5 +29,5 @@ public class OrderViewDto {
 
   private OrderStatus status;
 
-  private List<ProductViewDto> products;
+  private List<ProductWithCountDto> products;
 }
