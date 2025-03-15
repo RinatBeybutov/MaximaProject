@@ -42,7 +42,7 @@ public class ProductApiTestData {
   }
 
   /**
-   * Создает экземпляр ProductViewDto с тестовыми данными для продукта Добрый кола
+   * Создает экземпляр ProductViewDto с тестовыми данными для продукта Coca-Cola
    *
    * @return ProductViewDto с предустановленными значениями name, categoryUuid и uuid
    */
