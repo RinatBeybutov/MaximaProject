@@ -136,8 +136,9 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
   @DisplayName("Проверка возврата ошибки при попытке получения отсутствующей категории")
   void testGetNonExisting() {
     ResponseEntity<CategoryDto> getResponse =
-        restTemplate.getForEntity("/api/v1/categories/" + OrderApiTestData.NON_EXISTING_CATEGORY_UUID,
-                                  CategoryDto.class);
+        restTemplate.getForEntity(
+            "/api/v1/categories/" + OrderApiTestData.NON_EXISTING_CATEGORY_UUID,
+            CategoryDto.class);
     assertEquals(HttpStatus.NOT_FOUND, getResponse.getStatusCode());
   }
 }

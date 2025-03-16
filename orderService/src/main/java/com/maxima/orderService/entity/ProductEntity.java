@@ -3,7 +3,6 @@ package com.maxima.orderService.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class ProductEntity extends BaseEntity {
   private String name;
 
   @Column(name = "category_id", updatable = false, insertable = false)
-  private Long categoryid;
+  private Long categoryId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private CategoryEntity category;
