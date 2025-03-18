@@ -31,6 +31,7 @@ public class OrderApiTestData {
         .build();
   }
 
+
   public static OrderViewDto getViewOrderDto() {
     OrderViewDto orderViewDtoDto = new OrderViewDto();
     orderViewDtoDto.setUuid(UUID.fromString("36c4caec-48ba-4099-abc6-cf80026905d6"));

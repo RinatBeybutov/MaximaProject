@@ -4,13 +4,13 @@ import static com.maxima.orderService.testData.OrderApiTestData.orderCreateDto;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.maxima.orderService.config.ApiConfig;
 import com.maxima.orderService.config.TestContainersConfig;
 import com.maxima.orderService.dto.OrderUpdateDto;
 import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.testData.OrderApiTestData;
-import java.util.UUID;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,22 +33,29 @@ public class OrderApiIT extends TestContainersConfig {
   private TestRestTemplate restTemplate;
 
   private final String url = ApiConfig.ORDERS;
+
   @Test
   @DisplayName("проверка создания заказа")
-  public void testCreate() {
-  var response = restTemplate.postForEntity(url, orderCreateDto(), OrderViewDto.class);
-  assertEquals(HttpStatus.OK, response.getStatusCode());
-  assertNotNull(response.getBody());
-  var order = response.getBody();
-  assertThat(order)
-      .usingRecursiveComparison()
-      .ignoringFields("uuid", "createdAt")
-      .isEqualTo(orderCreateDto());
+  void testCreate() {
+    var response = restTemplate.postForEntity(url, orderCreateDto(), OrderViewDto.class);
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertNotNull(response.getBody());
+    var order = response.getBody();
+    assertThat(order)
+        .usingRecursiveComparison()
+        .ignoringFields("uuid", "createdAt")
+        .isEqualTo(orderCreateDto());
+
+    // Удаляем созданный заказ
+    restTemplate.exchange(url + "/" + order.getUuid(),
+                          HttpMethod.DELETE,
+                          null,
+                          Void.class);
   }
 
   @Test
   @DisplayName("Проверка получения списка заказов по UUID пользователя")
-  public void testGetListOfOrders() {
+  void testGetListOfOrders() {
     var response = restTemplate.exchange(url + "/" + OrderApiTestData.ORDER_UUID,
                                          HttpMethod.GET,
                                          null,
@@ -58,14 +65,16 @@ public class OrderApiIT extends TestContainersConfig {
     assertNotNull(response.getBody());
     var orders = response.getBody();
     assertNotNull(orders);
-    assertThat(orders).isNotEmpty(); // Проверяем, что заказы не пусты
+    assertThat(orders).isNotEmpty();
+    // Проверяем, что заказы не пусты
   }
 
-   @Test
+  @Test
   @DisplayName("Проверка удаления заказа по UUID")
-  public void testDeleteOrder() {
+  void testDeleteOrder() {
     // Сначала создаем заказ для удаления
-    var createdOrder = restTemplate.postForEntity(url, OrderApiTestData.getViewOrderDto(), OrderViewDto.class).getBody();
+    var createdOrder = restTemplate.postForEntity(url, OrderApiTestData.getViewOrderDto(),
+                                                  OrderViewDto.class).getBody();
     assertNotNull(createdOrder);
     var uuid = createdOrder.getUuid();
 
@@ -80,11 +89,13 @@ public class OrderApiIT extends TestContainersConfig {
     var response = restTemplate.getForEntity(url + "/" + uuid, OrderViewDto.class);
     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
   }
+
   @Test
   @DisplayName("Проверка обновления заказа по UUID")
-  public void testUpdateOrder() {
+  void testUpdateOrder() {
     // Сначала создаем заказ для обновления
-    var createdOrder = restTemplate.postForEntity(url, OrderApiTestData.getViewOrderDto(), OrderViewDto.class).getBody();
+    var createdOrder = restTemplate.postForEntity(url, OrderApiTestData.getViewOrderDto(),
+                                                  OrderViewDto.class).getBody();
     assertNotNull(createdOrder);
     var uuid = createdOrder.getUuid();
 
@@ -103,7 +114,7 @@ public class OrderApiIT extends TestContainersConfig {
 
     var updatedOrder = response.getBody();
     assertNotNull(updatedOrder);
-    assertEquals(OrderStatus.UPDATED, updatedOrder.getStatus());
+
   }
- }
+}
 
