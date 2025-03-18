@@ -1,4 +1,4 @@
-package com.maxima.metricsservice.service;
+package com.maxima.metricsService.service;
 
 import com.petProject.MetricsService.dto.OrderMetricsDto;
 
