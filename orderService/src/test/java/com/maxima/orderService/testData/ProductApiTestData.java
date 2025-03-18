@@ -20,7 +20,7 @@ public class ProductApiTestData {
         .build();
   }
 
-  public static ProductCreateDto productUpdateDto() {
+  public static ProductCreateDto productUpda teDto() {
     return ProductCreateDto.builder()
         .name("new name")
         .categoryUuid(UUID.fromString("fcc49792-9c0b-49f7-9fce-5d9d631d042f"))

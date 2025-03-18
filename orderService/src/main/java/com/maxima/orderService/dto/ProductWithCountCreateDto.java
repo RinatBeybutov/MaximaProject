@@ -1,5 +1,6 @@
 package com.maxima.orderService.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
  */
 @Getter
 @Setter
+@Builder
 public class ProductWithCountCreateDto {
 
   private UUID uuid;
