@@ -16,7 +16,7 @@ public class MetricsApiDelegateImpl implements MetricsApiDelegate {
 
   private final MetricsService service;
 
-  @Override
+  //@Override
   public ResponseEntity<OrderMetricsDto> getMetrics() {
     return ResponseEntity.ok(service.getMetrics());
   }
