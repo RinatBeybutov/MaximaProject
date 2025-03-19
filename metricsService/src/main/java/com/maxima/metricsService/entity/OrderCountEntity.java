@@ -14,7 +14,8 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(schema = "public", name = "order_count")//надо заменить схему после создания миграций
+//TODO:надо заменить схему после создания миграций
+@Table(schema = "public", name = "order_count")
 @IdClass(OrderCountEntity.OrderCountId.class)
 public class OrderCountEntity implements Serializable {
 
