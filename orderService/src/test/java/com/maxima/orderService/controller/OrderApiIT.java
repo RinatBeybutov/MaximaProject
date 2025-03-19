@@ -1,5 +1,6 @@
 package com.maxima.orderService.controller;
 
+import static com.maxima.orderService.testData.OrderApiTestData.getViewOrderDto;
 import static com.maxima.orderService.testData.OrderApiTestData.orderCreateDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
