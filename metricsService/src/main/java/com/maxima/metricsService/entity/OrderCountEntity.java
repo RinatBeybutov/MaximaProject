@@ -31,8 +31,7 @@ public class OrderCountEntity implements Serializable {
   private Integer orderCount;
 
   /**
-   * Класс составного ключа
-   * Состоит из даты и целого числа - часа
+   * Класс составного ключа Состоит из даты и целого числа - часа
    */
   @Data
   public static class OrderCountId implements Serializable {
