@@ -9,7 +9,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
  * Класс конфигурации контейнеров
  */
 @Testcontainers
-public class TestContainersConfig_products {
+public class TestContainersConfigForProducts {
 
   /**
    * Докер контейнер для postgres

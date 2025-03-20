@@ -12,8 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.maxima.orderService.config.ApiConfig;
-import com.maxima.orderService.config.TestContainersConfig;
-import com.maxima.orderService.config.TestContainersConfig_products;
+import com.maxima.orderService.config.TestContainersConfigForProducts;
 import com.maxima.orderService.dto.ProductViewDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +32,7 @@ import org.springframework.http.MediaType;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("Тестирование API для сущности ProductEntity")
 @Slf4j
-public class ProductApiITests extends TestContainersConfig_products {
+public class ProductApiIntegrationalTests extends TestContainersConfigForProducts {
 
   @Autowired
   private TestRestTemplate restTemplate;
