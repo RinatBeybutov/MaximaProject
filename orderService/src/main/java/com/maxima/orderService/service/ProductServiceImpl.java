@@ -8,6 +8,8 @@ import com.maxima.orderService.repository.ProductRepository;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional
+  @CacheEvict(cacheNames = "products")
   public ProductViewDto create(ProductCreateDto dto) {
     var category = categoryRepository.getByUuid(dto.getCategoryUuid());
     var entity = mapper.toEntity(dto);
@@ -36,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = "products")
   public List<ProductViewDto> getList() {
     return repository.findAll()
         .stream()
@@ -45,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional(readOnly = true)
+  @CacheEvict(cacheNames = "products")
   public ProductViewDto find(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     return mapper.toDto(entity);
@@ -52,6 +57,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional
+  @CacheEvict(cacheNames = "products")
   public ProductViewDto update(UUID uuid, ProductCreateDto productCreateDto) {
     var entity = repository.getByUuid(uuid);
     var category = categoryRepository.getByUuid(productCreateDto.getCategoryUuid());
@@ -63,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional
+  @CacheEvict(cacheNames = "products")
   public void delete(UUID uuid) {
     var entity = repository.getByUuid(uuid);
     repository.delete(entity);
