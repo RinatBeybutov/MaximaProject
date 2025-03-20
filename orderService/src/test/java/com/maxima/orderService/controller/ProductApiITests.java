@@ -13,7 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.maxima.orderService.config.ApiConfig;
 import com.maxima.orderService.config.TestContainersConfig;
+import com.maxima.orderService.config.TestContainersConfig_products;
 import com.maxima.orderService.dto.ProductViewDto;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,8 @@ import org.springframework.http.MediaType;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("Тестирование API для сущности ProductEntity")
-public class ProductApiIT extends TestContainersConfig {
+@Slf4j
+public class ProductApiITests extends TestContainersConfig_products {
 
   @Autowired
   private TestRestTemplate restTemplate;
@@ -150,5 +153,34 @@ public class ProductApiIT extends TestContainersConfig {
                                                Void.class);
 
     assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
+  }
+
+
+  @Test
+  @DisplayName("Проверка работы кэша")
+  void testCache() {
+    log.info("<<testCache:1>>");
+    var response = restTemplate.postForEntity(url,
+            productCreateDto(),
+            ProductViewDto.class);
+
+    log.info("<<testCache:2>>");
+    assertEquals(HttpStatus.OK, response.getStatusCode());
+    log.info("<<testCache:3>>");
+    assertNotNull(response.getBody());
+    log.info("<<testCache:4>>");
+    var product = response.getBody();
+    log.info("<<testCache:5>>");
+    var response2 = restTemplate.getForEntity(url + "/" + product.getUuid(),
+            ProductViewDto.class);
+    log.info("<<testCache:6>>");
+    var response3 = restTemplate.getForEntity(url + "/" + product.getUuid(),
+            ProductViewDto.class);
+    log.info("<<testCache:7>>");
+
+    var deleteResponse = restTemplate.exchange(url + "/" + product.getUuid(),
+            HttpMethod.DELETE,
+            null,
+            Void.class);
   }
 }
