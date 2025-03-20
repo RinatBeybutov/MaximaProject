@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional
-  @CacheEvict(cacheNames = "products")
+  @CacheEvict(cacheNames = "products", key = "#uuid")
   public ProductViewDto update(UUID uuid, ProductCreateDto productCreateDto) {
     log.info("<<update product:>>");
     var entity = repository.getByUuid(uuid);

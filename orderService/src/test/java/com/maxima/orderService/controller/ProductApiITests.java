@@ -178,6 +178,18 @@ public class ProductApiITests extends TestContainersConfig_products {
             ProductViewDto.class);
     log.info("<<testCache:7>>");
 
+    var newDto = productUpdateDto();
+    var headers = new HttpHeaders();
+    var response4 = restTemplate.exchange(url + "/" + product.getUuid(),
+            HttpMethod.PUT,
+            new HttpEntity<>(newDto, headers),
+            ProductViewDto.class);
+
+    log.info("<<testCache:8>>");
+    var response5 = restTemplate.getForEntity(url + "/" + product.getUuid(),
+            ProductViewDto.class);
+    log.info("<<testCache:9>>");
+
     var deleteResponse = restTemplate.exchange(url + "/" + product.getUuid(),
             HttpMethod.DELETE,
             null,
