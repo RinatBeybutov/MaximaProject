@@ -28,6 +28,9 @@ public class OrderApiTestData {
         .build();
   }
 
+  /**
+   * Получение OrderViewDto
+   */
   public static OrderViewDto getViewOrderDto() {
     return OrderViewDto.builder()
         .uuid(ORDER_UUID)
