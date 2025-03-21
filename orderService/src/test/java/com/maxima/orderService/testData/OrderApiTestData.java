@@ -3,6 +3,7 @@ package com.maxima.orderService.testData;
 import com.maxima.orderService.dto.OrderCreateDto;
 import com.maxima.orderService.dto.OrderViewDto;
 import com.maxima.orderService.dto.ProductWithCountCreateDto;
+import com.maxima.orderService.entity.OrderStatus;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
  */
 public class OrderApiTestData {
 
-  public static final UUID ORDER_UUID = UUID.fromString("423bd97c-f1af-413c-9f62-18b4ab158293");
+  public static final UUID ORDER_UUID = UUID.fromString("63a31acf-5450-42a0-8f9b-5d732bbdf397");
 
   /**
    * Создание OrderCreateDto
@@ -35,6 +36,9 @@ public class OrderApiTestData {
     return OrderViewDto.builder()
         .uuid(ORDER_UUID)
         .userUuid(UUID.fromString("423bd97c-f1af-413c-9f62-18b4ab158293"))
+        .status(OrderStatus.valueOf("CREATED"))
+        .products(List.of())
+        .createdAt(null)
         .build();
   }
 }
