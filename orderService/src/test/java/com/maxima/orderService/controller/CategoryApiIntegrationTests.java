@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.maxima.orderService.testData.OrderApiTestData;
+import com.maxima.orderService.testData.CategoryApiTestData;
 import com.maxima.orderService.config.TestContainersConfig;
 import com.maxima.orderService.dto.CategoryCreateDto;
 import com.maxima.orderService.dto.CategoryDto;
@@ -31,7 +31,7 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
   @DisplayName("Проверка создания объекта")
   void testCreate() {
     ResponseEntity<CategoryDto> createResponse =
-        restTemplate.postForEntity("/api/v1/categories", OrderApiTestData.getCategoryCreateDto(),
+        restTemplate.postForEntity("/api/v1/categories", CategoryApiTestData.getCategoryCreateDto(),
                                    CategoryDto.class);
     assertEquals(HttpStatus.OK, createResponse.getStatusCode());
     CategoryDto categoryDto = createResponse.getBody();
@@ -41,7 +41,7 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
     assertThat(categoryDto)
         .usingRecursiveComparison()
         .ignoringFields("uuid", "id")
-        .isEqualTo(OrderApiTestData.getCategoryDtoForCreate());
+        .isEqualTo(CategoryApiTestData.getCategoryDtoForCreate());
 
     restTemplate.delete("/api/v1/categories/" + uuid);
   }
@@ -50,7 +50,7 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
   @DisplayName("Проверка получения категории по UUID")
   void testGetOne() {
     ResponseEntity<CategoryDto> getResponse =
-        restTemplate.getForEntity("/api/v1/categories/" + OrderApiTestData.CATEGORY_UUID,
+        restTemplate.getForEntity("/api/v1/categories/" + CategoryApiTestData.CATEGORY_UUID,
                                   CategoryDto.class);
     assertEquals(HttpStatus.OK, getResponse.getStatusCode());
 
@@ -59,7 +59,7 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
     assertThat(category)
         .usingRecursiveComparison()
         .ignoringFields("uuid", "id")
-        .isEqualTo(OrderApiTestData.getCategoryDto());
+        .isEqualTo(CategoryApiTestData.getCategoryDto());
   }
 
   @Test
@@ -75,7 +75,7 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
     assertThat(categories[0])
         .usingRecursiveComparison()
         .ignoringFields("uuid", "id")
-        .isEqualTo(OrderApiTestData.getCategoryDtoFirstInList());
+        .isEqualTo(CategoryApiTestData.getCategoryDtoFirstInList());
   }
 
   @Test
@@ -83,14 +83,14 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
   void testUpdate() {
     //создание новой категории
     ResponseEntity<CategoryDto> createResponse =
-        restTemplate.postForEntity("/api/v1/categories", OrderApiTestData.getCategoryCreateDto(),
+        restTemplate.postForEntity("/api/v1/categories", CategoryApiTestData.getCategoryCreateDto(),
                                    CategoryDto.class);
     assertEquals(HttpStatus.OK, createResponse.getStatusCode());
     CategoryDto categoryDto = createResponse.getBody();
     String uuid = categoryDto.getUuid().toString();
 
     //обновление
-    CategoryCreateDto categoryPutDto = new CategoryCreateDto(OrderApiTestData.CATEGORY_NAME);
+    CategoryCreateDto categoryPutDto = new CategoryCreateDto(CategoryApiTestData.CATEGORY_NAME);
     ResponseEntity<CategoryDto> putResponse =
         restTemplate.exchange("/api/v1/categories/" + uuid, HttpMethod.PUT,
                               new HttpEntity<CategoryCreateDto>(categoryPutDto), CategoryDto.class);
@@ -102,7 +102,7 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
     assertThat(outputDto)
         .usingRecursiveComparison()
         .ignoringFields("uuid", "id")
-        .isEqualTo(OrderApiTestData.getCategoryDtoForUpdate());
+        .isEqualTo(CategoryApiTestData.getCategoryDtoForUpdate());
 
     //удаление
     restTemplate.delete("/api/v1/categories/" + uuid);
@@ -113,7 +113,7 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
   void testDelete() {
     //создание новой категории
     ResponseEntity<CategoryDto> createResponse =
-        restTemplate.postForEntity("/api/v1/categories", OrderApiTestData.getCategoryCreateDto(),
+        restTemplate.postForEntity("/api/v1/categories", CategoryApiTestData.getCategoryCreateDto(),
                                    CategoryDto.class);
     assertEquals(HttpStatus.OK, createResponse.getStatusCode());
     CategoryDto categoryDto = createResponse.getBody();
@@ -137,7 +137,7 @@ class CategoryApiIntegrationTests extends TestContainersConfig {
   void testGetNonExisting() {
     ResponseEntity<CategoryDto> getResponse =
         restTemplate.getForEntity(
-            "/api/v1/categories/" + OrderApiTestData.NON_EXISTING_CATEGORY_UUID,
+            "/api/v1/categories/" + CategoryApiTestData.NON_EXISTING_CATEGORY_UUID,
             CategoryDto.class);
     assertEquals(HttpStatus.NOT_FOUND, getResponse.getStatusCode());
   }

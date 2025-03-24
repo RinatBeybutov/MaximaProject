@@ -1,38 +1,44 @@
 package com.maxima.orderService.testData;
 
-import com.maxima.orderService.dto.CategoryCreateDto;
-import com.maxima.orderService.dto.CategoryDto;
+import com.maxima.orderService.dto.OrderCreateDto;
+import com.maxima.orderService.dto.OrderViewDto;
+import com.maxima.orderService.dto.ProductWithCountCreateDto;
+import com.maxima.orderService.entity.OrderStatus;
+import java.util.List;
 import java.util.UUID;
-import lombok.Getter;
 
 /**
- * Класс с данными для теста
+ * Класс для тестовых данных
  */
 public class OrderApiTestData {
 
-  public static final String CATEGORY_UUID = "fcc49792-9c0b-49f7-9fce-5d9d631d042f";
+  public static final UUID ORDER_UUID = UUID.fromString("63a31acf-5450-42a0-8f9b-5d732bbdf397");
 
-  public static final String NON_EXISTING_CATEGORY_UUID = "00000000-0000-0000-0000-000000000000";
+  /**
+   * Создание OrderCreateDto
+   */
+  public static OrderCreateDto orderCreateDto() {
+    return OrderCreateDto.builder()
+        .userUuid(UUID.fromString("423bd97c-f1af-413c-9f62-18b4ab158293"))
+        .products(List.of(
+            ProductWithCountCreateDto.builder()
+                .uuid(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"))
+                .count(2L)
+                .build()
+        ))
+        .build();
+  }
 
-  public static final String CATEGORY_NAME = "Тестовая категория1";
-
-  @Getter
-  private static final CategoryCreateDto categoryCreateDto = new CategoryCreateDto(
-      "Тестовая категория");
-
-  @Getter
-  private static final CategoryDto categoryDto = new CategoryDto(4L, UUID.fromString(
-      "fcc49792-9c0b-49f7-9fce-5d9d631d042f"), "Чипсы");
-
-  @Getter
-  private static final CategoryDto categoryDtoForCreate = new CategoryDto(10L, UUID.fromString(
-      "1cc49792-9c0b-49f7-9fce-5d9d631d042f"), "Тестовая категория");
-
-  @Getter
-  private static final CategoryDto categoryDtoForUpdate = new CategoryDto(10L, UUID.fromString(
-      "1cc49792-9c0b-49f7-9fce-5d9d631d042f"), CATEGORY_NAME);
-
-  @Getter
-  private static final CategoryDto categoryDtoFirstInList = new CategoryDto(1L, UUID.fromString(
-      "fcc49792-9c0b-49f7-9fce-5d9d631d045f"), "Напитки");
+  /**
+   * Получение OrderViewDto
+   */
+  public static OrderViewDto getViewOrderDto() {
+    return OrderViewDto.builder()
+        .uuid(ORDER_UUID)
+        .userUuid(UUID.fromString("423bd97c-f1af-413c-9f62-18b4ab158293"))
+        .status(OrderStatus.valueOf("CREATED"))
+        .products(List.of())
+        .createdAt(null)
+        .build();
+  }
 }
