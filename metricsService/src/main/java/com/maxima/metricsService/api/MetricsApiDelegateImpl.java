@@ -1,6 +1,6 @@
-package com.maxima.metricsservice.api;
+package com.maxima.metricsService.api;
 
-import com.maxima.metricsservice.service.MetricsService;
+import com.maxima.metricsService.service.MetricsService;
 import com.petProject.MetricsService.controller.MetricsApiDelegate;
 import com.petProject.MetricsService.dto.OrderMetricsDto;
 import lombok.RequiredArgsConstructor;
