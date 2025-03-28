@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.maxima.orderService.testData.CategoryApiTestData;
 import com.maxima.orderService.config.TestContainersConfig;
+import com.maxima.orderService.testData.OrderApiTestData;
 import com.maxima.orderService.dto.CategoryCreateDto;
 import com.maxima.orderService.dto.CategoryDto;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpMethod;
@@ -22,7 +24,8 @@ import org.springframework.http.HttpEntity;
  * Класс интегационных тестов для контроллера CategoryController
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class CategoryApiIntegrationTests extends TestContainersConfig {
+@Import(TestContainersConfig.class)
+class CategoryApiIntegrationTests {
 
   @Autowired
   private TestRestTemplate restTemplate;

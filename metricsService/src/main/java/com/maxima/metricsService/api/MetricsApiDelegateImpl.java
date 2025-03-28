@@ -1,8 +1,8 @@
 package com.maxima.metricsService.api;
 
+import com.maxima.metricsService.dto.OrderMetricsDto;
 import com.maxima.metricsService.service.MetricsService;
-import com.petProject.MetricsService.controller.MetricsApiDelegate;
-import com.petProject.MetricsService.dto.OrderMetricsDto;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class MetricsApiDelegateImpl implements MetricsApiDelegate {
   private final MetricsService service;
 
   @Override
-  public ResponseEntity<OrderMetricsDto> getMetrics() {
+  public ResponseEntity<OrderMetricsDto> metricsOrdersGet(LocalDate date) {
     return ResponseEntity.ok(service.getMetrics());
   }
 }

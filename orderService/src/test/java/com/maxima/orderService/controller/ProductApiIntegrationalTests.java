@@ -14,11 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import com.maxima.orderService.config.ApiConfig;
 import com.maxima.orderService.config.TestContainersConfig;
 import com.maxima.orderService.dto.ProductViewDto;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -30,7 +32,8 @@ import org.springframework.http.MediaType;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("Тестирование API для сущности ProductEntity")
-public class ProductApiIT extends TestContainersConfig {
+@Import(TestContainersConfig.class)
+class ProductApiIntegrationalTests {
 
   @Autowired
   private TestRestTemplate restTemplate;

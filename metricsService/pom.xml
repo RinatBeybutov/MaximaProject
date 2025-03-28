@@ -157,8 +157,8 @@
             ${project.basedir}/src/main/resources/static/openapi.yaml
           </inputSpec>
           <generatorName>spring</generatorName>
-          <apiPackage>com.petProject.MetricsService.controller</apiPackage>
-          <modelPackage>com.petProject.MetricsService.dto</modelPackage>
+          <apiPackage>com.maxima.metricsService.api</apiPackage>
+          <modelPackage>com.maxima.metricsService.dto</modelPackage>
           <supportingFilesToGenerate>
             ApiUtil.java
           </supportingFilesToGenerate>
