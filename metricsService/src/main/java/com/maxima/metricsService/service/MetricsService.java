@@ -1,6 +1,7 @@
-package com.maxima.metricsservice.service;
+package com.maxima.metricsService.service;
 
-import com.petProject.MetricsService.dto.OrderMetricsDto;
+
+import com.maxima.metricsService.dto.OrderMetricsDto;
 
 /**
  * Интерфейс сервиса для работы с метриками заказов.

@@ -2,6 +2,8 @@ package com.maxima.orderService.testData;
 
 import com.maxima.orderService.dto.ProductCreateDto;
 import com.maxima.orderService.dto.ProductViewDto;
+import com.maxima.orderService.entity.CategoryEntity;
+import com.maxima.orderService.entity.ProductEntity;
 import java.util.UUID;
 
 /**
@@ -12,6 +14,23 @@ public class ProductApiTestData {
   public static final UUID WRONG_UUID = UUID.fromString("974df0be-8fe6-4cb8-8e71-b307567c3e60");
 
   public static final int NUMBER_OF_PRODUCTS = 3;
+
+  /**
+   * Мок объект для продукта при получении из репозитория
+   */
+  public static ProductEntity mockProductEntity() {
+    ProductEntity productEntity = new ProductEntity();
+    productEntity.setId(1L);
+    productEntity.setUuid(UUID.fromString("fcc49792-9c0b-49f7-9fce-5d9d631d045f"));
+    productEntity.setName("test category");
+    productEntity.setCategoryId(1L);
+    CategoryEntity categoryEntity = new CategoryEntity();
+    categoryEntity.setId(1L);
+    categoryEntity.setUuid(UUID.fromString("fcc49792-9c0b-49f7-9fce-5d9d631d045f"));
+    productEntity.setCategory(categoryEntity);
+
+    return productEntity;
+  }
 
   public static ProductCreateDto productCreateDto() {
     return ProductCreateDto.builder()

@@ -1,4 +1,4 @@
-package com.maxima.metricsservice;
+package com.maxima.metricsService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

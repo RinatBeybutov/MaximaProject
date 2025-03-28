@@ -32,7 +32,6 @@ public class ProductServiceImpl implements ProductService {
   @Transactional
   @CacheEvict(cacheNames = "products")
   public ProductViewDto create(ProductCreateDto dto) {
-    log.info("<<creating product:>>");
     var category = categoryRepository.getByUuid(dto.getCategoryUuid());
     var entity = mapper.toEntity(dto);
     entity.setCategory(category);
@@ -44,7 +43,6 @@ public class ProductServiceImpl implements ProductService {
   @Transactional(readOnly = true)
   //@Cacheable(cacheNames = "products")
   public List<ProductViewDto> getList() {
-    log.info("<<getting products list:>>");
     return repository.findAll()
         .stream()
         .map(mapper::toDto)
@@ -53,9 +51,8 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional(readOnly = true)
-  @Cacheable(cacheNames = "products", key = "#uuid")
+  @Cacheable(value = "products", key = "#uuid")
   public ProductViewDto find(UUID uuid) {
-    log.info("<<find product:>>");
     var entity = repository.getByUuid(uuid);
     return mapper.toDto(entity);
   }
@@ -64,7 +61,6 @@ public class ProductServiceImpl implements ProductService {
   @Transactional
   @CacheEvict(cacheNames = "products", key = "#uuid")
   public ProductViewDto update(UUID uuid, ProductCreateDto productCreateDto) {
-    log.info("<<update product:>>");
     var entity = repository.getByUuid(uuid);
     var category = categoryRepository.getByUuid(productCreateDto.getCategoryUuid());
     mapper.update(productCreateDto, entity);
@@ -77,7 +73,6 @@ public class ProductServiceImpl implements ProductService {
   @Transactional
   @CacheEvict(cacheNames = "products")
   public void delete(UUID uuid) {
-    log.info("<<delete product:>>");
     var entity = repository.getByUuid(uuid);
     repository.delete(entity);
   }
