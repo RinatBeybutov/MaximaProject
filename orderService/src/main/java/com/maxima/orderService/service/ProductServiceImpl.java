@@ -30,7 +30,6 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional
-  @CacheEvict(cacheNames = "products")
   public ProductViewDto create(ProductCreateDto dto) {
     var category = categoryRepository.getByUuid(dto.getCategoryUuid());
     var entity = mapper.toEntity(dto);
@@ -41,7 +40,6 @@ public class ProductServiceImpl implements ProductService {
 
   @Override
   @Transactional(readOnly = true)
-  //@Cacheable(cacheNames = "products")
   public List<ProductViewDto> getList() {
     return repository.findAll()
         .stream()

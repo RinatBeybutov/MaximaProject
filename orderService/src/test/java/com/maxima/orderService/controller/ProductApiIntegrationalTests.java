@@ -32,7 +32,6 @@ import org.springframework.http.MediaType;
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DisplayName("Тестирование API для сущности ProductEntity")
-@Slf4j
 @Import(TestContainersConfig.class)
 class ProductApiIntegrationalTests {
 
