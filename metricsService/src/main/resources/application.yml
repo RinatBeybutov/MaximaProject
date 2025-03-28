@@ -1,7 +1,16 @@
 spring:
   application:
     name: metricsService
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      username: ""
+      password: ""
+      timeout: 6000ms
+      connect-timeout: 3000ms
 server:
   port: 8084
 springdoc:
   swagger-ui.url: /openapi.yaml
+
