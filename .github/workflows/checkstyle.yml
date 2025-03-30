@@ -1,0 +1,48 @@
+name: Checkstyle
+on:
+  push:
+    branches:
+      - 'task/**'
+jobs:
+  userService:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - checkout
+        uses: actions/checkout@v4
+      - name: Step 2 - Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+          cache: maven
+      - name: Step 3 - Checkstyle for UserService
+        working-directory: ./userService/
+        run: mvn -P check-code-style validate
+  orderService:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - checkout
+        uses: actions/checkout@v4
+      - name: Step 2 - Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+          cache: maven
+      - name: Step 3 - Checkstyle for OrderService
+        working-directory: ./orderService/
+        run: mvn -P check-code-style validate
+  metricsService:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - checkout
+        uses: actions/checkout@v4
+      - name: Step 2 - Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+          cache: maven
+      - name: Step 3 - Checkstyle for OrderService
+        working-directory: ./metricsService/
+        run: mvn -P check-code-style validate
